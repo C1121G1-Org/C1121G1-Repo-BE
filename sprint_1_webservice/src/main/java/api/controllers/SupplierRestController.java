@@ -37,6 +37,7 @@ package api.controllers;
 
 
 import api.dto.SupplierDto;
+import api.models.ResponseObject;
 import api.models.Supplier;
 import api.services.ISupplierService;
 import org.springframework.beans.BeanUtils;
@@ -47,6 +48,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,14 +63,14 @@ public class SupplierRestController {
     private ISupplierService iSupplierService;
 
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Supplier>> getSupplierList() {
-        List<Supplier> supplierList = iSupplierService.findAll();
-        if (supplierList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(supplierList, HttpStatus.OK);
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<Supplier>> getSupplierList() {
+//        List<Supplier> supplierList = iSupplierService.findAll();
+//        if (supplierList.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(supplierList, HttpStatus.OK);
+//    }
 
     /*
     Created by NgocTTB
@@ -77,15 +79,15 @@ public class SupplierRestController {
     */
 
     @PostMapping(value = "/create")
-    public ResponseEntity<Map<String, String>> saveArticle(@Valid @RequestBody SupplierDto supplierDto,
-                                                           BindingResult bindingResult) {
+    public ResponseEntity<ResponseObject> createSupplier(@Valid @RequestBody SupplierDto supplierDto,
+                                                         BindingResult bindingResult) {
         supplierDto.setIsupplierService(iSupplierService);
         supplierDto.validate(supplierDto, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = bindingResult.getFieldErrors()
                     .stream().collect(Collectors.toMap(
                             e -> e.getField(), e -> e.getDefaultMessage()));
-            return new ResponseEntity<>(errorMap, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         Supplier supplier = new Supplier();
         BeanUtils.copyProperties(supplierDto, supplier);

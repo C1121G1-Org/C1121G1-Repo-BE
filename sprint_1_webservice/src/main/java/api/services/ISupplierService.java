@@ -5,7 +5,7 @@ import api.models.Supplier;
 import java.util.List;
 
 public interface ISupplierService {
-    List<Supplier> findAll();
+//    List<Supplier> findAll();
 
     void save(Supplier supplier);
 

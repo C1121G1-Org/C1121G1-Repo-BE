@@ -13,15 +13,20 @@ public class SupplierServiceImpl implements ISupplierService {
     @Autowired
     ISupplierRepository iSupplierRepository;
 
-    @Override
-    public List<Supplier> findAll() {
-        return iSupplierRepository.findAll();
-    }
+//    @Override
+//    public List<Supplier> findAll() {
+//        return iSupplierRepository.findAll();
+//    }
 
     @Override
     public void save(Supplier supplier) {
-        iSupplierRepository.save(supplier);
+        iSupplierRepository.createSupplier(supplier.getSupplierName(), supplier.getAddress(), supplier.getPhone(), supplier.getEmail(), supplier.isDeleteFlag());
     }
+
+//    @Override
+//    public void save(Supplier supplier) {
+//        iSupplierRepository.save(supplier);
+//    }
 
     @Override
     public Supplier findBySupplierName(String supplierName) {
