@@ -1,10 +1,19 @@
 package api.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "account")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
 
     @Id
@@ -21,7 +30,7 @@ public class Account {
     @Column(name = "is_enabled", nullable = false)
     private Boolean isEnabled;
 
-    @Column(name = "verification_code", nullable = false, length = 255)
+    @Column(name = "verification_code", length = 255)
     private String verificationCode;
 
     @OneToOne(mappedBy = "account")
