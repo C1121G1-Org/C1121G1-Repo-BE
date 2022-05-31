@@ -1,12 +1,21 @@
 package api.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import api.models.Supplier;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import api.services.ISupplierService;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class SupplierDto implements Validator {
     private Long id;
 
@@ -29,56 +38,7 @@ public class SupplierDto implements Validator {
     private ISupplierService isupplierService;
 
     public SupplierDto() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
-
-
-    public boolean isDeleteFlag() {
-        return deleteFlag;
-    }
-    public void setDeleteFlag(boolean deleteFlag) {
-        this.deleteFlag = deleteFlag;
+        setDeleteFlag(true);
     }
 
     public ISupplierService getIsupplierService() {
@@ -99,9 +59,9 @@ public class SupplierDto implements Validator {
         SupplierDto supplierDto = (SupplierDto) target;
         String supplierName = supplierDto.getSupplierName();
         Supplier supplier = this.isupplierService.findBySupplierName(supplierName);
-        if(supplier!=null){
-            if(supplier.getSupplierName().equals(supplierName)){
-                errors.rejectValue("supplierName","","Name is already existed");
+        if (supplier != null) {
+            if (supplier.getSupplierName().equals(supplierName)) {
+                errors.rejectValue("supplierName", "", "Name is already existed");
             }
         }
     }

@@ -1,10 +1,20 @@
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "customer")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -24,6 +34,7 @@ public class Customer {
     private boolean gender;
 
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private Set<Invoice> invoiceSet;
 
 }
