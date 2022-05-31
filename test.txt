@@ -1,1 +1,7 @@
+<<<<<<< HEAD
+test file
+
+test file hihi dồ ngốc
+=======
 etst anasd
+>>>>>>> eb36497fb9efc96985deb32a3c453fbd1b264623

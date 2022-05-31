@@ -1,8 +1,20 @@
 package api.controllers;
 
+import api.dto.CustomerDto;
+import api.models.Customer;
+import api.models.ResponseObject;
 import api.services.ICustomerService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -19,8 +31,19 @@ public class CustomerRestController {
     }
 
     @PostMapping(value = "/create")
-    public String createCustomer(){
-        return null;
+    public ResponseEntity<ResponseObject> createCustomer(@Valid @RequestBody CustomerDto customerDto,
+                                 BindingResult bindingResult){
+        Map<String, String> errorMap = new HashMap<>();
+        if(bindingResult.hasErrors()){
+            bindingResult.getFieldErrors()
+                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+            return new ResponseEntity<>(new ResponseObject(false,"Failed!", errorMap, new ArrayList()),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
+        iCustomerService.save(customer);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping(value = "/update")
