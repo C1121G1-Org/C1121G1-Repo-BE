@@ -1,10 +1,19 @@
 package api.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "product")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +41,11 @@ public class Product {
     private String otherDescription;
 
     @OneToMany(mappedBy = "product")
-    private Set<Invoice> invoiceSet;
-
-    @OneToMany(mappedBy = "product")
     private Set<Storage> storageSet;
 
     @Column(name = "delete_flag", nullable = false)
     private boolean deleteFlag;
+
+    @OneToMany(mappedBy = "product")
+    private Set<InvoiceDetail> invoiceDetailSet;
 }
