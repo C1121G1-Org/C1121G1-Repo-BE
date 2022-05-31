@@ -4,4 +4,5 @@ import api.models.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
+    Supplier findBySupplierName(String supplierName);
 }
