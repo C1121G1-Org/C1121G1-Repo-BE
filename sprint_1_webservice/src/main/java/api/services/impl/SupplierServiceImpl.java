@@ -37,4 +37,14 @@ public class SupplierServiceImpl implements ISupplierService {
     public Page<Supplier> getAllSupplierPagingAndSearch(Pageable pageable, String supplier, String address, String phone, String email) {
         return iSupplierRepository.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
     }
+
+    @Override
+    public void save(Supplier supplier) {
+        iSupplierRepository.createSupplier(supplier.getSupplierName(), supplier.getAddress(), supplier.getPhone(), supplier.getEmail(), supplier.isDeleteFlag());
+    }
+
+    @Override
+    public Supplier findBySupplierName(String supplierName) {
+        return iSupplierRepository.findBySupplierName(supplierName);
+    }
 }

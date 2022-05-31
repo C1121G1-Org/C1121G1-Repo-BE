@@ -18,4 +18,9 @@ public interface ISupplierService {
     Supplier findSupplier(Long supplierDto);
     List<Supplier> getAllSupplier();
     Page<Supplier> getAllSupplierPagingAndSearch(Pageable pageable, String supplier, String address, String phone, String email);
+
+    void save(Supplier supplier);
+
+    Supplier findBySupplierName(String supplierName);
+
 }

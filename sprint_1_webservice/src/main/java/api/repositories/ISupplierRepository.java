@@ -32,4 +32,9 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
 
     @Query(value = "select * from supplier where delete_flag = 1 ", nativeQuery = true)
     List<Supplier> getAllSupplier();
+
+
+    @Query(value = " INSERT INTO supplier ( address, email, phone_number, supplier_name, delete_flag) VALUES (?, ?, ?, ?, ?);", nativeQuery = true)
+    void createSupplier(String supplierName, String address, String phone, String email,boolean deleteFlag );
+    Supplier findBySupplierName(String supplierName);
 }
