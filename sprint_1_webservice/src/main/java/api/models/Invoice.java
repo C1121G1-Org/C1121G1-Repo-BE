@@ -1,10 +1,19 @@
 package api.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "invoice")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Invoice {
 
     @Id
@@ -24,15 +33,7 @@ public class Invoice {
     @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
     private Customer customer;
 
-//    @OneToOne
-//    @JoinColumn(name = "invoiceDetail_id", nullable = false, referencedColumnName = "id")
-//    private InvoiceDetail invoiceDetail;
-
     @OneToMany(mappedBy = "invoice")
     private Set<InvoiceDetail> invoiceDetailSet;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false, referencedColumnName = "id")
-    private Product product;
 
 }
