@@ -9,17 +9,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 /*
-    Created by Trinh Khai
+    Created by KhaiTT
     Date: 11:48 31/05/2022
-    Function:
+    Function: this class JwtUtility has jwt create method and check jwt has a valid or not.
 */
-
-
 @Component
 public class JwtUtility implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
     private final String jwtSecret = "secretkey";
 
+    /*
+        Function: This generateJwtToken() method will generate jwt code with below parameters.
+    */
     public String generateJwtToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -33,6 +34,9 @@ public class JwtUtility implements Serializable {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    /*
+        Function: This validateJwtToken() method will check the jwt code is valid or not.
+    */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken).getBody().getSubject();

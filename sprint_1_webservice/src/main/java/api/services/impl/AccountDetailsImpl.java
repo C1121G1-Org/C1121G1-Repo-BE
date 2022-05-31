@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /*
-    Created by Trinh Khai
+    Created by KhaiTT
     Date: 10:17 31/05/2022
     Function: class AccountDetailsImpl implements interface UserDetails to override all method
               of interface UserDetails to store account information which is later encapsulated

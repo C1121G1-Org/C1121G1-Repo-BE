@@ -22,9 +22,12 @@ public class AccountDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private IAccountRepository iAccountRepository;
 
+    /*
+        Function: This loadUserByUsername() method will return a UserDetails object with the parameter username.
+    */
     @Override
     @Transactional
-        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("username: " + username);
         Account account = iAccountRepository.findByUserName(username);
         if (account == null) {
