@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -48,4 +49,18 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<InvoiceDetail> invoiceDetailSet;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return deleteFlag == product.deleteFlag && id.equals(product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(image, product.image) && Objects.equals(qrScan, product.qrScan) && Objects.equals(screenSize, product.screenSize) && Objects.equals(camera, product.camera) && Objects.equals(selfie, product.selfie) && Objects.equals(cpu, product.cpu) && Objects.equals(memory, product.memory) && Objects.equals(otherDescription, product.otherDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return 22;
+    }
+
 }
