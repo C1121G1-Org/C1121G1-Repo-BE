@@ -4,10 +4,21 @@ import api.models.Invoice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
+
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into invoice (create_date, create_time ,payments, customer_id) value (?1,?2,?3,?4);", nativeQuery = true)
+    void saveInvoice(String createDate, String createTime, String payments, Long customerId);
+
+
     @Query(value = "select * from  invocie " +
             "inner join customer on invocie.id = customer.id " +
             "inner join product on invocie.id = product.id " +
