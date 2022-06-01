@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerController_getListCustomer {
+public class CustomerController_getCustomer {
     @Autowired
     private MockMvc mockMvc;
 
@@ -43,6 +43,7 @@ public class CustomerController_getListCustomer {
                 .andExpect(jsonPath("$.content[0].email").value("hoangduy@gmail.com"))
                 .andExpect(jsonPath("$.content[0].gender").value("false"));
     }
+//    test findById
 
     @Test
     public void getInfoCustomer_id_1() throws Exception {
@@ -85,11 +86,10 @@ public class CustomerController_getListCustomer {
                 .andExpect(jsonPath("$.gender").value(false));
     }
 
-//    search
 
+//    search Customer
     @Test
     public void getListReportCustomer_customer_7() throws Exception {
-//        mặc định về rỗng
 //        mặc định sẽ trả về susccess
         this.mockMvc.perform(
                         MockMvcRequestBuilders
@@ -135,11 +135,8 @@ public class CustomerController_getListCustomer {
 
     }
 
-
-
     @Test
     public void getListReportCustomer_phone_7() throws Exception {
-//        mặc định về rỗng
 //        mặc định sẽ trả về susccess
         this.mockMvc.perform(
                         MockMvcRequestBuilders
@@ -147,7 +144,6 @@ public class CustomerController_getListCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
     @Test
     public void getListReportCustomer_customer_phone_8() throws Exception {
 //        mặc định sẽ trả về susccess
@@ -157,7 +153,6 @@ public class CustomerController_getListCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
     @Test
     public void getListReportCustomer_phone_9() throws Exception {
         this.mockMvc.perform(
@@ -182,7 +177,5 @@ public class CustomerController_getListCustomer {
                 .andExpect(jsonPath("$.content[0].email").value("hoangduy@gmail.com"))
                 .andExpect(jsonPath("$.content[0].address").value("số 978 Trần Hưng Đạo, phường 7, quận 5, Tp. Hồ Chí Minh"))
                 .andExpect(jsonPath("$.content[0].gender").value("false"));
-
     }
-
 }

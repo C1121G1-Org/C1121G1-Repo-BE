@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductController_getListProduct {
+public class ProductController_getProduct {
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,7 +50,7 @@ public class ProductController_getListProduct {
                 .andExpect(jsonPath("$.content[0].selfie").value("12MP"));
     }
 
-//    check id
+//    check findById
 
     @Test
     public void getInfoProduct_id_1() throws Exception {
@@ -102,7 +102,6 @@ public class ProductController_getListProduct {
 
     @Test
     public void getListReportProduct_7() throws Exception {
-//        mặc định về rỗng
 //        mặc định sẽ trả về susccess
         this.mockMvc.perform(
                         MockMvcRequestBuilders
