@@ -5,6 +5,9 @@ import api.models.Product;
 import api.services.IProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -21,9 +25,19 @@ public class ProductRestController {
     @Autowired
     IProductService iProductService;
 
+
+
     @GetMapping(value = "/list")
-    public String listProduct() {
-        return null;
+    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                       @RequestParam Optional<String> keyPhone) {
+        String keyNameValue = keyName.orElse("");
+        String keyPhoneValue = keyPhone.orElse("");
+
+        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue);
+        if (productPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")
