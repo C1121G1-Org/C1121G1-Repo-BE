@@ -73,10 +73,11 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      Function: get All customer and search
  */
     @Query(value = "select * from customer where customer_name like concat('%', :name ,'%')" +
-            " and phone_number like concat('%', :phone,'%')"
+            " and phone_number like concat('%', :phone,'%')",
+            countQuery = "select * from customer where customer_name like concat('%', :name ,'%')" +
+                    "and phone_number like concat('%', :phone,'%')"
             , nativeQuery = true)
     Page<Customer> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("phone") String keyWord2);
-
 
     /*
   Created by LongNHL
@@ -86,14 +87,14 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional
     @Modifying
     @Query(value = "insert into customer(customer_name, phone_number, date_of_birth, email, address, gender) " +
-            "values (?1,?2,?3,?4,?5,?6);",nativeQuery = true)
-    void saveCustomer(String customerName, String phoneNumber, String dateOfBirth, String email,String address, boolean gender);
+            "values (?1,?2,?3,?4,?5,?6);", nativeQuery = true)
+    void saveCustomer(String customerName, String phoneNumber, String dateOfBirth, String email, String address, boolean gender);
 
 
-    @Query(value = "select * from customer where customer_name = ?1 and phone_number = ?2 and date_of_birth = ?3;",nativeQuery = true)
+    @Query(value = "select * from customer where customer_name = ?1 and phone_number = ?2 and date_of_birth = ?3;", nativeQuery = true)
     Customer findCustomer(String customerName, String phoneNumber, String DateOfBirth);
 
 
-    @Query(value = "select product.*, storage.quantity from product inner join storage on product.id = storage.product_id",nativeQuery = true)
+    @Query(value = "select product.*, storage.quantity from product inner join storage on product.id = storage.product_id", nativeQuery = true)
     <T> List<T> findProductUsingService(Class<T> classType);
 }

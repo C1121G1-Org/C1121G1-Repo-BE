@@ -47,13 +47,13 @@ public class ProductRestController {
       */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                        @RequestParam Optional<String> keyPhone ,
-                                                        @RequestParam Optional<String> keyQuality) {
+                                                        @RequestParam Optional<String> keyPhone,
+                                                        @RequestParam Optional<String> keyQuanlity) {
         String keyNameValue = keyName.orElse("");
         String keyPhoneValue = keyPhone.orElse("");
-        String keyQualityValue = keyQuality.orElse("");
+        String keyQualityValue = keyQuanlity.orElse("");
 
-        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue ,keyQualityValue);
+        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue, keyQualityValue);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -88,21 +88,19 @@ public class ProductRestController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 
-
     /*
      Created by tuanPA
      Time: 18:15 31/05/2022
      Function: findById
  */
-    @GetMapping(value = "/list/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
-        Product product = this.iProductService.findById(id);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Product> product = this.iProductService.findById(id);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 
     /*
      Created by tuanPA

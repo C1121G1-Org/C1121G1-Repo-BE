@@ -28,18 +28,18 @@ public class ProductController_getListProduct {
     }
 
     @Test
-    public void getListStudent_6() throws Exception {
+    public void getListProduct_6() throws Exception {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/product/list/"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.totalPages").value(4))
-                .andExpect(jsonPath("$.totalElements").value(13))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.totalElements").value(1))
                 .andExpect(jsonPath("$.content[0].camera").value("2"))
                 .andExpect(jsonPath("$.content[0].cpu").value("snap889"))
-                .andExpect(jsonPath("$.content[0].delete_flag").value("flase"))
+                .andExpect(jsonPath("$.content[0].delete_flag").value("0"))
                 .andExpect(jsonPath("$.content[0].image").value("https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-gold-1-600x600.jpg"))
                 .andExpect(jsonPath("$.content[0].memory").value("64G"))
                 .andExpect(jsonPath("$.content[0].name").value("Samsung A72"))
@@ -53,43 +53,154 @@ public class ProductController_getListProduct {
 //    check id
 
     @Test
-    public void getInfoStudent_id_1() throws Exception {
+    public void getInfoProduct_id_1() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/product/{id}", "null"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
     @Test
-    public void getInfoStudent_id_2() throws Exception {
+    public void getInfoProduct_id_2() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/product/{id}", ""))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
     @Test
-    public void getInfoStudent_id_3() throws Exception {
+    public void getInfoProduct_id_3() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/customer/{id}", "127"))
+                        .get("/api/product/{id}", "127"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void getInfoStudent_id_4() throws Exception {
+    public void getInfoProduct_id_4() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/studentRest/detail/{id}", "1"))
+                        .get("/api/product/{id}", "2"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.customerName").value("Huỳnh Thị Kim Ngân"))
-                .andExpect(jsonPath("$.dateOfBirth").value("1999-11-01"))
-                .andExpect(jsonPath("$.email").value("hoangduy@gmail.com"))
-                .andExpect(jsonPath("$.address").value("số 978 Trần Hưng Đạo, phường 7, quận 5, Tp. Hồ Chí Minh"))
-                .andExpect(jsonPath("$.gender").value(false));
+                .andExpect(jsonPath("$.name").value("Samsung A72"))
+                .andExpect(jsonPath("$.price").value("1.00000001E8"))
+                .andExpect(jsonPath("$.image").value("https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-gold-1-600x600.jpg"))
+                .andExpect(jsonPath("$.qrScan").value("gdfgfdgdf"))
+                .andExpect(jsonPath("$.screenSize").value("6 inch"))
+                .andExpect(jsonPath("$.camera").value("2"))
+                .andExpect(jsonPath("$.selfie").value("12MP"))
+                .andExpect(jsonPath("$.cpu").value("snap889"))
+                .andExpect(jsonPath("$.memory").value("64G"))
+                .andExpect(jsonPath("$.otherDescription").value("new"))
+                .andExpect(jsonPath("$.deleteFlag").value(false));
+    }
+
+
+    //    search
+
+    @Test
+    public void getListReportProduct_7() throws Exception {
+//        mặc định về rỗng
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/product/list"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListSearchProduct_name_8() throws Exception {
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/product/list?keyName="))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportProduct_name_9() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/product/list?keyName=yudgdfg"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportProduct_name_11() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyName=Samsung A72"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.name").value("Samsung A72"))
+                .andExpect(jsonPath("$.price").value("1.00000001E8"))
+                .andExpect(jsonPath("$.image").value("https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-gold-1-600x600.jpg"))
+                .andExpect(jsonPath("$.qrScan").value("gdfgfdgdf"))
+                .andExpect(jsonPath("$.screenSize").value("6 inch"))
+                .andExpect(jsonPath("$.camera").value("2"))
+                .andExpect(jsonPath("$.selfie").value("12MP"))
+                .andExpect(jsonPath("$.cpu").value("snap889"))
+                .andExpect(jsonPath("$.memory").value("64G"))
+                .andExpect(jsonPath("$.otherDescription").value("new"))
+                .andExpect(jsonPath("$.deleteFlag").value(false));
+
+    }
+
+
+
+    @Test
+    public void getListReportProduct_phone_7() throws Exception {
+//        mặc định về rỗng
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/product/list"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportProduct_phone_8() throws Exception {
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/product/list?keyPrice="))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportProduct_phone_9() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/product/list?keyPrice=346435345435a"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportProduct_phone_11() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyPrice=1.00000001E8"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.name").value("Samsung A72"))
+                .andExpect(jsonPath("$.price").value("1.00000001E8"))
+                .andExpect(jsonPath("$.image").value("https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-gold-1-600x600.jpg"))
+                .andExpect(jsonPath("$.qrScan").value("gdfgfdgdf"))
+                .andExpect(jsonPath("$.screenSize").value("6 inch"))
+                .andExpect(jsonPath("$.camera").value("2"))
+                .andExpect(jsonPath("$.selfie").value("12MP"))
+                .andExpect(jsonPath("$.cpu").value("snap889"))
+                .andExpect(jsonPath("$.memory").value("64G"))
+                .andExpect(jsonPath("$.otherDescription").value("new"))
+                .andExpect(jsonPath("$.deleteFlag").value(false));
+
     }
 }

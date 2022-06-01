@@ -42,11 +42,10 @@ public class CustomerController_getListCustomer {
                 .andExpect(jsonPath("$.content[0].address").value("số 978 Trần Hưng Đạo, phường 7, quận 5, Tp. Hồ Chí Minh"))
                 .andExpect(jsonPath("$.content[0].email").value("hoangduy@gmail.com"))
                 .andExpect(jsonPath("$.content[0].gender").value("false"));
-
     }
 
     @Test
-    public void getInfoStudent_id_1() throws Exception {
+    public void getInfoCustomer_id_1() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/{id}", "null"))
@@ -55,7 +54,7 @@ public class CustomerController_getListCustomer {
     }
 
     @Test
-    public void getInfoStudent_id_2() throws Exception {
+    public void getInfoCustomer_id_2() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/{id}", ""))
@@ -64,7 +63,7 @@ public class CustomerController_getListCustomer {
     }
 
     @Test
-    public void getInfoStudent_id_3() throws Exception {
+    public void getInfoCustomer_id_3() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/{id}", "127"))
@@ -73,10 +72,10 @@ public class CustomerController_getListCustomer {
     }
 
     @Test
-    public void getInfoStudent_id_4() throws Exception {
+    public void getInfoCustomer_id_4() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/studentRest/detail/{id}", "1"))
+                        .get("/api/customer/{id}", "1"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.customerName").value("Huỳnh Thị Kim Ngân"))
@@ -86,5 +85,104 @@ public class CustomerController_getListCustomer {
                 .andExpect(jsonPath("$.gender").value(false));
     }
 
+//    search
+
+    @Test
+    public void getListReportCustomer_customer_7() throws Exception {
+//        mặc định về rỗng
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_customer_name_8() throws Exception {
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyName="))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_name_9() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyName=djfioeshfi"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_name_11() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyName=ngân"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.content[0].customerName").value("Huỳnh Thị Kim Ngân"))
+                .andExpect(jsonPath("$.content[0].phoneNumber").value("0912123785"))
+                .andExpect(jsonPath("$.content[0].dateOfBirth").value("1999-11-01"))
+                .andExpect(jsonPath("$.content[0].email").value("hoangduy@gmail.com"))
+                .andExpect(jsonPath("$.content[0].address").value("số 978 Trần Hưng Đạo, phường 7, quận 5, Tp. Hồ Chí Minh"))
+                .andExpect(jsonPath("$.content[0].gender").value("false"));
+
+    }
+
+
+
+    @Test
+    public void getListReportCustomer_phone_7() throws Exception {
+//        mặc định về rỗng
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_customer_phone_8() throws Exception {
+//        mặc định sẽ trả về susccess
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyPhone="))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_phone_9() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyphon=346435345435a"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_phone_11() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/list?keyPhone=0912123785"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.content[0].customerName").value("Huỳnh Thị Kim Ngân"))
+                .andExpect(jsonPath("$.content[0].phoneNumber").value("0912123785"))
+                .andExpect(jsonPath("$.content[0].dateOfBirth").value("1999-11-01"))
+                .andExpect(jsonPath("$.content[0].email").value("hoangduy@gmail.com"))
+                .andExpect(jsonPath("$.content[0].address").value("số 978 Trần Hưng Đạo, phường 7, quận 5, Tp. Hồ Chí Minh"))
+                .andExpect(jsonPath("$.content[0].gender").value("false"));
+
+    }
 
 }
