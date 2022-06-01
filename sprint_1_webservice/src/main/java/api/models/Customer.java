@@ -1,5 +1,7 @@
 package api.models;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,5 +35,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Invoice> invoiceSet;
+
 
 }
