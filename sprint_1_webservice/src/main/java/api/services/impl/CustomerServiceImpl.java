@@ -2,9 +2,7 @@ package api.services.impl;
 
 import api.dto.PurchaseHistoryDto;
 import api.dto.ReportCustomerDto;
-
 import api.models.Customer;
-
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class CustomerService implements ICustomerService {
+public class CustomerServiceImpl implements ICustomerService {
 
     @Autowired
     ICustomerRepository iCustomerRepository;
@@ -50,11 +46,7 @@ public class CustomerService implements ICustomerService {
         return iCustomerRepository.detail(id, pageable);
     }
 
-    /*
-           Created by tamHT
-           Time: 18:15 31/05/2022
-           Function: get  all page customer and search of customer
-       */
+
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2) {
         return iCustomerRepository.pageFindAll(pageable, key1, key2);
@@ -63,5 +55,21 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer findById(long id) {
         return iCustomerRepository.findById(id).get();
+    }
+
+    /*
+Created by LongNHL
+Time: 21:30 31/05/2022
+Function: create customer
+*/
+    @Override
+    public void createCustomer(Customer customer) {
+        iCustomerRepository.saveCustomer(customer.getCustomerName(), customer.getPhoneNumber(),
+                customer.getDateOfBirth(), customer.getEmail(), customer.getAddress(), customer.isGender());
+    }
+
+    @Override
+    public Customer findCustomer(Customer customer) {
+        return iCustomerRepository.findCustomer(customer.getCustomerName(),customer.getPhoneNumber(),customer.getDateOfBirth());
     }
 }

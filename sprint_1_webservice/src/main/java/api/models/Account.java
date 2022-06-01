@@ -30,7 +30,7 @@ public class Account {
     @Column(name = "is_enabled", nullable = false)
     private Boolean isEnabled;
 
-    @Column(name = "verification_code", nullable = false, length = 255)
+    @Column(name = "verification_code", length = 255)
     private String verificationCode;
 
     @OneToOne(mappedBy = "account")

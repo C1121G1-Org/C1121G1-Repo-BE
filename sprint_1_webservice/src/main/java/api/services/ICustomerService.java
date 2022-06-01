@@ -1,6 +1,5 @@
 package api.services;
 
-
 import api.dto.PurchaseHistoryDto;
 import api.dto.ReportCustomerDto;
 
@@ -37,11 +36,17 @@ public interface ICustomerService {
           Function: get  all page customer and search of customer
       */
     Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2);
+
     /*
              Created by tamHT
              Time: 18:15 31/05/2022
              Function: get customer By ID
          */
     Customer findById(long id);
+
+    void createCustomer(Customer customer);
+
+    Customer findCustomer(Customer customer);
+
 
 }
