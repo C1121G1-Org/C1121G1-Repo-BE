@@ -50,7 +50,11 @@ public class CustomerService implements ICustomerService {
         return iCustomerRepository.detail(id, pageable);
     }
 
-
+    /*
+           Created by tamHT
+           Time: 18:15 31/05/2022
+           Function: get  all page customer and search of customer
+       */
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2) {
         return iCustomerRepository.pageFindAll(pageable, key1, key2);
