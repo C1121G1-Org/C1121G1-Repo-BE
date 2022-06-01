@@ -6,4 +6,6 @@ public interface IProductService {
     void save(Product product);
 
     Product findById(Long id);
+
+    void updateProduct(Product product);
 }

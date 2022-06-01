@@ -2,6 +2,7 @@ package api.controllers;
 
 import api.dto.ProductDto;
 import api.models.Product;
+import api.models.ResponseObject;
 import api.services.IProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://localhost:8080")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -26,21 +29,37 @@ public class ProductRestController {
         return null;
     }
 
+    /*
+    Created by TuanPA
+    Date: 17:08 31/05/2022
+    Function: Create product
+*/
+
     @PostMapping(value = "/create")
-    public ResponseEntity<Map<String, String>> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
-        Map<String, String> mapErrors = null;
+    public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
+                                                        BindingResult bindingResult) {
+        Map<String, String> errorMap = new HashMap<>();
+
         if (bindingResult.hasFieldErrors()) {
-//        mapErrors = bindingResult.getFieldErrors().stream().collect(Collectors.toMap(e -> e.getField(), e -> e.getDefaultMessage()));
+            bindingResult
+                    .getFieldErrors()
+                    .stream()
+                    .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
+
         Product product = new Product();
         BeanUtils.copyProperties(productDto, product);
+        product.setDeleteFlag(false);
+
         this.iProductService.save(product);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/list/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
+
         Product product = this.iProductService.findById(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,14 +68,22 @@ public class ProductRestController {
     }
 
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
+    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+        Map<String, String> errorMap = new HashMap<>();
 
+        if (bindingResult.hasFieldErrors()) {
+            bindingResult
+                    .getFieldErrors()
+                    .stream()
+                    .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
+
+
         Product product = new Product();
         BeanUtils.copyProperties(productDto, product);
 
-        this.iProductService.save(product);
+        this.iProductService.updateProduct(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
