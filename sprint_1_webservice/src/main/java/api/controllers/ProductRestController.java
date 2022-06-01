@@ -45,7 +45,7 @@ public class ProductRestController {
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/listngu")
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
                                                         @RequestParam Optional<String> keyPhone) {
         String keyNameValue = keyName.orElse("");
@@ -58,7 +58,7 @@ public class ProductRestController {
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/createngu")
     public String createProduct() {
         return null;
     }
