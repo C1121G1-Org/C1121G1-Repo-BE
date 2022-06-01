@@ -28,7 +28,7 @@ public class Invoice {
 
     @Column(name = "total_money", nullable = false)
     private Double totalMoney;
-  
+
     @Column(name = "payments", nullable = false, length = 50)
     private String payments;
 
