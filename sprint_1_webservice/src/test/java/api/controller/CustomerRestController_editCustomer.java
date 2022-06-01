@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerRestController_editCustomer<b> {
+public class CustomerRestController_editCustomer {
 
     @Autowired
     private MockMvc mockMvc;
@@ -86,6 +86,217 @@ public class CustomerRestController_editCustomer<b> {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    public void editCustomer_name_7() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setCustomerName("Đình Quốc");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void editPhone_Number_8() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setPhoneNumber("");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editPhone_Number_9() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setPhoneNumber("avc");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editPhone_Number_10() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setPhoneNumber("0912457864");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void editDate_Of_Birth_11() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setDateOfBirth("");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editDate_Of_Birth_12() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setDateOfBirth("9999-99-99");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editDate_Of_Birth_13() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setDateOfBirth("1993-12-01");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void editEmail_14() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setEmail("");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editEmail_15() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setEmail("asdasdadas");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editEmail_16() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setEmail("hoangtu83@gmail.com");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void editAdress_16() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setAddress("");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void editAdress_17() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setAddress("Đại học mở Hà Nội");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+
+    @Test
+    public void editGender_19() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setGender(false);
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+
 
 
 
