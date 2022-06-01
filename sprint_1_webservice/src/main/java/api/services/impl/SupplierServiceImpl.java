@@ -20,7 +20,7 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public void save(Supplier supplier) {
-        iSupplierRepository.createSupplier(supplier.getSupplierName(), supplier.getAddress(), supplier.getPhone(), supplier.getEmail(), supplier.isDeleteFlag());
+        iSupplierRepository.createSupplier(supplier);
     }
 
 //    @Override

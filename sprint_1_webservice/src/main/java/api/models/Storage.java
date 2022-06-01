@@ -1,10 +1,19 @@
 package api.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "storage")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Storage {
 
     @Id

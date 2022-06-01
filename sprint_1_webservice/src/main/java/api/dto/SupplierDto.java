@@ -77,6 +77,7 @@ public class SupplierDto implements Validator {
     public boolean isDeleteFlag() {
         return deleteFlag;
     }
+
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }

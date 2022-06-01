@@ -22,12 +22,14 @@ public class Invoice {
 
     @Column(name = "create_time", nullable = false, length = 50)
     private String createTime;
+
     @Column(name = "create_date", nullable = false, length = 50)
     private String createDate;
+
     @Column(name = "total_money", nullable = false)
     private Double totalMoney;
-    @Column(name = "payments", nullable = false, length = 50)
 
+    @Column(name = "payments", nullable = false, length = 50)
     private String payments;
 
     @ManyToOne
