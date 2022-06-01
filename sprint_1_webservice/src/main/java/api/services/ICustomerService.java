@@ -7,5 +7,5 @@ public interface ICustomerService {
 
     Customer getNewCustomer();
 
-    Customer findCustomerById(Long id);
+
 }

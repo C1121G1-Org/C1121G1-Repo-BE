@@ -18,7 +18,7 @@ public interface IInvoiceDetailRepository extends JpaRepository<InvoiceDetail,Lo
     */
     @Transactional
     @Modifying
-    @Query(value = "insert into invoice_detail (quantity,invoice_id, product_id) value (?1,?2,?3)",nativeQuery = true)
+    @Query(value = "insert into invoice_detail (quantity, product_id,invoice_id) value (?1,?2,?3)",nativeQuery = true)
     void createInvoiceDetail(Long quantity, Long productId, Long invoiceId);
 
 

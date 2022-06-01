@@ -18,7 +18,7 @@ public class CustomerServiceImpl implements ICustomerService {
     */
     @Override
     public void createCustomer(Customer customer) {
-        iCustomerRepository.saveCustomer( customer.getCustomerName(), customer.getPhoneNumber(),
+        iCustomerRepository.saveCustomer(customer.getCustomerName(), customer.getPhoneNumber(),
                 customer.getDateOfBirth(), customer.getEmail(), customer.getAddress(), customer.isGender());
     }
     /*
@@ -29,14 +29,5 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public Customer getNewCustomer() {
         return iCustomerRepository.getNewCreateCustomer();
-    }
-    /*
-       Created by LongNHL
-       Time: 21:30 31/05/2022
-       Function: get customer
-       */
-    @Override
-    public Customer findCustomerById(Long id) {
-        return iCustomerRepository.findCustomerById(id);
     }
 }

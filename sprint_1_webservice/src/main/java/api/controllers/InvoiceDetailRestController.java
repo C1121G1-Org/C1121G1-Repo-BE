@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,30 +30,6 @@ public class InvoiceDetailRestController {
     private IInvoiceService iInvoiceService;
     @Autowired
     private ICustomerService iCustomerService;
-
-    /*
-     Created by LongNHL
-     Time: 21:30 31/05/2022
-     Function: create invoiceDetail
-     */
-//    @PostMapping(value = "/create")
-//    public ResponseEntity<ResponseObject> createInvoiceDetail(@RequestBody InvoiceDetailDto invoiceDetailDto,
-//                                                              BindingResult bindingResult) {
-//        Map<String, String> errorMap = new HashMap<>();
-//        if (bindingResult.hasErrors()) {
-//            bindingResult.getFieldErrors()
-//                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
-//            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//
-////        InvoiceDetail invoiceDetail = new InvoiceDetail();
-////        BeanUtils.copyProperties(invoiceDetailDto, invoiceDetail);
-////        iInvoiceDetailService.createNewInvoiceDetail(invoiceDetail);
-//
-//        iInvoiceDetailService.createInvoiceDetail(invoiceDetailDto);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
     //Create by chienLV
 //Time: 18h00 31/05/2022
@@ -73,7 +50,7 @@ public class InvoiceDetailRestController {
      Function: create invoiceDetail
      */
     @PostMapping(value = "/create")
-    public ResponseEntity<ResponseObject> createInvoiceDetail(@RequestBody InvoiceDetailDto invoiceDetailDto,
+    public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
                                                                  BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -82,32 +59,29 @@ public class InvoiceDetailRestController {
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
                     HttpStatus.BAD_REQUEST);
         }
-
-//        Customer customer = iCustomerService.findCustomerById(invoiceDetailDto.getInvoiceDto().getCustomer().getId());
-//        if (customer ==null){
-//            BeanUtils.copyProperties(invoiceDetailDto.getInvoiceDto().getCustomer(),customer);
-//            iCustomerService.createCustomer(customer);
-//        }
-        Customer customer;
-        if (invoiceDetailDto.getInvoiceDto().getCustomer().getId() == null) {
-            iCustomerService.createCustomer(invoiceDetailDto.getInvoiceDto().getCustomer());
+        if (invoiceDetailDto.getProductInvoiceDtoList().isEmpty()){
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(invoiceDetailDto.getInvoiceDto().getCustomerDto(), customer);
+        if (invoiceDetailDto.getInvoiceDto().getCustomerDto().getId() == null) {
+            iCustomerService.createCustomer(customer);
             customer = iCustomerService.getNewCustomer();
-        } else {
-            customer = invoiceDetailDto.getInvoiceDto().getCustomer();
         }
-        Invoice invoice = new Invoice();
-        BeanUtils.copyProperties(invoiceDetailDto.getInvoiceDto(), invoice);
-        invoice.setCustomer(customer);
-        iInvoiceService.saveNewInvoice(invoice);
-        Invoice newInvoice = iInvoiceService.getNewInvoice();
+            Invoice invoice = new Invoice();
+            BeanUtils.copyProperties(invoiceDetailDto.getInvoiceDto(), invoice);
+            invoice.setCustomer(customer);
+            iInvoiceService.saveNewInvoice(invoice);
+            Invoice newInvoice = iInvoiceService.getNewInvoice();
 
-        List<ProductInvoiceDto> list =  invoiceDetailDto.getProductInvoiceDtoList();
-        for (int i = 0; i < list.size(); i++ ){
-            Long quantity = list.get(i).getQuantity();
-            Long productId = list.get(i).getProductId();
-            iInvoiceDetailService.createInvoiceDetail(quantity,productId,newInvoice.getId());
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+            List<ProductInvoiceDto> list = invoiceDetailDto.getProductInvoiceDtoList();
+            for (int i = 0; i < list.size(); i++) {
+                Long quantity = list.get(i).getQuantity();
+                Long productId = list.get(i).getProductId();
+                iInvoiceDetailService.createInvoiceDetail(quantity, productId, newInvoice.getId());
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+
     }
-
 }

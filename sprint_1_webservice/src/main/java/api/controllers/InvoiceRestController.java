@@ -69,20 +69,11 @@ public class InvoiceRestController {
             return new ResponseEntity<>(new ResponseObject(false,"Failed!", errorMap, new ArrayList()),
                     HttpStatus.BAD_REQUEST);
         }
-
-//        Customer customer = iCustomerService.findCustomerById(invoiceDto.getCustomer().getId());
-//        if (customer ==null){
-//            BeanUtils.copyProperties(invoiceDto.getCustomer(),customer);
-//            iCustomerService.createCustomer(customer);
-//        }
-
-
-        Customer customer;
-        if(invoiceDto.getCustomer().getId() == null){
-            iCustomerService.createCustomer(invoiceDto.getCustomer());
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(invoiceDto.getCustomerDto(),customer);
+        if(invoiceDto.getCustomerDto().getId() == null) {
+            iCustomerService.createCustomer(customer);
             customer = iCustomerService.getNewCustomer();
-        }else {
-            customer = invoiceDto.getCustomer();
         }
 
         Invoice invoice = new Invoice();

@@ -20,7 +20,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
    */
     @Transactional
     @Modifying
-    @Query(value = "insert into customer(id, customer_name, phone_number, date_of_birth, email, address, gender) " +
+    @Query(value = "insert into customer( customer_name, phone_number, date_of_birth, email, address, gender) " +
             "values (?1,?2,?3,?4,?5,?6);",nativeQuery = true)
     void saveCustomer(String customerName, String phoneNumber, String dateOfBirth, String email,String address, boolean gender);
     /*
