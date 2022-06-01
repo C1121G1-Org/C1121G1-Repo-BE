@@ -1,13 +1,16 @@
 package api.utils;
 
 import api.models.Product;
+import api.models.ProductQRCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.ByteArrayResource;
 
 import javax.imageio.ImageIO;
@@ -24,12 +27,12 @@ public class QRCodeUtils {
 
     private static final String PATH = "D:\\sprint-1\\test-qrcode\\";
 
-    public static String encode(Product product) {
-        String filePath = PATH + "PD-" + product.getId() + ".png";
+    public static String encode(ProductQRCode productQRCode) {
+        String filePath = PATH + "PD-" + productQRCode.getId() + ".png";
 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            String jsonProduct = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(product);
+            String jsonProduct = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(productQRCode);
 
             Hashtable hashtable = new Hashtable();
             hashtable.put(EncodeHintType.CHARACTER_SET, "UTF-8");
@@ -44,15 +47,24 @@ public class QRCodeUtils {
         }
     }
 
-    public static String decode(BufferedImage bf) {
+    public static ProductQRCode decode(BufferedImage bf) {
         BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(bf)));
         try {
             Result rs = new MultiFormatReader().decode(binaryBitmap);
-            return rs.getText();
+            ObjectMapper mapper = new ObjectMapper();
+
+            ProductQRCode productQRCode = mapper.readValue(rs.getText(), ProductQRCode.class);
+
+            return productQRCode;
         } catch (NotFoundException e) {
             e.printStackTrace();
             return null;
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     public static boolean checkQRCodes(BufferedImage bf1, BufferedImage bf2) {
@@ -63,12 +75,23 @@ public class QRCodeUtils {
             Result rs1 = new MultiFormatReader().decode(bitmap1);
             Result rs2 = new MultiFormatReader().decode(bitmap2);
 
-            return rs1.getText().equals(rs2.getText());
+            ObjectMapper mapper = new ObjectMapper();
+
+            ProductQRCode product1 = mapper.readValue(rs1.getText(), ProductQRCode.class);
+            ProductQRCode product2 = mapper.readValue(rs2.getText(), ProductQRCode.class);
+
+            return product1.equals(product2);
 
         } catch (NotFoundException e) {
             e.printStackTrace();
             return false;
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
+        return false;
     }
+
 
 }

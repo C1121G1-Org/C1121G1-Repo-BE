@@ -1,10 +1,12 @@
 package api.controllers;
 
 import api.models.Product;
+import api.models.ProductQRCode;
 import api.utils.QRCodeUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -53,9 +55,11 @@ public class QRCodeRestController_encode {
     @Test
     public void encode_4() throws Exception {
         Product productDTO = new Product(1L, "iPhone", 200D, "image", "qrScan", "screenSize", "Camera", "Selfie", "Cpu", "memory", "other", null, true, null);
+        ProductQRCode productQRCode = new ProductQRCode();
         ObjectMapper objectMapper = new ObjectMapper();
+        BeanUtils.copyProperties(productDTO, productQRCode);
         String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(productDTO);
-        String path = QRCodeUtils.encode(productDTO);
+        String path = QRCodeUtils.encode(productQRCode);
         ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(Paths.get(path)));
         mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/encode")
                         .content(json)
