@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 public class InvoiceDetailServiceImpl implements IInvoiceDetailService {
     @Autowired
     IInvoiceDetailRepository iInvoiceDetailRepository;
+
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create invoiceDetail
+    */
     @Override
     public void createNewInvoiceDetail(InvoiceDetail invoiceDetail) {
         iInvoiceDetailRepository.createInvoiceDetail(invoiceDetail.getQuantity(),invoiceDetail.getInvoice().getId(),invoiceDetail.getProduct().getId());
