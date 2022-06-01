@@ -1,5 +1,7 @@
+
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,17 +28,17 @@ public class Invoice {
     @Column(name = "create_date", nullable = false, length = 50)
     private String createDate;
 
-    @Column(name = "total_money", nullable = false)
-    private Double totalMoney;
-
     @Column(name = "payments", nullable = false, length = 50)
     private String payments;
+    @Column(name = "total_money", nullable = false)
+    private Double totalMoney;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
     private Customer customer;
 
     @OneToMany(mappedBy = "invoice")
+    @JsonBackReference
     private Set<InvoiceDetail> invoiceDetailSet;
 
 }
