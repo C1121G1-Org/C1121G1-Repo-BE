@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -14,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 //Create by chienLV
 //Time: 16h30 01/06/2022
-//Function: get list product bestseller from database
+//Function: test method get list product bestseller from database at controller
 @SpringBootTest
 @AutoConfigureMockMvc
 public class InvoiceDetailRestController_getListProductBestseller {
@@ -37,6 +36,8 @@ public class InvoiceDetailRestController_getListProductBestseller {
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.size()").value(10))
+                .andExpect(jsonPath("$.[0].productQuantity").value(34))
+                .andExpect(jsonPath("$.[9].productQuantity").value(10))
                 .andExpect(jsonPath("$.[0].id").value(2))
                 .andExpect(jsonPath("$.[0].name").value("Samsung A72"))
                 .andExpect(jsonPath("$.[0].price").value(100000001))
