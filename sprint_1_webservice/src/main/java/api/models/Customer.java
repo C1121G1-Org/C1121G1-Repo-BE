@@ -1,10 +1,19 @@
 package api.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "customer")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -26,4 +35,12 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<Invoice> invoiceSet;
 
+    public Customer(String customerName, String phoneNumber, String dateOfBirth, String email, String address, boolean gender) {
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+    }
 }
