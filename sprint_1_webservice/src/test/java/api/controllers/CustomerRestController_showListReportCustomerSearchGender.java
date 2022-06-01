@@ -13,43 +13,43 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerRestController_showListReportCustomerSearch {
+public class CustomerRestController_showListReportCustomerSearchGender {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void getListReportCustomer_gender_7() throws Exception {
+    public void getListReportCustomerSearchGender_gender_7() throws Exception {
         this.mockMvc.perform(
-                MockMvcRequestBuilders
-                        .get("/api/customer/report-customer-search"))
+                        MockMvcRequestBuilders
+                                .get("/api/customer/report-customer-search-gender"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void getListReportCustomer_gender_8() throws Exception {
-        this.mockMvc.perform(
-                MockMvcRequestBuilders
-                        .get("/api/customer/report-customer-search?gender="))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-    }
-
-    @Test
-    public void getListReportCustomer_gender_9() throws Exception {
+    public void getListReportCustomerSearchGender_gender_8() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/customer/report-customer-search?gender=ljkjkljkl"))
+                                .get("/api/customer/report-customer-search-gender?gender="))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void getListReportCustomer_gender_11() throws Exception {
+    public void getListReportCustomerSearchGender_gender_9() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/customer/report-customer-search?gender=true"))
+                                .get("/api/customer/report-customer-search-gender?gender=differentBoolean"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomerSearchGender_gender_11() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/report-customer-search-gender?gender=true"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.totalPages").value(1))
@@ -59,6 +59,5 @@ public class CustomerRestController_showListReportCustomerSearch {
                 .andExpect(jsonPath("$.content[0].email").value("quoctuan@gmail.com"))
                 .andExpect(jsonPath("$.content[0].gender").value("true"))
                 .andExpect(jsonPath("$.content[0].phoneNumber").value("0905112365"));
-
     }
 }
