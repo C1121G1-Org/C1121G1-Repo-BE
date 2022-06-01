@@ -8,14 +8,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductRestController_createProduct {
+public class ProductRestController_editProduct {
 
     @Autowired
     private MockMvc mockMvc;
@@ -23,10 +25,63 @@ public class ProductRestController_createProduct {
     @Autowired
     private ObjectMapper objectMapper;
 
-    //    test name
+//    check find by id
 
     @Test
-    public void createProduct_name_13() throws Exception {
+    public void getInfoProduct_id_1() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/product/{id}", "null"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+
+
+    @Test
+    public void getInfoProduct_id_2() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/product/{id}", ""))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getInfoProduct_id_3() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/product/{id}", "127"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getInfoProduct_id_4() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/product/{id}", "2"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.name").value("Iphone13"))
+                .andExpect(jsonPath("$.price").value("1000"))
+                .andExpect(jsonPath("$.image").value("https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-gold-1-600x600.jpg"))
+                .andExpect(jsonPath("$.screenSize").value("10 Inch"))
+                .andExpect(jsonPath("$.camera").value("20MP"))
+                .andExpect(jsonPath("$.qrScan").value("asdafafafsfs"))
+                .andExpect(jsonPath("$.selfie").value("12MP"))
+                .andExpect(jsonPath("$.cpu").value("100-MDX"))
+                .andExpect(jsonPath("$.memory").value("128gb"))
+                .andExpect(jsonPath("$.otherDescription").value("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp."))
+                .andExpect(jsonPath("$.deleteFlag").value(false));
+    }
+
+//    check edit product
+
+//    test name
+
+    @Test
+    public void editProduct_name_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
 //        productDto.setName("");
@@ -51,7 +106,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_name_14() throws Exception {
+    public void editProduct_name_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -79,7 +134,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_name_17() throws Exception {
+    public void editProduct_name_23() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
@@ -106,7 +161,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_name_18() throws Exception {
+    public void editProduct_name_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -118,9 +173,6 @@ public class ProductRestController_createProduct {
         productDto.setCpu("100-MDX");
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
-
-
-
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
@@ -134,7 +186,7 @@ public class ProductRestController_createProduct {
 //    test price
 
     @Test
-    public void createProduct_price_13() throws Exception {
+    public void editProduct_price_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -160,7 +212,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_price_15_1() throws Exception {
+    public void editProduct_price_21_1() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -186,7 +238,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_price_15_2() throws Exception {
+    public void editProduct_price_21_2() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -214,7 +266,7 @@ public class ProductRestController_createProduct {
 //    test image
 
     @Test
-    public void createProduct_image_13() throws Exception {
+    public void editProduct_image_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -239,7 +291,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_image_14() throws Exception {
+    public void editProduct_image_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -263,7 +315,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_image_18() throws Exception {
+    public void editProduct_image_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -286,9 +338,9 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is2xxSuccessful());
     }
 
-//    test screen size
+    //    test screen size
     @Test
-    public void createProduct_screenSize_13() throws Exception {
+    public void editProduct_screenSize_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -314,7 +366,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_screenSize_14() throws Exception {
+    public void editProduct_screenSize_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -339,7 +391,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_screenSize_17() throws Exception {
+    public void editProduct_screenSize_23() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -364,7 +416,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_screenSize_18() throws Exception {
+    public void editProduct_screenSize_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -392,7 +444,7 @@ public class ProductRestController_createProduct {
 //    test camera
 
     @Test
-    public void createProduct_camera_13() throws Exception {
+    public void editProduct_camera_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -417,7 +469,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_camera_14() throws Exception {
+    public void editProduct_camera_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -442,7 +494,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_camera_17() throws Exception {
+    public void editProduct_camera_23() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -467,7 +519,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_camera_18() throws Exception {
+    public void editProduct_camera_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -494,7 +546,7 @@ public class ProductRestController_createProduct {
 
     //    test selfie
     @Test
-    public void createProduct_selfie_13() throws Exception {
+    public void editProduct_selfie_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -520,7 +572,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_selfie_14() throws Exception {
+    public void editProduct_selfie_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -547,7 +599,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_selfie_17() throws Exception {
+    public void editProduct_selfie_23() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -570,7 +622,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_selfie_18() throws Exception {
+    public void editProduct_selfie_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -599,7 +651,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_cpu_13() throws Exception {
+    public void editProduct_cpu_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -626,7 +678,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_cpu_14() throws Exception {
+    public void editProduct_cpu_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -653,7 +705,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_cpu_17() throws Exception {
+    public void editProduct_cpu_23() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -680,7 +732,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_cpu_18() throws Exception {
+    public void editProduct_cpu_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -708,7 +760,7 @@ public class ProductRestController_createProduct {
 //    test memory
 
     @Test
-    public void createProduct_memory_13() throws Exception {
+    public void editProduct_memory_19() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -733,7 +785,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_memory_14() throws Exception {
+    public void editProduct_memory_20() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -756,7 +808,7 @@ public class ProductRestController_createProduct {
     }
 
     @Test
-    public void createProduct_memory_17() throws Exception {
+    public void editProduct_memory_23() throws Exception {
 
         ProductDto productDto = new ProductDto();
 
@@ -781,7 +833,7 @@ public class ProductRestController_createProduct {
 
 
     @Test
-    public void createProduct_memory_18() throws Exception {
+    public void editProduct_memory_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -803,4 +855,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is2xxSuccessful());
     }
 
+
+
 }
+
