@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.models.Customer;
 import api.models.Product;
 import api.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,14 @@ public class ProductRestController {
     @Autowired
     IProductService iProductService;
 
+    /*
+          Created by tamHT
+          Time: 18:15 31/05/2022
+          Function: get  all page product and search of product
+      */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                       @RequestParam Optional<String> keyPhone) {
+    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                        @RequestParam Optional<String> keyPhone) {
         String keyNameValue = keyName.orElse("");
         String keyPhoneValue = keyPhone.orElse("");
 
@@ -32,19 +38,32 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+    /*
+           Created by tamHT
+           Time: 18:15 31/05/2022
+           Function: get product by id
+       */
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getCustomerById(@PathVariable("id") Long id) {
+        Product product = iProductService.findById(id);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/create")
-    public String createProduct(){
+    public String createProduct() {
         return null;
     }
 
     @PatchMapping(value = "/update")
-    public String updateProduct(){
+    public String updateProduct() {
         return null;
     }
 
     @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteProduct(){
+    public String deleteProduct() {
         return null;
     }
 }

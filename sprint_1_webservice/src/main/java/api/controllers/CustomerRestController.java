@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,11 @@ public class CustomerRestController {
     @Autowired
     ICustomerService iCustomerService;
 
-
+    /*
+          Created by tamHT
+          Time: 18:15 31/05/2022
+          Function: get  all page customer and search of customer
+      */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
                                                        @RequestParam Optional<String> keyPhone) {
@@ -41,7 +44,11 @@ public class CustomerRestController {
         }
         return new ResponseEntity<>(customerPage, HttpStatus.OK);
     }
-
+    /*
+          Created by tamHT
+          Time: 18:15 31/05/2022
+          Function: get customer By ID
+      */
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id) {
         Customer customer = iCustomerService.findById(id);
@@ -50,7 +57,6 @@ public class CustomerRestController {
         }
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
-
 
     @PostMapping(value = "/create")
     public String createCustomer() {

@@ -31,8 +31,17 @@ public interface ICustomerService {
     */
     Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable);
 
+    /*
+          Created by tamHT
+          Time: 18:15 31/05/2022
+          Function: get  all page customer and search of customer
+      */
     Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2);
-
+    /*
+             Created by tamHT
+             Time: 18:15 31/05/2022
+             Function: get customer By ID
+         */
     Customer findById(long id);
 
 }

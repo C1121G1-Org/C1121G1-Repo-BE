@@ -8,6 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IProductRepository extends JpaRepository<Product, Long> {
+    /*
+Created by TamT
+Time: 18:00 31/05/2022
+Function: get All product and search
+*/
     @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
             " and price like concat('%', :price ,'%')"
             , nativeQuery = true)
