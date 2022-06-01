@@ -18,10 +18,10 @@ public class QRCodeRestController_decode {
     @Autowired
     private MockMvc mockMvc;
 
-    public void decode_1() throws FileNotFoundException {
+    public void decode_1() throws Exception {
         String path = "D:\\sprint-1\\test-qrcode\\PD-1.png";
         MultipartFile file = (MultipartFile) new FileInputStream(path);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/decode").requestAttr("file",file).contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/decode").requestAttr("file",file).contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
     }
 
 }
