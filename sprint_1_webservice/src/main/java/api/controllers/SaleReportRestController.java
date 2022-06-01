@@ -29,6 +29,9 @@ public class SaleReportRestController {
     @GetMapping("")
     public ResponseEntity<List<ISaleReport>> saleReportList() {
         List<ISaleReport> saleReportList = this.iSaleReportService.findAllSaleReports();
+        if (saleReportList.size() == 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(saleReportList, HttpStatus.OK);
     }
 

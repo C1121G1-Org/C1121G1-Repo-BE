@@ -35,10 +35,10 @@ public class ProductRestController {
         Time: 21:54 31/05/2022
         Function: list all Products from DB
     */
-    @GetMapping(value = "/list")
-    public List<Product> listProduct() {
-        return iProductService.getAllProduct();
-    }
+//    @GetMapping(value = "/list")
+//    public List<Product> listProduct() {
+//        return iProductService.getAllProduct();
+//    }
 
     /*
           Created by tamHT
@@ -58,10 +58,10 @@ public class ProductRestController {
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create")
-    public String createProduct() {
-        return null;
-    }
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
 
     @PatchMapping(value = "/update")
     public String updateProduct() {

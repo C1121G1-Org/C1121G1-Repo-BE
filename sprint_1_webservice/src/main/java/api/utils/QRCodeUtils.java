@@ -8,9 +8,16 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+import org.springframework.core.io.ByteArrayResource;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 public class QRCodeUtils {
@@ -23,8 +30,6 @@ public class QRCodeUtils {
         try {
             ObjectMapper mapper = new ObjectMapper();
             String jsonProduct = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(product);
-
-            System.out.println(jsonProduct);
 
             Hashtable hashtable = new Hashtable();
             hashtable.put(EncodeHintType.CHARACTER_SET, "UTF-8");
@@ -39,15 +44,12 @@ public class QRCodeUtils {
         }
     }
 
-    public static Product decode(BufferedImage bf) {
+    public static String decode(BufferedImage bf) {
         BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(bf)));
         try {
             Result rs = new MultiFormatReader().decode(binaryBitmap);
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            Product product = objectMapper.readValue(rs.getText(), Product.class);
-            return product;
-        } catch (NotFoundException | JsonProcessingException e) {
+            return rs.getText();
+        } catch (NotFoundException e) {
             e.printStackTrace();
             return null;
         }
@@ -61,14 +63,9 @@ public class QRCodeUtils {
             Result rs1 = new MultiFormatReader().decode(bitmap1);
             Result rs2 = new MultiFormatReader().decode(bitmap2);
 
-            ObjectMapper mapper = new ObjectMapper();
+            return rs1.getText().equals(rs2.getText());
 
-            Product product1 = mapper.readValue(rs1.getText(), Product.class);
-            Product product2 = mapper.readValue(rs2.getText(), Product.class);
-
-            return product1.equals(product2);
-
-        } catch (NotFoundException | JsonProcessingException e) {
+        } catch (NotFoundException e) {
             e.printStackTrace();
             return false;
         }
