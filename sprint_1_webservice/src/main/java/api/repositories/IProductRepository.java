@@ -18,10 +18,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                   2/    getAllProduct() = write a native query to get all Products from DB
     */
 
-    @Query(value = "select * from product where delete_flag = 1 ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 ", nativeQuery = true)
     List<Product> getAllProduct();
 
-    @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
     /*
@@ -29,8 +29,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
-    @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
-            " and price like concat('%', :price ,'%')"
-            , nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2);
+    @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
+            " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')"+
+            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id",nativeQuery = true)
+    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2 , @Param("quality")String keyWord3 );
 }

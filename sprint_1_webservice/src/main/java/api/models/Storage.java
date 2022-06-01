@@ -36,7 +36,6 @@ public class Storage {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, referencedColumnName = "id")
     private Product product;
-
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false, referencedColumnName = "id")
     private Supplier supplier;

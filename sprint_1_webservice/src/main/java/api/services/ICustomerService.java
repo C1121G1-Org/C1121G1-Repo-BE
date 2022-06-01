@@ -8,6 +8,8 @@ import api.models.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface ICustomerService {
     /*
         Created by TuanNQ
@@ -42,7 +44,7 @@ public interface ICustomerService {
              Time: 18:15 31/05/2022
              Function: get customer By ID
          */
-    Customer findById(long id);
+    Optional<Customer> findById(long id);
 
     void createCustomer(Customer customer);
 

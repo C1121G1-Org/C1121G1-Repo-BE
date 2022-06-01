@@ -21,7 +21,7 @@ public interface IProductService {
                Time: 18:15 31/05/2022
                Function: get all product
            */
-    Page<Product> findAllProduct(Pageable pageable, String key1, String key2);
+    Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
 
     /*

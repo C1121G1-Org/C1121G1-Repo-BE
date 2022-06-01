@@ -35,10 +35,10 @@ public class ProductRestController {
         Time: 21:54 31/05/2022
         Function: list all Products from DB
     */
-    @GetMapping(value = "/list")
-    public List<Product> listProduct() {
-        return iProductService.getAllProduct();
-    }
+//    @GetMapping(value = "/list")
+//    public List<Product> listProduct() {
+//        return iProductService.getAllProduct();
+//    }
 
     /*
           Created by tamHT
@@ -47,11 +47,13 @@ public class ProductRestController {
       */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                        @RequestParam Optional<String> keyPhone) {
+                                                        @RequestParam Optional<String> keyPhone ,
+                                                        @RequestParam Optional<String> keyQuality) {
         String keyNameValue = keyName.orElse("");
         String keyPhoneValue = keyPhone.orElse("");
+        String keyQualityValue = keyQuality.orElse("");
 
-        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue);
+        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue ,keyQualityValue);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -73,18 +75,18 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: create new product
  */
-    @PostMapping(value = "/create")
-    public ResponseEntity<Map<String, String>> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
-        Map<String, String> mapErrors = null;
-        if (bindingResult.hasFieldErrors()) {
-//        mapErrors = bindingResult.getFieldErrors().stream().collect(Collectors.toMap(e -> e.getField(), e -> e.getDefaultMessage()));
-        }
-        Product product = new Product();
-        BeanUtils.copyProperties(productDto, product);
-        this.iProductService.save(product);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping(value = "/create")
+//    public ResponseEntity<Map<String, String>> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+//        Map<String, String> mapErrors = null;
+//        if (bindingResult.hasFieldErrors()) {
+////        mapErrors = bindingResult.getFieldErrors().stream().collect(Collectors.toMap(e -> e.getField(), e -> e.getDefaultMessage()));
+//        }
+//        Product product = new Product();
+//        BeanUtils.copyProperties(productDto, product);
+//        this.iProductService.save(product);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 
     /*
