@@ -8,6 +8,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -16,18 +18,22 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class StorageDto implements Validator {
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Quantity must be not blank! Please input!")
     private String createdDate;
-    private boolean status;
-    @NotBlank
+    @NotNull(message = "Status must be not empty! Please input!")
+    private Boolean status;
+    @NotBlank(message = "Quantity must be not blank! Please input!")
     private String quantity;
+    @NotNull(message = "Status must be not empty! Please input!")
     private Long createdEmployeeDto;
+    @NotNull(message = "Status must be not empty! Please input!")
     private Long productDto;
+    @NotNull(message = "Status must be not empty! Please input!")
     private Long supplierDto;
     private boolean deleteFlag;
 
     public StorageDto(){
-        setDeleteFlag(true);
+        setDeleteFlag(false);
     }
 
     @Override
@@ -53,7 +59,7 @@ public class StorageDto implements Validator {
             }
         }
         //Validate createdDate
-        if (storageDto.getCreatedDate().equals("")) {
+        if (storageDto.getCreatedDate() == null || storageDto.getCreatedDate().equals("")) {
             errors.rejectValue("createdDate", "createdDate.notBlank", "Created Date must not be blank!");
         } else {
             LocalDate currentDate = LocalDate.now();

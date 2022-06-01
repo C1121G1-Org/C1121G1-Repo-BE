@@ -18,10 +18,10 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                   2/    getAllProduct() = write a native query to get all Products from DB
     */
 
-    @Query(value = "select * from product where delete_flag = 1 ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 ", nativeQuery = true)
     List<Product> getAllProduct();
 
-    @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
     /*

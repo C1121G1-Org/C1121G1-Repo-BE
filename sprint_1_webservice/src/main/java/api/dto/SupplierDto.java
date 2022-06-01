@@ -38,7 +38,7 @@ public class SupplierDto implements Validator {
     private ISupplierService isupplierService;
 
     public SupplierDto() {
-        setDeleteFlag(true);
+        setDeleteFlag(false);
     }
 
     public ISupplierService getIsupplierService() {
