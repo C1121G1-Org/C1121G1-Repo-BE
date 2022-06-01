@@ -30,6 +30,11 @@ public class CustomerRestController {
         return null;
     }
 
+    /*
+    Created by LongNHL
+    Time: 11:30 31/05/2022
+    Function: create invoice
+    */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createCustomer(@Valid @RequestBody CustomerDto customerDto,
                                  BindingResult bindingResult){
@@ -42,7 +47,7 @@ public class CustomerRestController {
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
-        iCustomerService.save(customer);
+        iCustomerService.createCustomer(customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
