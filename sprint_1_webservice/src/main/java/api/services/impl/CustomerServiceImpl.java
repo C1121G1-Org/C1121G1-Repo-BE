@@ -1,11 +1,11 @@
 package api.services.impl;
 
-import api.dto.PurchaseHistoryDto;
-import api.dto.ReportCustomerDto;
-import api.models.Customer;
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import api.dto.PurchaseHistoryDto;
+import api.dto.ReportCustomerDto;
+import api.models.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -58,10 +58,10 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     /*
-Created by LongNHL
-Time: 21:30 31/05/2022
-Function: create customer
-*/
+        Created by LongNHL
+        Time: 21:30 31/05/2022
+        Function: create customer
+    */
     @Override
     public void createCustomer(Customer customer) {
         iCustomerRepository.saveCustomer(customer.getCustomerName(), customer.getPhoneNumber(),
@@ -70,6 +70,7 @@ Function: create customer
 
     @Override
     public Customer findCustomer(Customer customer) {
-        return iCustomerRepository.findCustomer(customer.getCustomerName(),customer.getPhoneNumber(),customer.getDateOfBirth());
+        return iCustomerRepository.findCustomer(customer.getCustomerName(), customer.getPhoneNumber(), customer.getDateOfBirth());
     }
+
 }

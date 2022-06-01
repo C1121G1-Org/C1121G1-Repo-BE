@@ -1,6 +1,5 @@
 package api.controllers;
 
-
 import api.dto.ProductDto;
 import api.models.Product;
 import api.services.IProductService;
@@ -14,10 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.validation.BindingResult;
-
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -30,6 +29,16 @@ public class ProductRestController {
 
     @Autowired
     IProductService iProductService;
+
+    /*
+        Created by khoaVC
+        Time: 21:54 31/05/2022
+        Function: list all Products from DB
+    */
+    @GetMapping(value = "/list")
+    public List<Product> listProduct() {
+        return iProductService.getAllProduct();
+    }
 
     /*
           Created by tamHT
@@ -56,9 +65,6 @@ public class ProductRestController {
 
     @PatchMapping(value = "/update")
     public String updateProduct() {
-        return null;
-    }
-    public String listProduct() {
         return null;
     }
 

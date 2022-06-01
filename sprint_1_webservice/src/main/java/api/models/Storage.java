@@ -41,7 +41,20 @@ public class Storage {
     @JoinColumn(name = "supplier_id", nullable = false, referencedColumnName = "id")
     private Supplier supplier;
 
-    @Column(name = "delete_flag", nullable = false)
+    @Column(name = "delete_flag", nullable = false, columnDefinition = "BIT(1) default 1")
     private boolean deleteFlag;
 
+    @Override
+    public String toString() {
+        return "Storage{" +
+                "id=" + id +
+                ", createdDate='" + createdDate + '\'' +
+                ", status=" + status +
+                ", quantity=" + quantity +
+                ", createdEmployee=" + createdEmployee +
+                ", product=" + product +
+                ", supplier=" + supplier +
+                ", deleteFlag=" + deleteFlag +
+                '}';
+    }
 }
