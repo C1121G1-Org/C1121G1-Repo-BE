@@ -22,10 +22,11 @@ public class CustomerServiceImpl implements ICustomerService {
     */
     @Override
     public void editCustomer(Customer customer, Long id) {
-        iCustomerRepository.editCustomer(customer.getAddress()
+        /*iCustomerRepository.editCustomer(customer.getAddress()
                 ,customer.getCustomerName(),customer.getDateOfBirth()
                 ,customer.getEmail(),customer.isGender()
-                ,customer.getPhoneNumber(),id);
+                ,customer.getPhoneNumber(),id);*/
+        iCustomerRepository.editCustomer(customer,id);
     }
 
     /*

@@ -35,16 +35,44 @@ public class CustomerRestController_editCustomer {
     }
 
     @Test
-    public void getInfoStudent_id_2() throws Exception {
-
+    public void getInfoCustomer_id_4() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/customer/{id}", "2"))
+                .get("/studentRest/detail/{id}", "4"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.name").value("Le Van C"))
-                .andExpect(jsonPath("$.dateOfBirth").value("2022-06-02"))
-                .andExpect(jsonPath("$.classStudent.id").value(12));
+                .andExpect(jsonPath("$.customerName").value("Nguyễn Thái Việt"))
+                .andExpect(jsonPath("$.phoneNumber").value("0912456789"))
+                .andExpect(jsonPath("$.dateOfBirth").value("2022-10-12"))
+                .andExpect(jsonPath("$.email").value("hoangtn97@gmail.com"))
+                .andExpect(jsonPath("$.address").value("102 Điện Biên Phủ"))
+                .andExpect(jsonPath("$.gender").value(1));
     }
+
+    @Test
+    public void editCustomer_name_5() throws Exception {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto=
+        customerDto.setCustomerName("Du");
+        customerDto.setGrade(8.0);
+        customerDto.setDateOfBirth("2000-10-05");
+        customerDto.setGender(1);
+
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/studentRest/create")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+
+
+
+
+
+
 
 
     /*@Test

@@ -1,5 +1,6 @@
 package api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,20 +19,23 @@ public class CustomerRestController_getInfoCustomer {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
-    public void getInfoStudent_id_1() throws Exception {
+    public void getInfoCustomer_id_1() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/studentRest/detail/{id}", "null"))
+                .get("/api/Customer/{id}", "null"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void getInfoStudent_id_4() throws Exception {
+    public void getInfoCustomer_id_4() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/studentRest/detail/{id}", "4"))
+                        .get("/api/Customer/{id}", "4"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.customerName").value("Nguyễn Thái Việt"))

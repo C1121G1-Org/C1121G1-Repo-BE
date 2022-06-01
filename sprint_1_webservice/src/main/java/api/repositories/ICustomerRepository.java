@@ -23,7 +23,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Time: 12:38 PM 2022-06-01
     Function: edit object by id from database
      */
-    @Query( value = "UPDATE `sprint-1-db`.`customer` SET " +
+    /*@Query( value = "UPDATE `sprint-1-db`.`customer` SET " +
            "`address` = ?1," +
            " `customer_name` = ?2," +
            " `date_of_birth` = ?3," +
@@ -31,17 +31,17 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " `gender` = ?5," +
            " `phone_number` = ?6 WHERE (`id` =:id);",nativeQuery = true)
    void editCustomer(String address, String customerName, String dateOfBirth,
-                     String email, Boolean gender, String phoneNumber,@Param("id") Long id);
+                     String email, Boolean gender, String phoneNumber,@Param("id") Long id);*/
 
 
 
 
-    /*@Transactional
+    @Transactional
     @Modifying
     @Query(value = "UPDATE `sprint-1-db`.`customer` Set `customer` (`address`, `customer_name`, `date_of_birth`, `email`, `gender`, `phone_number`) " +
-            "values (:#{#storage.id}, :#{#storage.createdDate}, :#{#storage.quantity}, :#{#storage.status}, " +
-            ":#{#storage.createdEmployee.id}, :#{#storage.product.id}, :#{#storage.supplier.id}) WHERE (`id`=:id)", nativeQuery = true)
-    void editCustomer(Customer customer,@Param("id") Long id);*/
+            "values (:#{#customer.address}, :#{#customer.customerName}, :#{#customer.dateOfBirth}, :#{#customer.email}, " +
+            ":#{#customer.gender}, :#{#customer.phoneNumber}) WHERE (`id`=:id)", nativeQuery = true)
+            void editCustomer(Customer customer,@Param("id") Long id);
 
     /*
     Created By hoangDH,
