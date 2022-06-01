@@ -28,11 +28,31 @@ public class CustomerServiceImpl implements ICustomerService {
 
     /*
         Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by gender
+    */
+    @Override
+    public Page<ReportCustomerDto> filterByGender(Pageable pageable, Boolean gender) {
+        return iCustomerRepository.filterByGender(pageable, gender);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by age
+    */
+    @Override
+    public Page<ReportCustomerDto> filterByAge(Pageable pageable, Integer age) {
+        return iCustomerRepository.filterByAge(pageable, age);
+    }
+
+    /*
+        Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */
     @Override
-    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age) {
+    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age) {
         return iCustomerRepository.filterByGenderAndAge(pageable, gender, age);
     }
 
@@ -72,5 +92,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public Customer findCustomer(Customer customer) {
         return iCustomerRepository.findCustomer(customer.getCustomerName(), customer.getPhoneNumber(), customer.getDateOfBirth());
     }
+
+
 
 }
