@@ -2,6 +2,9 @@ package api.services.impl;
 
 import api.dto.PurchaseHistoryDto;
 import api.dto.ReportCustomerDto;
+
+import api.models.Customer;
+
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +51,13 @@ public class CustomerService implements ICustomerService {
     }
 
 
+    @Override
+    public Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2) {
+        return iCustomerRepository.pageFindAll(pageable, key1, key2);
+    }
+
+    @Override
+    public Customer findById(long id) {
+        return iCustomerRepository.findById(id).get();
+    }
 }
