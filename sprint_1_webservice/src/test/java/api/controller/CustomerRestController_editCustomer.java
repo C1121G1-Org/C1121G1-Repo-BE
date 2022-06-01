@@ -2,6 +2,8 @@ package api.controller;
 
 
 import api.dto.CustomerDto;
+import api.services.ICustomerService;
+import api.services.impl.CustomerServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +13,24 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Optional;
+
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CustomerRestController_editCustomer {
+public class CustomerRestController_editCustomer<b> {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private ICustomerService iCustomerService;
 
     @Test
     public void getInfoCustomer_id_1() throws Exception {
@@ -50,22 +57,36 @@ public class CustomerRestController_editCustomer {
 
     @Test
     public void editCustomer_name_5() throws Exception {
+        long id=4;
         CustomerDto customerDto = new CustomerDto();
-        customerDto=
-        customerDto.setCustomerName("Du");
-        customerDto.setGrade(8.0);
-        customerDto.setDateOfBirth("2000-10-05");
-        customerDto.setGender(1);
-
-
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setCustomerName("123");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/studentRest/create")
+                        .patch("/api/customer/{id}")
                         .content(this.objectMapper.writeValueAsString(customerDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    public void editCustomer_name_6() throws Exception {
+        long id=4;
+        CustomerDto customerDto=new CustomerDto();
+        doReturn(Optional.of(customerDto)).when(iCustomerService).findById(id);
+        customerDto = new CustomerDto((long) 1,"Nguyễn Thái Việt", "0912456789","2022-10-12","hoangtn97@gmail.com","102 Điện Biên Phủ",true);
+        customerDto.setCustomerName("");
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .patch("/api/customer/{id}")
+                        .content(this.objectMapper.writeValueAsString(customerDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
 
 
 
