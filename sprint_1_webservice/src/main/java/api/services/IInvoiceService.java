@@ -1,5 +1,6 @@
 package api.services;
 
+import api.dto.InvoiceDto;
 import api.models.Invoice;
 import api.models.Customer;
 import api.models.Invoice;
@@ -15,4 +16,7 @@ public interface IInvoiceService {
     List<Customer> listCustomer();
     List<Product> listProduct();
 
+    void createInvoice(InvoiceDto invoiceDto);
+
+    Invoice getNewInvoice();
 }

@@ -13,11 +13,19 @@ import javax.transaction.Transactional;
 
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 
+
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create invoice
+    */
     @Transactional
     @Modifying
-    @Query(value = "insert into invoice (create_date, create_time ,payments, customer_id) value (?1,?2,?3,?4);", nativeQuery = true)
-    void saveInvoice(String createDate, String createTime, String payments, Long customerId);
+    @Query(value = "insert into invoice (create_date, create_time,total_money ,payments, customer_id) value (?1,?2,?3,?4,?5);", nativeQuery = true)
+    void saveInvoice(String createDate, String createTime,Double totalMoney, String payments, Long customerId);
 
+    @Query(value = "select * from invoice order by id desc limit 1;",nativeQuery = true)
+    Invoice getNewInvoice();
 
     @Query(value = "select * from  invocie " +
             "inner join customer on invocie.id = customer.id " +
@@ -33,6 +41,8 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
             , nativeQuery = true)
     Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable , @Param("sorts") String sort);
+
+
 
 //    @Query(value = "select * from land_information join direction on direction.id = land_information.direction_id " +
 //            "where price like concat('%', :prices ,'%')" +

@@ -8,19 +8,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceDetailDto {
     private Long id;
+    @Valid
+    private InvoiceDto invoiceDto;
 
 
-    private Long quantity;
 
-
-    private Long invoiceId;
-
-
-    private Long productId;
+    private List<ProductInvoiceDto> productInvoiceDtoList;
 }
