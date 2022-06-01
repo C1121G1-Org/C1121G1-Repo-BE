@@ -37,4 +37,12 @@ public class Customer {
     @JsonBackReference
     private Set<Invoice> invoiceSet;
 
+    public Customer(String customerName, String phoneNumber, String dateOfBirth, String email, String address, boolean gender) {
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+    }
 }
