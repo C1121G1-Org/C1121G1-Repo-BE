@@ -7,21 +7,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-<<<<<<< HEAD
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.PathVariable;
-=======
-import org.springframework.transaction.annotation.Transactional;
-
->>>>>>> manager-product
-=======
 
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.transaction.annotation.Transactional;
 
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
+
+import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.transaction.annotation.Transactional;
+
+
 
 import java.util.List;
 
@@ -82,15 +79,15 @@ Function: Query Create product
       Function: get All product and search
 <<<<<<< HEAD
     */
-<<<<<<< HEAD
-=======
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 
-    @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')" +
-            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id", nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quality") String keyWord3);
+    @Query(value = "select * , storage.quantity from product inner join" +
+            " storage on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%')" +
+            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quatity ,'%')  group by product.id ",
+            countQuery = "select count(*) from product inner join" +
+                    " storage on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%')" +
+                    "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quatity ,'%')  group by product.id ", nativeQuery = true)
+    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quatity") String keyWord3);
 
     /*
      Created by hieuMMT
@@ -99,20 +96,7 @@ Function: Query Create product
  */
     @Query(value = "update product SET delete_flag = 1 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
-}
-<<<<<<< HEAD
-=======
-=======
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
-    @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
-            " and price like concat('%', :price ,'%')"
-            , nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2);
 }
 
-<<<<<<< HEAD
 
->>>>>>> manager-product
-=======
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
