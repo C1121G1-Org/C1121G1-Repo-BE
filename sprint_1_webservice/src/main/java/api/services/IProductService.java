@@ -39,4 +39,5 @@ public interface IProductService {
  */
     Product findById(Long id);
 
+    void updateProduct(Product product);
 }
