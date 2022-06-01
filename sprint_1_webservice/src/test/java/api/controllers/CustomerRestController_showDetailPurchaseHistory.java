@@ -19,7 +19,7 @@ public class CustomerRestController_showDetailPurchaseHistory {
     private MockMvc mockMvc;
 
     @Test
-    public void getDetailPurchaseHistory_id_1() throws Exception {
+    public void getDetailPurchaseHistory_id_7() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/purchase-history/{id}", "null"))
@@ -28,7 +28,7 @@ public class CustomerRestController_showDetailPurchaseHistory {
     }
 
     @Test
-    public void getDetailPurchaseHistory_id_2() throws Exception {
+    public void getDetailPurchaseHistory_id_8() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/purchase-history/{id}", ""))
@@ -37,7 +37,7 @@ public class CustomerRestController_showDetailPurchaseHistory {
     }
 
     @Test
-    public void getDetailPurchaseHistory_id_3() throws Exception {
+    public void getDetailPurchaseHistory_id_9() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/purchase-history/{id}", "123"))
@@ -46,7 +46,7 @@ public class CustomerRestController_showDetailPurchaseHistory {
     }
 
     @Test
-    public void getDetailPurchaseHistory_id_5() throws Exception {
+    public void getDetailPurchaseHistory_id_11() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/purchase-history/{id}", "1"))
@@ -58,4 +58,11 @@ public class CustomerRestController_showDetailPurchaseHistory {
                 .andExpect(jsonPath("$.content[0].purchaseProducts").value("iPhone 11 Pro Max,SamSung s22"))
                 .andExpect(jsonPath("$.content[0].totalMoney").value("3.65E7"));
     }
+
+    /* Đối với case_10 không cần xét vì muốn xem được Chi tiết lịch sử mua hàng thì phải bấm vào Xem lịch
+    sử mua hàng trong record của Danh sách báo cáo khách hàng.
+    Mà khách hàng phải mua hàng rồi thì mới có trong Danh sách báo cáo khách hàng
+    nên danh sách Chi tiết lịch sử mua hàng sẽ luôn có.
+    */
+
 }
