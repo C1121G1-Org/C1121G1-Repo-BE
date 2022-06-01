@@ -40,10 +40,14 @@ public interface IProductService {
  */
     Product findById(Long id);
 
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
          Function: delete product
      */
     void deleteFlag(Long id);
+
+    void updateProduct(Product product);
+
 }

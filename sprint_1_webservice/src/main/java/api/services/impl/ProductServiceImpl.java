@@ -47,7 +47,7 @@ public class ProductServiceImpl implements IProductService {
     */
     @Override
     public void save(Product product) {
-        this.iProductRepository.save(product);
+        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie());
     }
 
     /*
@@ -57,8 +57,17 @@ public class ProductServiceImpl implements IProductService {
  */
     @Override
     public Product findById(Long id) {
-        return iProductRepository.findById(id).orElse(null);
+        return iProductRepository.findByProductById(id);
+    }
 
+    /*
+     Created by tuanPA
+     Time: 18:15 31/05/2022
+     Function: updateProduct
+ */
+    @Override
+    public void updateProduct(Product product) {
+        this.iProductRepository.updateProduct(product);
     }
     /*
          Created by hieuMMT
