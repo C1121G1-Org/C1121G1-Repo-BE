@@ -1,8 +1,21 @@
 package api.controllers;
 
+import api.models.Customer;
+import api.models.Invoice;
+import api.models.Product;
+import api.models.ResponseObject;
 import api.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -12,9 +25,28 @@ public class InvoiceRestController {
     @Autowired
     IInvoiceService iInvoiceService;
 
+    @ModelAttribute("customer")
+    private List<Customer> customerList(){
+        return iInvoiceService.listCustomer();
+    }
+
+    @ModelAttribute("product")
+    private List<Product> productList(){
+        return iInvoiceService.listProduct();
+    }
+
     @GetMapping(value = "/list")
-    public String listInvoice(){
-        return null;
+    public ResponseEntity<ResponseObject> list(@RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                               @RequestParam("page") Optional<Integer> page,
+                                               @RequestParam(defaultValue = "",required = false) String sort) {
+        Pageable pageable = PageRequest.of(page.orElse(0), 10);
+        Page<Invoice> invoices = iInvoiceService.findAll(keyword, pageable,sort);
+        ModelAndView modelAndView = new ModelAndView("/api/invoice", "invoice", invoices);
+        modelAndView.addObject("keyword", keyword);
+        if (invoices.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")
