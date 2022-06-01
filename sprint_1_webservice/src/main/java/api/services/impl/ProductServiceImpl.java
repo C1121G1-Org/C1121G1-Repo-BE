@@ -31,13 +31,13 @@ public class ProductServiceImpl implements IProductService {
         return iProductRepository.findProduct(productDto);
     }
         /*
-            Created by tamHT
+            Created by hieuMMT and tamHT
             Time: 18:15 31/05/2022
             Function: search Products
         */
     @Override
-    public Page<Product> findAllProduct(Pageable pageable, String key1, String key2) {
-        return iProductRepository.pageFindAll(pageable,key1,key2);
+    public Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3) {
+        return iProductRepository.pageFindAll(pageable,key1, key2 , key3);
     }
 
     /*
@@ -69,4 +69,15 @@ public class ProductServiceImpl implements IProductService {
     public void updateProduct(Product product) {
         this.iProductRepository.updateProduct(product);
     }
+    /*
+         Created by hieuMMT
+         Time: 14:15 1/06/2022
+         Function: delete product
+     */
+    @Override
+    public void deleteFlag(Long id) {
+        this.iProductRepository.deleteFlag(id);
+    }
+
+
 }

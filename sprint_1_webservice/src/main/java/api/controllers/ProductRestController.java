@@ -6,7 +6,6 @@ import api.models.ResponseObject;
 import api.services.IProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,14 +13,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
+import java.util.*;
+
 
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 @RestController
@@ -32,32 +35,49 @@ public class ProductRestController {
     @Autowired
     IProductService iProductService;
 
-    /*
-        Created by khoaVC
-        Time: 21:54 31/05/2022
-        Function: list all Products from DB
-    */
+
+//    @GetMapping(value = "/list")
+//    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+//                                                       @RequestParam Optional<String> keyPhone) {
+//    /*
+//        Created by khoaVC
+//        Time: 21:54 31/05/2022
+//        Function: list all Products from DB
+//    */
+
 //    @GetMapping(value = "/list")
 //    public List<Product> listProduct() {
 //        return iProductService.getAllProduct();
 //    }
 
     /*
-          Created by tamHT
+          Created by tamHT and hieuMMT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
-    @GetMapping(value = "/list")
-    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                        @RequestParam Optional<String> keyPhone) {
-        String keyNameValue = keyName.orElse("");
-        String keyPhoneValue = keyPhone.orElse("");
+        @GetMapping(value = "/listProduct")
+        public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                @RequestParam Optional<String> keyPhone ,
+                @RequestParam Optional<String> keyQuality) {
+            String keyNameValue = keyName.orElse("");
+            String keyPhoneValue = keyPhone.orElse("");
+            String keyQualityValue = keyQuality.orElse("");
 
-        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue);
-        if (productPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue ,keyQualityValue);
+            if (productPage.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(productPage, HttpStatus.OK);
         }
-        return new ResponseEntity<>(productPage, HttpStatus.OK);
+
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+    @PatchMapping(value = "/update")
+    public String updateProduct() {
+        return null;
     }
 
 
@@ -129,9 +149,24 @@ public class ProductRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteProduct() {
-        return null;
+    /*
+     Created by hieuMMT
+     Time: 14:15 1/06/2022
+     Function: delete product
+ */
+//    @PatchMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
+//    public void deleteProduct(Long id) {
+//         this.iProductService.deleteFlag(id);
+//    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        Product product = iProductService.findById(id);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        iProductService.deleteFlag(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 }
