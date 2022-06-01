@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f5963900-dda3-4edf-ab39-22637817c291" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprint_1_webservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sprint_1_webservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +39,7 @@
       <workItem from="1654052693446" duration="2000" />
       <workItem from="1654054106082" duration="651000" />
       <workItem from="1654056940841" duration="102000" />
+      <workItem from="1654057124835" duration="467000" />
     </task>
     <servers />
   </component>
