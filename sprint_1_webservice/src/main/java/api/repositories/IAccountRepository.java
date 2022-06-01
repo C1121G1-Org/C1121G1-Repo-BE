@@ -23,7 +23,7 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
         Function: Use sql statement to change password under DB.
     */
     @Modifying
-    @Query(value = "UPDATE account SET encrypt_password = :encryptPassword WHERE (account_id = :accountId); ", nativeQuery = true)
+    @Query(value = "UPDATE account SET encrypt_password = :encryptPassword WHERE (id = :accountId); ", nativeQuery = true)
     void changPassword(@Param("encryptPassword") String encryptPassword, @Param("accountId") Long accountId);
 
     /*
