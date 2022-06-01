@@ -1,7 +1,11 @@
 package api.controllers;
 
 import api.models.Product;
+import api.models.ProductQRCode;
+import api.services.IProductService;
 import api.utils.QRCodeUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -27,12 +31,23 @@ import java.nio.file.Paths;
 @RequestMapping("/api/qrcode")
 public class QRCodeRestController {
 
+    @Autowired
+    IProductService iProductService;
+
     /*
         Function: encode QR-Code
     */
-    @GetMapping(value = "encode", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<Resource> encode(@RequestBody Product product) {
-        String filePath = QRCodeUtils.encode(product);
+    @PostMapping(value = "encode", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<Resource> encode(@RequestBody ProductQRCode product) {
+        ProductQRCode productQRCode = new ProductQRCode();
+        BeanUtils.copyProperties(product, productQRCode);
+        String filePath = QRCodeUtils.encode(productQRCode);
+        if (productQRCode.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (iProductService.findById(productQRCode.getId()) == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try {
             ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(Paths.get(filePath)));
             return ResponseEntity.status(HttpStatus.OK).contentLength(byteArrayResource.contentLength()).body(byteArrayResource);
@@ -44,12 +59,12 @@ public class QRCodeRestController {
     /*
        Function: decode QR-Code
    */
-    @PostMapping(value = "/decode", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Product> decode(@RequestBody MultipartFile file) {
+    @PostMapping(value = "/decode", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductQRCode> decode(@RequestBody MultipartFile file) {
         try {
             BufferedImage bf = ImageIO.read(file.getInputStream());
-            Product product = QRCodeUtils.decode(bf);
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            ProductQRCode productQRCode = QRCodeUtils.decode(bf);
+            return new ResponseEntity<>(productQRCode, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

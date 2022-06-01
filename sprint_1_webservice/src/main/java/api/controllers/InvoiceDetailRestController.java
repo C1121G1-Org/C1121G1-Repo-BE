@@ -69,19 +69,19 @@ public class InvoiceDetailRestController {
             iCustomerService.createCustomer(customer);
             customer = iCustomerService.getNewCustomer();
         }
-            Invoice invoice = new Invoice();
-            BeanUtils.copyProperties(invoiceDetailDto.getInvoiceDto(), invoice);
-            invoice.setCustomer(customer);
-            iInvoiceService.saveNewInvoice(invoice);
-            Invoice newInvoice = iInvoiceService.getNewInvoice();
+        Invoice invoice = new Invoice();
+        BeanUtils.copyProperties(invoiceDetailDto.getInvoiceDto(), invoice);
+        invoice.setCustomer(customer);
+        iInvoiceService.saveNewInvoice(invoice);
+        Invoice newInvoice = iInvoiceService.getNewInvoice();
 
-            List<ProductInvoiceDto> list = invoiceDetailDto.getProductInvoiceDtoList();
-            for (int i = 0; i < list.size(); i++) {
-                Long quantity = list.get(i).getQuantity();
-                Long productId = list.get(i).getProductId();
-                iInvoiceDetailService.createInvoiceDetail(quantity, productId, newInvoice.getId());
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
+        List<ProductInvoiceDto> list = invoiceDetailDto.getProductInvoiceDtoList();
+        for (int i = 0; i < list.size(); i++) {
+            Long quantity = list.get(i).getQuantity();
+            Long productId = list.get(i).getProductId();
+            iInvoiceDetailService.createInvoiceDetail(quantity, productId, newInvoice.getId());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 }

@@ -1,5 +1,6 @@
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,20 +44,31 @@ public class Product {
     private String otherDescription;
 
     @OneToMany(mappedBy = "product")
+    @JsonBackReference
     private Set<Storage> storageSet;
 
-    @Column(name = "delete_flag", nullable = false)
+    @Column(name = "delete_flag", nullable = false, columnDefinition = "BIT(1) default 1")
     private boolean deleteFlag;
 
     @OneToMany(mappedBy = "product")
+    @JsonBackReference
     private Set<InvoiceDetail> invoiceDetailSet;
 
+    /*
+            Create by: hauPV
+            Penalty: 5k
+         */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return deleteFlag == product.deleteFlag && id.equals(product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price) && Objects.equals(image, product.image) && Objects.equals(qrScan, product.qrScan) && Objects.equals(screenSize, product.screenSize) && Objects.equals(camera, product.camera) && Objects.equals(selfie, product.selfie) && Objects.equals(cpu, product.cpu) && Objects.equals(memory, product.memory) && Objects.equals(otherDescription, product.otherDescription);
+        return deleteFlag == product.deleteFlag && id.equals(product.id) && Objects.equals(name, product.name) &&
+                Objects.equals(price, product.price) && Objects.equals(image, product.image) &&
+                Objects.equals(qrScan, product.qrScan) && Objects.equals(screenSize, product.screenSize) &&
+                Objects.equals(camera, product.camera) && Objects.equals(selfie, product.selfie) &&
+                Objects.equals(cpu, product.cpu) && Objects.equals(memory, product.memory) &&
+                Objects.equals(otherDescription, product.otherDescription);
     }
 
     @Override
