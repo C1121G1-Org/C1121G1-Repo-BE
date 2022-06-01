@@ -33,7 +33,7 @@ public class CustomerRestController_showListReportCustomerSearch {
                 MockMvcRequestBuilders
                         .get("/api/customer/report-customer-search?gender="))
                 .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -50,6 +50,51 @@ public class CustomerRestController_showListReportCustomerSearch {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/customer/report-customer-search?gender=true"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.content[0].name").value("Quốc Tuấn"))
+                .andExpect(jsonPath("$.content[0].dateOfBirth").value("11-03-1998"))
+                .andExpect(jsonPath("$.content[0].email").value("quoctuan@gmail.com"))
+                .andExpect(jsonPath("$.content[0].gender").value("true"))
+                .andExpect(jsonPath("$.content[0].phoneNumber").value("0905112365"));
+
+    }
+
+
+    @Test
+    public void getListReportCustomer_age_7() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/report-customer-search"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_age_8() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/report-customer-search?age="))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_age_9() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/report-customer-search?age=222"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void getListReportCustomer_age_11() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/customer/report-customer-search?age=24"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.totalPages").value(1))
