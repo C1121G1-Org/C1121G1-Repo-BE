@@ -13,7 +13,13 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerRepository iCustomerRepository;
 
     @Override
-    public void save(Customer customer) {
-        iCustomerRepository.save(customer);
+    public void createCustomer(Customer customer) {
+        iCustomerRepository.saveCustomer(customer.getCustomerName(), customer.getPhoneNumber(),
+                customer.getDateOfBirth(), customer.getEmail(), customer.getAddress(), customer.isGender());
+    }
+
+    @Override
+    public Customer findCustomer(Customer customer) {
+        return iCustomerRepository.findCustomer(customer.getCustomerName(),customer.getPhoneNumber(),customer.getDateOfBirth());
     }
 }
