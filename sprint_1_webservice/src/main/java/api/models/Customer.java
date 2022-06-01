@@ -1,5 +1,6 @@
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,15 @@ public class Customer {
     private boolean gender;
 
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private Set<Invoice> invoiceSet;
 
+    public Customer(String customerName, String phoneNumber, String dateOfBirth, String email, String address, boolean gender) {
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+    }
 }

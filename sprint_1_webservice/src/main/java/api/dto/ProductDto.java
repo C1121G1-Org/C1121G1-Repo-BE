@@ -21,6 +21,4 @@ public class ProductDto {
     private String cpu;
     private String memory;
     private String otherDescription;
-
-
 }

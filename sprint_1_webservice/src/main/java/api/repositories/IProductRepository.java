@@ -1,6 +1,8 @@
 package api.repositories;
 
 import api.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,10 +10,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+
+
 public interface IProductRepository extends JpaRepository<Product, Long> {
     /*
+<<<<<<< HEAD
 Created by TuanPA
-Date: 17:08 31/05/2022
+Date: 14:01 01/06/2022
 Function: Query Create product
 */
     @Transactional
@@ -23,7 +29,7 @@ Function: Query Create product
 
     /*
     Created by TuanPA
-    Date: 17:08 31/05/2022
+    Date: 14:01 01/06/2022
     Function: Query edit product
 */
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
@@ -33,7 +39,7 @@ Function: Query Create product
     Product findByProductById(@Param("id") Long id);
     /*
     Created by TuanPA
-    Date: 17:08 31/05/2022
+    Date: 14:01 01/06/2022
     Function: update product
 */
     @Transactional
@@ -43,10 +49,30 @@ Function: Query Create product
             "memory = :#{#product.memory},name= :#{#product.name},other_description = :#{#product.otherDescription}, " +
             "price = :#{#product.price},qr_scan= :#{#product.qrScan},screen_size= :#{#product.screenSize},selfie= :#{#product.selfie} " +
             "WHERE id =:#{#product.id}", nativeQuery = true)
-
     void updateProduct(Product product);
 
+        /*
+        Created by khoaVC
+        Time: 21:54 31/05/2022
+        Function: 1/    findProduct() = write a native query to find Product by id
+                  2/    getAllProduct() = write a native query to get all Products from DB
+    */
 
+    @Query(value = "select * from product where delete_flag = 1 ", nativeQuery = true)
+    List<Product> getAllProduct();
+
+    @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
+    Product findProduct(@Param("id") Long productDto);
+
+    /*
+        Created by TamT
+        Time: 18:00 31/05/2022
+        Function: get All product and search
+    */
+    @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
+            " and price like concat('%', :price ,'%')"
+            , nativeQuery = true)
+    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2);
 }
 
 
