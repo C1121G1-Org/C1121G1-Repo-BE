@@ -78,8 +78,11 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
-
+//        change price of Dto become Double
+        Double price = Double.valueOf(productDto.getPrice());
         Product product = new Product();
+        product.setPrice(price);
+
         BeanUtils.copyProperties(productDto, product);
         product.setDeleteFlag(false);
 
@@ -123,6 +126,8 @@ public class ProductRestController {
 
 
         Product product = new Product();
+        Double price = Double.valueOf(productDto.getPrice());
+        product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
 
         this.iProductService.updateProduct(product);
