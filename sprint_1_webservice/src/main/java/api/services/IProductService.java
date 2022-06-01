@@ -41,13 +41,23 @@ public interface IProductService {
     Product findById(Long id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
          Function: delete product
      */
     void deleteFlag(Long id);
+<<<<<<< HEAD
 =======
     void updateProduct(Product product);
 >>>>>>> manager-product
+=======
+
+    void updateProduct(Product product);
+
+>>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 }
