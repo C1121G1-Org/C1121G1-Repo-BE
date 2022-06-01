@@ -13,36 +13,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-import java.util.*;
-=======
+
 import java.util.Optional;
->>>>>>> manager-product
-=======
 
-import java.util.*;
-
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
-<<<<<<< HEAD
-<<<<<<< HEAD
-import java.util.Optional;
-=======
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
->>>>>>> manager-product
-=======
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 
 
 @RestController
@@ -53,11 +35,7 @@ public class ProductRestController {
     @Autowired
     IProductService iProductService;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 //    @GetMapping(value = "/list")
 //    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
 //                                                       @RequestParam Optional<String> keyPhone) {
@@ -66,17 +44,7 @@ public class ProductRestController {
 //        Time: 21:54 31/05/2022
 //        Function: list all Products from DB
 //    */
-<<<<<<< HEAD
-=======
-    /*
-        Created by khoaVC
-        Time: 21:54 31/05/2022
-        Function: list all Products from DB
-    */
->>>>>>> manager-product
-=======
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 //    @GetMapping(value = "/list")
 //    public List<Product> listProduct() {
 //        return iProductService.getAllProduct();
@@ -102,10 +70,7 @@ public class ProductRestController {
             return new ResponseEntity<>(productPage, HttpStatus.OK);
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
+
 //    @PostMapping(value = "/create")
 //    public String createProduct() {
 //        return null;
@@ -115,12 +80,7 @@ public class ProductRestController {
     public String updateProduct() {
         return null;
     }
-<<<<<<< HEAD
-=======
->>>>>>> manager-product
-=======
 
->>>>>>> a7765ea60854a4d0e366ddd477c57210dae9ef1a
 
     /*
      Created by tuanPA

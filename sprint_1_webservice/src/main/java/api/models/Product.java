@@ -53,11 +53,10 @@ public class Product {
     @JsonBackReference
     private Set<InvoiceDetail> invoiceDetailSet;
 
-
     /*
-        Create by: hauPV
-        Penalty: 5k
-     */
+            Create by: hauPV
+            Penalty: 5k
+         */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
