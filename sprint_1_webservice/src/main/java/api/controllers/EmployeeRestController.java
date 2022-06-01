@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.dto.PersonalDto;
 import api.models.Account;
 import api.models.Employee;
 import api.payload.request.ChangePasswordRequest;
@@ -10,11 +11,15 @@ import api.services.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -66,6 +71,24 @@ public class EmployeeRestController {
         Account account = jwtFilter.findAccountByJwtToken();
         Optional<Employee> employeeOptional = iEmployeeService.findById(account.getEmployee().getId());
         return employeeOptional.map(employee -> new ResponseEntity<>(employee, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    /*
+        Created by KhaiTT
+        Date: 15:34 01/06/2022
+        Function: This method update personal information of employee.
+    */
+    @PutMapping(value = "/personal/information/update")
+    public ResponseEntity<Map<String, String>> updatePersonalInformation(@Valid @RequestBody PersonalDto personalDto,
+                                                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = bindingResult.getFieldErrors()
+                    .stream().collect(Collectors.toMap(
+                            e -> e.getField(), e -> e.getDefaultMessage()));
+            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+        }
+        iEmployeeService.updatePersonalInforamation(personalDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /*

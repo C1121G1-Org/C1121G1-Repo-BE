@@ -45,7 +45,8 @@ public class JwtFilter extends OncePerRequestFilter {
             if (token != null && jwtUtility.validateJwtToken(token)) {
                 // save token to jwtToken variable to use in findAccountByJwtToken() method below
                 jwtToken = token;
-                UserDetails userDetails = accountDetailsService.loadUserByUsername(token);
+                String username = jwtUtility.getUserNameFromJwtToken(token);
+                UserDetails userDetails = accountDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -44,7 +44,7 @@ public class SecurityRestController {
     /*
         Function: This authenticateUser() method stipulates which method the requests sent from clients will go.
     */
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
@@ -57,7 +57,6 @@ public class SecurityRestController {
         List<String> roles = accountDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        System.out.println("authenticateUser() at SecurityRestController in controller package.");
         return new ResponseEntity<>(new JwtResponse(jwt, accountDetails.getId(), accountDetails.getUsername(), roles), HttpStatus.OK);
     }
 
@@ -66,7 +65,7 @@ public class SecurityRestController {
                   change confirmation code to that account's email.
     */
     @GetMapping(value = "/find-by-username")
-    public ResponseEntity<Account> findByUserName(@RequestParam String username) {
+    public ResponseEntity<Account> findByUserName(@RequestParam("username") String username) {
         Account account = iAccountService.findByUserName(username);
         if (account != null) {
             String code = iAccountService.setVetificationCode(account);

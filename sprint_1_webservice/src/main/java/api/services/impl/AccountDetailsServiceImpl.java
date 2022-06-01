@@ -33,7 +33,6 @@ public class AccountDetailsServiceImpl implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
-        System.out.println("loadUserByUsername() at AccountDetailsServiceImpl in service package.");
         return AccountDetailsImpl.build(account);
     }
 }

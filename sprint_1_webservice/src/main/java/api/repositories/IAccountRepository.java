@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public interface IAccountRepository extends JpaRepository<Account, Long> {
     /*
         Created by KhaiTT
