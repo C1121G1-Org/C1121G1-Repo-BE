@@ -669,7 +669,6 @@ public class ProductRestController_createProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -693,7 +692,6 @@ public class ProductRestController_createProduct {
         productDto.setCpu("100-MDX");
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
-
 
 
         this.mockMvc

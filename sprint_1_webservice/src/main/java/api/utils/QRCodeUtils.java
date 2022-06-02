@@ -56,12 +56,7 @@ public class QRCodeUtils {
             ProductQRCode productQRCode = mapper.readValue(rs.getText(), ProductQRCode.class);
 
             return productQRCode;
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
+        } catch (NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
         return null;
@@ -82,12 +77,7 @@ public class QRCodeUtils {
 
             return product1.equals(product2);
 
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
+        } catch (NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
         return false;

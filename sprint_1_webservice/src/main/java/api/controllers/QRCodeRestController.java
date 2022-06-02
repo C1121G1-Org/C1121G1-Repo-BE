@@ -64,6 +64,11 @@ public class QRCodeRestController {
         try {
             BufferedImage bf = ImageIO.read(file.getInputStream());
             ProductQRCode productQRCode = QRCodeUtils.decode(bf);
+
+            if (productQRCode == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
             return new ResponseEntity<>(productQRCode, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();

@@ -11,19 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.Optional;
-
-
-import org.springframework.validation.BindingResult;
-
 import javax.validation.Valid;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 
@@ -52,6 +47,9 @@ public class ProductRestController {
 
     /*
           Created by tamHT and hieuMMT
+
+    /*
+          Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
@@ -83,10 +81,14 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: create new product
  */
+
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
                                                         BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
+        ProductDto productDtoErrors = new ProductDto();
+        productDtoErrors.setIProductService(iProductService);
+        productDtoErrors.validate(productDto,bindingResult);
 //        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
@@ -134,6 +136,7 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
 //        productDto.validate(productDto,bindingResult);
 
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -141,6 +144,7 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
+
         Product product = new Product();
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);

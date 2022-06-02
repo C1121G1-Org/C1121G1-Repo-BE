@@ -56,6 +56,5 @@ public interface IProductService {
 
     void updateProduct(Product product);
 
-
-
+    Product findProductByName(String name);
 }

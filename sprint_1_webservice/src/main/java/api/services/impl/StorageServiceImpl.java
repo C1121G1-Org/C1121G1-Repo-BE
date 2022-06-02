@@ -29,4 +29,19 @@ public class StorageServiceImpl implements IStorageService {
     public void createStorage(Storage storage) {
         iStorageRepository.createStorage(storage);
     }
+
+    /*
+    Created by LongNHL
+    Time: 22:30 1/06/2022
+    Function: find storage by productId after create invoice
+    */
+    @Override
+    public Storage getStorageByIdProduct(Long productId) {
+        return iStorageRepository.getStorageByIdProduct(productId);
+    }
+
+    @Override
+    public void updateQuantityProduct(Storage storage) {
+        iStorageRepository.updateQuantityProduct(storage.getQuantity(),storage.getId());
+    }
 }
