@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -22,17 +21,11 @@ public class EmployeeDto implements Validator {
     private String phoneNumber;
     private String image;
     private boolean deleteFlag;
-
-
-    private PositionDto positionDto ;
-
-    private AccountDto accountDto ;
-
+    private PositionDto positionDto;
+    private AccountDto accountDto;
+    private IAccountService iAccountService;
 
     public void setAccountService(IAccountService iAccountService) {
-    }
-
-    public void validate(EmployeeDto employeeDto, BindingResult bindingResult) {
     }
 
     @Override
@@ -43,4 +36,3 @@ public class EmployeeDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
     }
-}
