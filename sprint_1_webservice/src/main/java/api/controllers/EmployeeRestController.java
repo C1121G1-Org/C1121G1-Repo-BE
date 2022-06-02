@@ -53,8 +53,8 @@ public class EmployeeRestController {
     /*
     Created by Khoa PTD
     Time: 09:00 02/06/2022
-    Function: get position by id
-*/
+    Function: get position
+    */
     @GetMapping(value = "/position/list")
     public ResponseEntity<ResponseObject> listPosition() {
         List<Position> positionList = getAllPosition();

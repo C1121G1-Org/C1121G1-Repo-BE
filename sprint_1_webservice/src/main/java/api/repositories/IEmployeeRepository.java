@@ -44,8 +44,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "`account`.`encrypt_password`= :#{#account.encryptPassword}, " +
             "`account`.`user_name`= :#{#account.userName} " +
             "where employee.`id`= :#{#employee.id}", nativeQuery = true)
-    void updateEmployee(Employee employee , Account account);
-
+    void updateEmployee(Employee employee, Account account);
 
 
     /*
@@ -53,7 +52,7 @@ Created by Khoa PTD
 Time: 09:00 02/06/2022
 Function: findEmployeeById
 */
-    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id",nativeQuery = true)
+    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id", nativeQuery = true)
     Employee findEmployeeById(@Param("id") Long id);
 
 }
