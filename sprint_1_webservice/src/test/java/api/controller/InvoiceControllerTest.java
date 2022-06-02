@@ -28,7 +28,6 @@ public class InvoiceControllerTest {
     //Test case: List invoice
     // invoiceId = 1L, quantity = 6L, createTime = "12:00", createDate = "2022-01-21", customerName = "Nguyen Van A", productName = "xiaomi", totalMoney = 12000000
 
-
     @Test
     public  void findAll_5() throws Exception{
         this.mockMvc.perform(
@@ -61,5 +60,58 @@ public class InvoiceControllerTest {
                 .andExpect(jsonPath("$.content[0].payments").value("tien mat"))
                 .andExpect(jsonPath("$.content[0].totalMoney").value(1200000.0));
     }
+
+
+    //Test case: List invoice
+    //    object in null list
+
+    @Test
+    public  void findAll_7() throws Exception{
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/invoice/list/"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+
+    //Test case: List invoice
+    //    object in empty list
+
+    @Test
+    public  void findAll_8() throws Exception{
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/invoice/list/"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+
+    //Test case: List invoice
+    //   There are no objects in the list
+
+    @Test
+    public  void findAll_10() throws Exception{
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/invoice/list/"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    //Test case: List invoice
+    //   There are no objects in the list
+
+    @Test
+    public  void findAll_11() throws Exception{
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/invoice/list/"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+
 
 }
