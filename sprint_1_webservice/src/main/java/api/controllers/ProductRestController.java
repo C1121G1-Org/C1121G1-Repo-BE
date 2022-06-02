@@ -91,6 +91,7 @@ public class ProductRestController {
     public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
                                                         BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
+//        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -99,9 +100,12 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
-
+//        change price of Dto become Double
+        Double price = Double.valueOf(productDto.getPrice());
         Product product = new Product();
+
         BeanUtils.copyProperties(productDto, product);
+        product.setPrice(price);
         product.setDeleteFlag(false);
 
         this.iProductService.save(product);
@@ -133,6 +137,7 @@ public class ProductRestController {
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
+//        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -144,6 +149,8 @@ public class ProductRestController {
 
 
         Product product = new Product();
+        Double price = Double.valueOf(productDto.getPrice());
+        product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
 
         this.iProductService.updateProduct(product);
