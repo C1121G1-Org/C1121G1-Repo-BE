@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -26,6 +25,7 @@ public class ProductRestController_editProduct {
     private ObjectMapper objectMapper;
 
 //    check find by id
+//    id= null
 
     @Test
     public void getInfoProduct_id_1() throws Exception {
@@ -36,7 +36,7 @@ public class ProductRestController_editProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//id =""
 
     @Test
     public void getInfoProduct_id_2() throws Exception {
@@ -46,6 +46,7 @@ public class ProductRestController_editProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+//id out of range
 
     @Test
     public void getInfoProduct_id_3() throws Exception {
@@ -55,6 +56,8 @@ public class ProductRestController_editProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+//    valid id
 
     @Test
     public void getInfoProduct_id_4() throws Exception {
@@ -77,9 +80,9 @@ public class ProductRestController_editProduct {
     }
 
 //    check edit product
-
 //    test name
 
+//    test name = null
     @Test
     public void editProduct_name_19() throws Exception {
 
@@ -97,13 +100,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    test name = ""
 
     @Test
     public void editProduct_name_20() throws Exception {
@@ -125,13 +129,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    name over max length
 
     @Test
     public void editProduct_name_23() throws Exception {
@@ -152,13 +157,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid name
 
     @Test
     public void editProduct_name_24() throws Exception {
@@ -176,7 +182,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -185,8 +191,9 @@ public class ProductRestController_editProduct {
 
 //    test price
 
+// valid price
     @Test
-    public void editProduct_price_19() throws Exception {
+    public void editProduct_price_24() throws Exception {
 
         ProductDto productDto = new ProductDto();
         productDto.setName("Iphone13");
@@ -203,13 +210,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
+//price is negative
 
     @Test
     public void editProduct_price_21_1() throws Exception {
@@ -229,13 +237,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    price inclue character
 
     @Test
     public void editProduct_price_21_2() throws Exception {
@@ -255,7 +264,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -264,7 +273,7 @@ public class ProductRestController_editProduct {
 
 
 //    test image
-
+// image = null
     @Test
     public void editProduct_image_19() throws Exception {
 
@@ -282,7 +291,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -290,6 +299,7 @@ public class ProductRestController_editProduct {
     }
 
 
+//    image =""
     @Test
     public void editProduct_image_20() throws Exception {
 
@@ -307,13 +317,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid image
     @Test
     public void editProduct_image_24() throws Exception {
 
@@ -331,7 +342,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -339,6 +350,8 @@ public class ProductRestController_editProduct {
     }
 
     //    test screen size
+
+//    screenSize = null
     @Test
     public void editProduct_screenSize_19() throws Exception {
 
@@ -355,16 +368,16 @@ public class ProductRestController_editProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    screenSize = ""
     @Test
     public void editProduct_screenSize_20() throws Exception {
 
@@ -383,12 +396,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+//    screenSize out of length
 
     @Test
     public void editProduct_screenSize_23() throws Exception {
@@ -408,12 +423,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
+//    valid screenSize
 
     @Test
     public void editProduct_screenSize_24() throws Exception {
@@ -434,7 +451,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -442,6 +459,7 @@ public class ProductRestController_editProduct {
     }
 
 //    test camera
+// camera =null
 
     @Test
     public void editProduct_camera_19() throws Exception {
@@ -461,13 +479,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    camrera =""
     @Test
     public void editProduct_camera_20() throws Exception {
 
@@ -486,13 +505,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    camera out of length
     @Test
     public void editProduct_camera_23() throws Exception {
 
@@ -511,13 +531,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid camera
     @Test
     public void editProduct_camera_24() throws Exception {
 
@@ -537,7 +558,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -545,6 +566,7 @@ public class ProductRestController_editProduct {
     }
 
     //    test selfie
+//    selfie =null
     @Test
     public void editProduct_selfie_19() throws Exception {
 
@@ -564,13 +586,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    selfie = ""
     @Test
     public void editProduct_selfie_20() throws Exception {
 
@@ -590,13 +613,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    selfie out of length
 
     @Test
     public void editProduct_selfie_23() throws Exception {
@@ -614,13 +638,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid selfie
     @Test
     public void editProduct_selfie_24() throws Exception {
 
@@ -640,7 +665,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -648,7 +673,7 @@ public class ProductRestController_editProduct {
     }
 
 //    test cpu
-
+//    cpu =null
 
     @Test
     public void editProduct_cpu_19() throws Exception {
@@ -664,19 +689,16 @@ public class ProductRestController_editProduct {
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
-
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
-
+//cpu =""
     @Test
     public void editProduct_cpu_20() throws Exception {
 
@@ -691,19 +713,16 @@ public class ProductRestController_editProduct {
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
-
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
-
+//cpu out of length
     @Test
     public void editProduct_cpu_23() throws Exception {
 
@@ -723,13 +742,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid cpu
 
     @Test
     public void editProduct_cpu_24() throws Exception {
@@ -749,7 +769,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -758,6 +778,7 @@ public class ProductRestController_editProduct {
 
 
 //    test memory
+//memory =null
 
     @Test
     public void editProduct_memory_19() throws Exception {
@@ -777,13 +798,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    memory = ""
     @Test
     public void editProduct_memory_20() throws Exception {
 
@@ -800,13 +822,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    memory out of length
     @Test
     public void editProduct_memory_23() throws Exception {
 
@@ -824,13 +847,14 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid memory
 
     @Test
     public void editProduct_memory_24() throws Exception {
@@ -848,7 +872,7 @@ public class ProductRestController_editProduct {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/product/create")
+                        .patch("/api/product/update/5")
                         .content(this.objectMapper.writeValueAsString(productDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())

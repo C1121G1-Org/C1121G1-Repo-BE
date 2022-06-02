@@ -24,6 +24,7 @@ public class ProductRestController_createProduct {
     private ObjectMapper objectMapper;
 
     //    test name
+//    test name = null
 
     @Test
     public void createProduct_name_13() throws Exception {
@@ -49,7 +50,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//name =""
     @Test
     public void createProduct_name_14() throws Exception {
 
@@ -77,6 +78,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    name out of length
 
     @Test
     public void createProduct_name_17() throws Exception {
@@ -104,7 +106,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//valid name
     @Test
     public void createProduct_name_18() throws Exception {
 
@@ -132,6 +134,7 @@ public class ProductRestController_createProduct {
     }
 
 //    test price
+//valid price
 
     @Test
     public void createProduct_price_13() throws Exception {
@@ -147,8 +150,6 @@ public class ProductRestController_createProduct {
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -158,7 +159,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is2xxSuccessful());
     }
 
-
+// negative price
     @Test
     public void createProduct_price_15_1() throws Exception {
 
@@ -183,7 +184,7 @@ public class ProductRestController_createProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+//price include charactor
 
     @Test
     public void createProduct_price_15_2() throws Exception {
@@ -212,6 +213,7 @@ public class ProductRestController_createProduct {
 
 
 //    test image
+//image =null
 
     @Test
     public void createProduct_image_13() throws Exception {
@@ -237,7 +239,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//image =""
     @Test
     public void createProduct_image_14() throws Exception {
 
@@ -261,7 +263,7 @@ public class ProductRestController_createProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+//valid price
     @Test
     public void createProduct_image_18() throws Exception {
 
@@ -287,6 +289,7 @@ public class ProductRestController_createProduct {
     }
 
 //    test screen size
+//    screenSize = null
     @Test
     public void createProduct_screenSize_13() throws Exception {
 
@@ -313,6 +316,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    screenSize = ""
     @Test
     public void createProduct_screenSize_14() throws Exception {
 
@@ -338,6 +342,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    screenSize out of length
     @Test
     public void createProduct_screenSize_17() throws Exception {
 
@@ -363,6 +368,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//     valid screenSize
     @Test
     public void createProduct_screenSize_18() throws Exception {
 
@@ -390,6 +396,7 @@ public class ProductRestController_createProduct {
     }
 
 //    test camera
+//camera = null
 
     @Test
     public void createProduct_camera_13() throws Exception {
@@ -405,8 +412,6 @@ public class ProductRestController_createProduct {
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -416,6 +421,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    camera =""
     @Test
     public void createProduct_camera_14() throws Exception {
 
@@ -441,6 +447,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    camera out of length
     @Test
     public void createProduct_camera_17() throws Exception {
 
@@ -466,6 +473,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid camera
     @Test
     public void createProduct_camera_18() throws Exception {
 
@@ -493,6 +501,7 @@ public class ProductRestController_createProduct {
     }
 
     //    test selfie
+//    selfie = null
     @Test
     public void createProduct_selfie_13() throws Exception {
 
@@ -507,10 +516,7 @@ public class ProductRestController_createProduct {
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
-
-
-
-        this.mockMvc
+         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
                         .content(this.objectMapper.writeValueAsString(productDto))
@@ -519,6 +525,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    selfie =""
     @Test
     public void createProduct_selfie_14() throws Exception {
 
@@ -534,8 +541,6 @@ public class ProductRestController_createProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -545,6 +550,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//selfie out of length
 
     @Test
     public void createProduct_selfie_17() throws Exception {
@@ -569,6 +575,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    valid selfie
     @Test
     public void createProduct_selfie_18() throws Exception {
 
@@ -584,8 +591,6 @@ public class ProductRestController_createProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -597,7 +602,7 @@ public class ProductRestController_createProduct {
 
 //    test cpu
 
-
+//cpu =null
     @Test
     public void createProduct_cpu_13() throws Exception {
 
@@ -612,9 +617,6 @@ public class ProductRestController_createProduct {
         productDto.setMemory("128gb");
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
-
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -624,7 +626,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//cpu = ""
     @Test
     public void createProduct_cpu_14() throws Exception {
 
@@ -640,8 +642,6 @@ public class ProductRestController_createProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -651,6 +651,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    cpu out of length
 
     @Test
     public void createProduct_cpu_17() throws Exception {
@@ -668,7 +669,6 @@ public class ProductRestController_createProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -678,7 +678,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//    valid cpu
     @Test
     public void createProduct_cpu_18() throws Exception {
 
@@ -694,7 +694,6 @@ public class ProductRestController_createProduct {
         productDto.setOtherDescription("iPhone 13 Pro không có nhiều sự thay đổi về thiết kế, khi máy vẫn sở hữu kiểu dáng tương tự như điện thoại iPhone 12 Pro với các cạnh viền vuông vắn và hai mặt kính cường lực cao cấp.");
 
 
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/api/product/create")
@@ -706,7 +705,7 @@ public class ProductRestController_createProduct {
 
 
 //    test memory
-
+// memory = null
     @Test
     public void createProduct_memory_13() throws Exception {
 
@@ -731,6 +730,7 @@ public class ProductRestController_createProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+//memory =""
 
     @Test
     public void createProduct_memory_14() throws Exception {
@@ -755,6 +755,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
+//    memory out length
     @Test
     public void createProduct_memory_17() throws Exception {
 
@@ -779,7 +780,7 @@ public class ProductRestController_createProduct {
                 .andExpect(status().is4xxClientError());
     }
 
-
+//     vaid memory
     @Test
     public void createProduct_memory_18() throws Exception {
 
