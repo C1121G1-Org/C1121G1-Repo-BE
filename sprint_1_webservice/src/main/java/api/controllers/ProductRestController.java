@@ -47,13 +47,12 @@ public class ProductRestController {
       */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                        @RequestParam Optional<String> keyPhone,
+                                                        @RequestParam(value = "keyPrice",defaultValue = "1" , required = false) String keyPriceValue,
                                                         @RequestParam Optional<String> keyQuanlity) {
         String keyNameValue = keyName.orElse("");
-        String keyPhoneValue = keyPhone.orElse("");
         String keyQualityValue = keyQuanlity.orElse("");
 
-        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue, keyQualityValue);
+        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQualityValue);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
