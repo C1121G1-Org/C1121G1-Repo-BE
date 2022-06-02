@@ -24,7 +24,7 @@ public interface IAccountRoleRepository extends JpaRepository<AccountRole, Integ
     Created by Khoa PTD
     Time: 09:00 02/06/2022
     Function: find By Id Account
-*/
+    */
     @Query(value = "select account_role.id, account_role.account_id, account_role.role_id from account_role " +
             "inner join role on account_role.role_id = role.id " +
             "where account_role.account_id = :id",
@@ -33,10 +33,10 @@ public interface IAccountRoleRepository extends JpaRepository<AccountRole, Integ
 
 
     /*
-Created by Khoa PTD
-Time: 09:00 02/06/2022
-Function: setRoleId
-*/
+    Created by Khoa PTD
+    Time: 09:00 02/06/2022
+    Function: setRoleId
+    */
     @Transactional
     @Modifying
     @Query(value = "UPDATE `account_role` SET `role_id` = :positionId WHERE account_role.`id` = :id", nativeQuery = true)

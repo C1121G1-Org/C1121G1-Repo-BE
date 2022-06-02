@@ -15,10 +15,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmployeeRestController_createEmployee {
+public class EmployeeRestController_editEmployee  {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,7 +27,7 @@ public class EmployeeRestController_createEmployee {
 
     //test cho trường hợp item name
     @Test
-    public void createEmployee_name_13() throws Exception {
+    public void editEmployee_name_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -47,7 +46,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -55,7 +54,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_name_14() throws Exception {
+    public void editEmployee_name_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -75,7 +74,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -83,7 +82,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_name_15() throws Exception {
+    public void editEmployee_name_15() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -103,7 +102,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -111,7 +110,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_name_16() throws Exception {
+    public void editEmployee_name_16() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -131,7 +130,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -139,7 +138,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_name_17() throws Exception {
+    public void editEmployee_name_17() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -159,7 +158,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -167,7 +166,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_name_18() throws Exception {
+    public void editEmployee_name_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -187,7 +186,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -197,7 +196,7 @@ public class EmployeeRestController_createEmployee {
 
     // test trường hợp cho item DateOfBirth
     @Test
-    public void createEmployee_dateOfBirth_13() throws Exception {
+    public void editEmployee_dateOfBirth_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -217,7 +216,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -225,7 +224,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_dateOfBirth_14() throws Exception {
+    public void editEmployee_dateOfBirth_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -245,7 +244,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -253,7 +252,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_dateOfBirth_15() throws Exception {
+    public void editEmployee_dateOfBirth_15() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -273,7 +272,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -282,7 +281,7 @@ public class EmployeeRestController_createEmployee {
 
 
     @Test
-    public void createEmployee_dateOfBirth_18() throws Exception {
+    public void editEmployee_dateOfBirth_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -302,7 +301,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -311,7 +310,7 @@ public class EmployeeRestController_createEmployee {
 
     // test cho item address
     @Test
-    public void createEmployee_address_13() throws Exception {
+    public void editEmployee_address_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -331,7 +330,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -339,7 +338,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_address_14() throws Exception {
+    public void editEmployee_address_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -359,7 +358,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -368,7 +367,7 @@ public class EmployeeRestController_createEmployee {
 
 
     @Test
-    public void createEmployee_address_16() throws Exception {
+    public void editEmployee_address_16() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -388,7 +387,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -396,7 +395,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_address_17() throws Exception {
+    public void editEmployee_address_17() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -416,7 +415,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -424,7 +423,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_address_18() throws Exception {
+    public void editEmployee_address_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -444,7 +443,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -454,12 +453,12 @@ public class EmployeeRestController_createEmployee {
     // test cho trường item Image
 
     @Test
-    public void createEmployee_image_13() throws Exception {
+    public void editEmployee_image_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
         employeeDto.setEmployeeName("khoa");
-    employeeDto.setDateOfBirth("01/01/1998");
+        employeeDto.setDateOfBirth("01/01/1998");
         employeeDto.setAddress("101");
 //        employeeDto.setImage("");
         employeeDto.setPhoneNumber("0905393839");
@@ -474,7 +473,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -482,7 +481,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_Image_14() throws Exception {
+    public void editEmployee_Image_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -502,14 +501,14 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createEmployee_Image_18() throws Exception {
+    public void editEmployee_Image_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -529,15 +528,15 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
-    // TEST cho item sdt
+    // TEST cho item iphone
     @Test
-    public void createEmployee_phoneNumber_13() throws Exception {
+    public void editEmployee_phoneNumber_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -557,7 +556,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -565,7 +564,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_phoneNumber_14() throws Exception {
+    public void editEmployee_phoneNumber_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -585,7 +584,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -593,7 +592,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_phoneNumber_15() throws Exception {
+    public void editEmployee_phoneNumber_15() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -613,7 +612,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -621,7 +620,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_phoneNumber_16() throws Exception {
+    public void editEmployee_phoneNumber_16() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -641,7 +640,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -649,7 +648,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_phoneNumber_17() throws Exception {
+    public void editEmployee_phoneNumber_17() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -669,7 +668,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -677,7 +676,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_phoneNumber_18() throws Exception {
+    public void editEmployee_phoneNumber_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -697,7 +696,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -707,7 +706,7 @@ public class EmployeeRestController_createEmployee {
     // test cho trường item IdCard
 
     @Test
-    public void createEmployee_IdCard_13() throws Exception {
+    public void editEmployee_IdCard_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -727,7 +726,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -735,7 +734,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_IdCard_14() throws Exception {
+    public void editEmployee_IdCard_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -755,8 +754,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
-                        .content(this.objectMapper.writeValueAsString(employeeDto))
+                        .patch("/api/employee/update")                        .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -782,14 +780,13 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
-                        .content(this.objectMapper.writeValueAsString(employeeDto))
+                        .patch("/api/employee/update")                        .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createEmployee_idCard_18() throws Exception {
+    public void editEmployee_idCard_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -809,8 +806,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
-                        .content(this.objectMapper.writeValueAsString(employeeDto))
+                        .patch("/api/employee/update")                        .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
@@ -818,7 +814,7 @@ public class EmployeeRestController_createEmployee {
     // test cho trường item chọn position
 
     @Test
-    public void createEmployee_Position_13() throws Exception {
+    public void editEmployee_Position_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -838,7 +834,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -846,7 +842,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_Position_14() throws Exception {
+    public void editEmployee_Position_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -866,14 +862,14 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createEmployee_Position_18() throws Exception {
+    public void editEmployee_Position_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -893,7 +889,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -902,7 +898,7 @@ public class EmployeeRestController_createEmployee {
 
     // test cho item email
     @Test
-    public void createEmployee_Email_13() throws Exception {
+    public void editEmployee_Email_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -922,7 +918,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -930,7 +926,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_Email_14() throws Exception {
+    public void editEmployee_Email_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -950,7 +946,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -958,7 +954,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_Email_15() throws Exception {
+    public void editEmployee_Email_15() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -978,14 +974,14 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createEmployee_Email_18() throws Exception {
+    public void editEmployee_Email_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1005,7 +1001,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -1013,7 +1009,7 @@ public class EmployeeRestController_createEmployee {
     }
     // test cho item user name
     @Test
-    public void createEmployee_userName_13() throws Exception {
+    public void editEmployee_userName_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1033,14 +1029,14 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError() );
     }
     @Test
-    public void createEmployee_UserName_14() throws Exception {
+    public void editEmployee_UserName_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1060,7 +1056,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -1068,7 +1064,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_userName_18() throws Exception {
+    public void editEmployee_userName_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1088,7 +1084,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -1097,7 +1093,7 @@ public class EmployeeRestController_createEmployee {
 
     // test cho item pass work
     @Test
-    public void createEmployee_passWord_13() throws Exception {
+    public void ceditEmployee_passWord_13() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1117,14 +1113,14 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().is4xxClientError() );
     }
     @Test
-    public void createEmployee_passWord_14() throws Exception {
+    public void editEmployee_passWord_14() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1144,7 +1140,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -1152,7 +1148,7 @@ public class EmployeeRestController_createEmployee {
     }
 
     @Test
-    public void createEmployee_passWord_18() throws Exception {
+    public void editEmployee_passWord_18() throws Exception {
         EmployeeDto employeeDto = new EmployeeDto();
         PositionDto positionDto = new PositionDto();
         AccountDto accountDto = new AccountDto();
@@ -1172,7 +1168,7 @@ public class EmployeeRestController_createEmployee {
         accountDto.setVerificationCode("");
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/employee/create")
+                        .patch("/api/employee/update")
                         .content(this.objectMapper.writeValueAsString(employeeDto))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())

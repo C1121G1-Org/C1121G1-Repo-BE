@@ -1,16 +1,22 @@
 package api.controllers;
 
 import api.dto.AccountDto;
+import api.models.Employee;
+import api.models.Position;
 import api.dto.EmployeeDto;
 import api.dto.PositionDto;
 import api.models.*;
 import api.services.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import java.util.Optional;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,9 +57,9 @@ public class EmployeeRestController {
     }
 
     /*
-    Created by Khoa PTD
-    Time: 09:00 02/06/2022
-    Function: get position
+        Created by Khoa PTD
+        Time: 09:00 02/06/2022
+        Function: get position by id
     */
     @GetMapping(value = "/position/list")
     public ResponseEntity<ResponseObject> listPosition() {
@@ -62,7 +68,22 @@ public class EmployeeRestController {
                 true, "OK", new HashMap<>(), positionList), HttpStatus.OK);
     }
 
+    /*
+        Created by HuyNH
+        Time: 19:00 31/05/2022
+        Function: findAllEmployee = list Employee.
+    */
+    @GetMapping(value = {"/list"})
+    public ResponseEntity<Page<Employee>>findAllEmployee(@PageableDefault(value = 2)Pageable pageable,
+                                                         @RequestParam Optional<String> keyName) {
+        String nameValue = keyName.orElse("");
 
+        Page<Employee> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
+        if (employeePage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employeePage, HttpStatus.OK);
+    }
 
     /*
         Created by Khoa PTD
@@ -92,25 +113,23 @@ public class EmployeeRestController {
 
         account.setIsEnabled(true);
         iAccountService.save(account);
-//        Account acc = iAccountService.findByUserName(account.getUserName());
         Role role = iRoleService.findById(position.getId());
-        accountRole.setAccount(account);//sửa lại thành acc
+        accountRole.setAccount(account);
         accountRole.setRole(role);
         iAccountRoleService.save(accountRole);
         employee.setPosition(position);
         employee.setAccount(account);
+        employee.setDeleteFlag(false);
         iEmployeeService.save(employee);
 
         return new ResponseEntity<>(HttpStatus.OK);
-
-
     }
 
     /*
-    Created by Khoa PTD
-    Time: 09:00 02/06/2022
-    Function: find Employee by id
-*/
+        Created by Khoa PTD
+        Time: 09:00 02/06/2022
+        Function: find Employee by id.
+    */
     @GetMapping(value = "/{id}")
     public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable Long id) {
         Employee employee = this.iEmployeeService.findById(id);
@@ -135,13 +154,11 @@ public class EmployeeRestController {
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
-
-
     /*
-    Created by Khoa PTD
-    Time: 09:00 02/06/2022
-    Function: edit Employee
-*/
+        Created by Khoa PTD
+        Time: 09:00 02/06/2022
+        Function: edit Employee
+    */
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateEmployee(@PathVariable Integer id,
                                                          @Valid @RequestBody EmployeeDto employeeDto,
@@ -184,6 +201,20 @@ public class EmployeeRestController {
 
     }
 
-
+    /*
+        Created by HuyNH
+        Time: 19:00 31/05/2022
+        Function: findAllEmployee = delete flag employee.
+    */
+    @PatchMapping(value = "/delete/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long id) {
+        Employee employee = iEmployeeService.findById(id);
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        employee.setDeleteFlag(true);
+        iEmployeeService.saveDelete(employee);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
