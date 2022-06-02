@@ -26,6 +26,11 @@ public class EmployeeRestController_personal_information {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /*
+         Test case 1: View personal information without login.
+         Data: this method doesn't need input as it will get the account's personal information
+               based on which account is logged in through the JWT code stored in the request header.
+    */
     @Test
     public void view_personal_information_1() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -35,6 +40,11 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 4: View personal information after login successfully.
+         Data: this method doesn't need input as it will get the account's personal information
+               based on which account is logged in through the JWT code stored in the request header.
+    */
     @Test
     public void view_personal_information_4() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -45,6 +55,19 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is2xxSuccessful());
     }
 
+    /*
+         Test case 20: Update personal information without enter name value.
+         Data: {
+                    id: 1,
+                    name: "",
+                    dateOfBirth: "2001-12-21",
+                    address: "",
+                    idCard: "",
+                    image: "",
+                    phoneNumber: "",
+                }
+          * address, idCard, image, phoneNumber are optional fields, can be empty.
+    */
     @Test
     public void update_personal_information_name_20() throws Exception {
         PersonalDto personalDto = new PersonalDto();
@@ -64,6 +87,19 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 24: Update personal information with valid name value.
+         Data: {
+                    id: 1,
+                    name: "Khai",
+                    dateOfBirth: "2001-12-21",
+                    address: "",
+                    idCard: "",
+                    image: "",
+                    phoneNumber: "",
+                }
+          * address, idCard, image, phoneNumber are optional fields, can be empty.
+    */
     @Test
     public void update_personal_information_name_24() throws Exception {
         PersonalDto personalDto = new PersonalDto();
@@ -83,6 +119,19 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is2xxSuccessful());
     }
 
+    /*
+         Test case 20: Update personal information without enter date of birth value.
+         Data: {
+                    id: 1,
+                    name: "Khai",
+                    dateOfBirth: "",
+                    address: "",
+                    idCard: "",
+                    image: "",
+                    phoneNumber: "",
+                }
+          * address, idCard, image, phoneNumber are optional fields, can be empty.
+    */
     @Test
     public void update_personal_information_date_of_birth_20() throws Exception {
         PersonalDto personalDto = new PersonalDto();
@@ -102,6 +151,20 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 20: Update personal information with wrong format of date of birth, expect format of
+                       date of birth is yyyy-MM-dd.
+         Data: {
+                    id: 1,
+                    name: "Khai",
+                    dateOfBirth: "2001/12/21",
+                    address: "",
+                    idCard: "",
+                    image: "",
+                    phoneNumber: "",
+                }
+          * address, idCard, image, phoneNumber are optional fields, can be empty.
+    */
     @Test
     public void update_personal_information_date_of_birth_21() throws Exception {
         PersonalDto personalDto = new PersonalDto();
@@ -121,6 +184,19 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 24: Update personal information with valid date of birth format (yyyy-MM-dd).
+         Data: {
+                    id: 1,
+                    name: "Khai",
+                    dateOfBirth: "2001/12/21",
+                    address: "",
+                    idCard: "",
+                    image: "",
+                    phoneNumber: "",
+                }
+          * address, idCard, image, phoneNumber are optional fields, can be empty.
+    */
     @Test
     public void update_personal_information_date_of_birth_24() throws Exception {
         PersonalDto personalDto = new PersonalDto();
@@ -140,6 +216,19 @@ public class EmployeeRestController_personal_information {
                 .andExpect(status().is2xxSuccessful());
     }
 
+    /*
+        Test case 24: Update personal information with valid values but not logged in.
+        Data: {
+                   id: 1,
+                   name: "Khai",
+                   dateOfBirth: "2001/12/21",
+                   address: "",
+                   idCard: "",
+                   image: "",
+                   phoneNumber: "",
+               }
+         * address, idCard, image, phoneNumber are optional fields, can be empty.
+   */
     @Test
     public void update_personal_information_date_of_birth() throws Exception {
         PersonalDto personalDto = new PersonalDto();

@@ -27,89 +27,124 @@ public class SecurityRestController_login {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /*
+         Test case 1: Login without username.
+         Data: username: null
+               password: "123456"
+    */
     @Test
     public void login_username_1() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setPassword("123456");
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/public/login")
+                        .post("/api/public/login")
                         .content(this.objectMapper.writeValueAsString(loginRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 1: Login without password.
+         Data: username: "khaipro"
+               password: null
+    */
     @Test
     public void login_password_1() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("khaipro");
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/public/login")
+                        .post("/api/public/login")
                         .content(this.objectMapper.writeValueAsString(loginRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 2: Login without enter username value.
+         Data: username: ""
+               password: "123456"
+    */
     @Test
     public void login_username_2() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("");
         loginRequest.setPassword("123456");
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/public/login")
-                .content(this.objectMapper.writeValueAsString(loginRequest))
-                .contentType(MediaType.APPLICATION_JSON))
+                    .post("/api/public/login")
+                    .content(this.objectMapper.writeValueAsString(loginRequest))
+                    .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 2: Login without enter password value.
+         Data: username: "khaipro"
+               password: ""
+    */
     @Test
     public void login_password_2() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("khaipro");
         loginRequest.setPassword("");
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/public/login")
+                        .post("/api/public/login")
                         .content(this.objectMapper.writeValueAsString(loginRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 3: Login with username does not exist in DB, username exists in DB is "khaipro".
+         Data: username: "khaivip"
+               password: "123456"
+    */
     @Test
     public void login_username_3() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("khaivip");
         loginRequest.setPassword("123456");
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/public/login")
+                        .post("/api/public/login")
                         .content(this.objectMapper.writeValueAsString(loginRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 3: Login with incorrect password, correct password is "123456.
+         Data: username: "khaivip"
+               password: "12345678"
+    */
     @Test
     public void login_password_3() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("khaipro");
         loginRequest.setPassword("12345678");
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/public/login")
+                        .post("/api/public/login")
                         .content(this.objectMapper.writeValueAsString(loginRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    /*
+         Test case 4: Login successfull.
+         Data: username: "khaipro"
+               password: "123456"
+    */
     @Test
     public void login_username_password_4() throws Exception {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("khaipro");
         loginRequest.setPassword("123456");
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/public/login")
+                        .post("/api/public/login")
                         .content(this.objectMapper.writeValueAsString(loginRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
