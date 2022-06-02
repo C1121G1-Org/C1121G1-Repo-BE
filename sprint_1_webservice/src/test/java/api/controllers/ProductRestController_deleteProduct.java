@@ -36,6 +36,15 @@ public class ProductRestController_deleteProduct {
                 .andExpect(status().is4xxClientError());
     }
     @Test
+    public void deleteProduct_27() throws Exception {
+
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .delete("/api/product/delete/{id}", "99"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+    @Test
     public void deleteProduct_28() throws Exception {
 
         this.mockMvc.perform(
