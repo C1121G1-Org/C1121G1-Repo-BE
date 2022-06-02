@@ -13,6 +13,12 @@ import javax.transaction.Transactional;
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 
 
+        /*
+        Created by CongNv
+        Time: 21:30 31/05/2022
+        Function: create invoice
+        */
+
 
     @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
             "FROM  invoice " +
@@ -36,26 +42,22 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 //    @Query(value = "select * from land_information " +
 //            "join direction on direction.id = land_information.direction_id " +
 
+
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create invoice
+    */
     @Transactional
     @Modifying
-    @Query(value = "insert into invoice (create_date, create_time ,payments, customer_id) value (?1,?2,?3,?4);", nativeQuery = true)
-    void saveInvoice(String createDate, String createTime, String payments, Long customerId);
+    @Query(value = "insert into invoice (create_date, create_time,total_money ,payments, customer_id) value (?1,?2,?3,?4,?5);", nativeQuery = true)
+    void saveInvoice(String createDate, String createTime,Double totalMoney, String payments, Long customerId);
+
+    @Query(value = "select * from invoice order by id desc limit 1;",nativeQuery = true)
+    Invoice getNewInvoice();
 
 
-    @Query(value = "select * from  invocie " +
-            "inner join customer on invocie.id = customer.id " +
-            "inner join product on invocie.id = product.id " +
-            "where (create_time like concat('%',:keyword,'%') " +
-            "or  create_date like concat('%',:keyword,'%')  " +
-            "or  total_money like concat('%',:keyword,'%')  " +
-            "or  customer_id like concat('%',:keyword,'%')  " +
-            "or  product_id like concat('%',:keyword,'%')) and flag = 1 " +
-            "order by case when :sorts = 'sortDateAsc' then create_date end desc ," +
-            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
-            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
-            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
-            , nativeQuery = true)
-    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable , @Param("sorts") String sort);
+
 
 //    @Query(value = "select * from land_information join direction on direction.id = land_information.direction_id " +
 
