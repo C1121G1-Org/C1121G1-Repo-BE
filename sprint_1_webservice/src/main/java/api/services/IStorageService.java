@@ -14,4 +14,19 @@ public interface IStorageService {
     */
     List<Storage> getAllStorage();
     void createStorage(Storage storage);
+
+    /*
+     Created by LongNHL
+     Time: 22:30 1/06/2022
+     Function: find storage by productId after create invoice
+     */
+    Storage getStorageByIdProduct(Long productId);
+        /*
+        Created by LongNHL
+        Time: 22:30 1/06/2022
+        Function: update quantity for product after create invoice
+        */
+    void updateQuantityProduct(Storage storage);
+
+
 }

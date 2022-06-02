@@ -7,6 +7,7 @@ import api.models.*;
 import api.services.ICustomerService;
 import api.services.IInvoiceDetailService;
 import api.services.IInvoiceService;
+import api.services.IStorageService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,8 @@ public class InvoiceDetailRestController {
     private IInvoiceService iInvoiceService;
     @Autowired
     private ICustomerService iCustomerService;
+    @Autowired
+    private IStorageService iStorageService;
 
     //Create by chienLV
 //Time: 18h00 31/05/2022
@@ -51,7 +54,7 @@ public class InvoiceDetailRestController {
      */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
-                                                                 BindingResult bindingResult) {
+                                                              BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors()
@@ -59,7 +62,7 @@ public class InvoiceDetailRestController {
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
                     HttpStatus.BAD_REQUEST);
         }
-        if (invoiceDetailDto.getProductInvoiceDtoList().isEmpty()){
+        if (invoiceDetailDto.getProductInvoiceDtoList().isEmpty()) {
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
                     HttpStatus.BAD_REQUEST);
         }
@@ -82,6 +85,22 @@ public class InvoiceDetailRestController {
             iInvoiceDetailService.createInvoiceDetail(quantity, productId, newInvoice.getId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
-
+    }
+        /*
+         Created by LongNHL
+         Time: 22:30 1/06/2022
+         Function: create invoiceDetail
+         */
+    @PatchMapping("/updateQuantityProduct")
+    public ResponseEntity<String> updateQuantityProduct(@RequestBody ProductInvoiceDto productInvoiceDto) {
+        Storage storage = iStorageService.getStorageByIdProduct(productInvoiceDto.getProductId());
+        if (productInvoiceDto.getQuantity() > storage.getQuantity()){
+            String messageError = "Số lượng sản phẩm trong kho: " + storage.getQuantity();
+           return new ResponseEntity<>(messageError,HttpStatus.BAD_REQUEST);
+        }else {
+            storage.setQuantity(storage.getQuantity() - productInvoiceDto.getQuantity());
+            iStorageService.updateQuantityProduct(storage);
+            return new ResponseEntity<>("Cập nhật số lượng thành công", HttpStatus.OK);
+        }
     }
 }
