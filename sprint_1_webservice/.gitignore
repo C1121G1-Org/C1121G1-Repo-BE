@@ -16,7 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-/sprint_1_webservice/src/test/
+#/sprint_1_webservice/src/test/
 ### IntelliJ IDEA ###
 .idea
 *.iws

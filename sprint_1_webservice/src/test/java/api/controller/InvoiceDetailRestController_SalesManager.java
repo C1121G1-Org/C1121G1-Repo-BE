@@ -41,7 +41,8 @@ public class InvoiceDetailRestController_SalesManager {
         InvoiceDto invoiceDto = new InvoiceDto();
         CustomerDto customer = new CustomerDto();
         List<ProductInvoiceDto> productInvoiceDtoList = new ArrayList<>();
-        productInvoiceDtoList = null;
+        ProductInvoiceDto productInvoiceDto = new ProductInvoiceDto();
+        productInvoiceDtoList.add(productInvoiceDto);
         invoiceDetailDto.setInvoiceDto(invoiceDto);
         invoiceDto.setPayments("Thẻ tín dụng");
         invoiceDto.setTotalMoney(1000000.0);
@@ -66,8 +67,10 @@ public class InvoiceDetailRestController_SalesManager {
         InvoiceDto invoiceDto = new InvoiceDto();
         CustomerDto customer = new CustomerDto();
         List<ProductInvoiceDto> productInvoiceDtoList = new ArrayList<>();
-        productInvoiceDtoList.get(0).setQuantity(0L);
-        productInvoiceDtoList.get(0).setProductId(0L);
+        ProductInvoiceDto productInvoiceDto = new ProductInvoiceDto();
+        productInvoiceDtoList.add(productInvoiceDto);
+        productInvoiceDto.setProductId(0L);
+        productInvoiceDto.setQuantity(0L);
         invoiceDetailDto.setInvoiceDto(invoiceDto);
         invoiceDto.setPayments("Thẻ tín dụng");
         invoiceDto.setTotalMoney(1000000.0);
