@@ -38,10 +38,18 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE `sprint-1-db`.`customer` Set `customer` (`address`, `customer_name`, `date_of_birth`, `email`, `gender`, `phone_number`) " +
+    @Query( value = "UPDATE `sprint-1-db`.`customer` SET " +
+            "`address` = :#{#customer.address}," +
+            " `customer_name` = :#{#customer.customerName}," +
+            " `date_of_birth` = :#{#customer.dateOfBirth}," +
+            " `email` = :#{#customer.email}," +
+            " `gender` = :#{#customer.gender}," +
+            " `phone_number` = :#{#customer.phoneNumber} WHERE (`id` =:id);",nativeQuery = true)
+    void editCustomer(Customer customer,@Param("id") Long id);
+    /*@Query(value = "UPDATE `sprint-1-db`.`customer` Set `customer` (`address`, `customer_name`, `date_of_birth`, `email`, `gender`, `phone_number`) " +
             "values (:#{#customer.address}, :#{#customer.customerName}, :#{#customer.dateOfBirth}, :#{#customer.email}, " +
-            ":#{#customer.gender}, :#{#customer.phoneNumber}) WHERE (`id`=:id)", nativeQuery = true)
-            void editCustomer(Customer customer,@Param("id") Long id);
+            ":#{#customer.gender}, :#{#customer.phoneNumber}) WHERE (`id`=:id)", nativeQuery = true)*/
+
 
     /*
     Created By hoangDH,

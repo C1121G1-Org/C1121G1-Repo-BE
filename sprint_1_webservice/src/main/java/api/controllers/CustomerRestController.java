@@ -85,6 +85,7 @@ public class CustomerRestController {
                 return new ResponseEntity<>(new ResponseObject(false,"Failed!", errorMap, new ArrayList()),
                         HttpStatus.BAD_REQUEST);
             }
+            customerDto.setId(id);
             BeanUtils.copyProperties(customerDto, customer);
             iCustomerService.editCustomer(customer,id);
             return new ResponseEntity<>(HttpStatus.OK);
