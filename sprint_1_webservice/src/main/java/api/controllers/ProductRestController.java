@@ -76,10 +76,6 @@ public class ProductRestController {
 //        return null;
 //    }
 
-    @PatchMapping(value = "/update")
-    public String updateProduct() {
-        return null;
-    }
 
 
     /*
@@ -118,16 +114,15 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: findById
  */
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
-
-        Product product = this.iProductService.findById(id);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Product> product = this.iProductService.findById(id);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 
     /*
      Created by tuanPA
@@ -146,8 +141,6 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
-
-
         Product product = new Product();
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
@@ -169,7 +162,7 @@ public class ProductRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        Product product = iProductService.findById(id);
+       Optional<Product> product = iProductService.findById(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

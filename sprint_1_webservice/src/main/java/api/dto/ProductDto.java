@@ -41,6 +41,7 @@ public class ProductDto{
     private String memory;
     private String otherDescription;
 
+//    private boolean deleteFlag;
 
 //
 //    @Override
