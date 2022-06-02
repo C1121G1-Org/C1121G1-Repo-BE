@@ -32,7 +32,7 @@ public class ProductServiceImpl implements IProductService {
         return iProductRepository.findProduct(productDto);
     }
         /*
-            Created by tamHT
+            Created by hieuMMT and tamHT
             Time: 18:15 31/05/2022
             Function: search Products
         */
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements IProductService {
     */
     @Override
     public void save(Product product) {
-        this.iProductRepository.save(product);
+        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie());
     }
 
     /*
@@ -58,7 +58,26 @@ public class ProductServiceImpl implements IProductService {
  */
     @Override
     public Optional<Product> findById(Long id) {
-        return iProductRepository.findById(id);
+        return iProductRepository.findById(id);}
 
+    /*
+     Created by tuanPA
+     Time: 18:15 31/05/2022
+     Function: updateProduct
+ */
+    @Override
+    public void updateProduct(Product product) {
+        this.iProductRepository.updateProduct(product);
     }
+    /*
+         Created by hieuMMT
+         Time: 14:15 1/06/2022
+         Function: delete product
+     */
+    @Override
+    public void deleteFlag(Long id) {
+        this.iProductRepository.deleteFlag(id);
+    }
+
+
 }

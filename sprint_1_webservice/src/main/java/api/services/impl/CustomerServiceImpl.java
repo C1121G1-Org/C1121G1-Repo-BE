@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
-
     @Autowired
     ICustomerRepository iCustomerRepository;
     /*
@@ -50,6 +49,11 @@ public class CustomerServiceImpl implements ICustomerService {
 
 
     /*
+<<<<<<< HEAD
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create customer
+=======
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer
@@ -121,10 +125,14 @@ public class CustomerServiceImpl implements ICustomerService {
         iCustomerRepository.saveCustomer(customer.getCustomerName(), customer.getPhoneNumber(),
                 customer.getDateOfBirth(), customer.getEmail(), customer.getAddress(), customer.isGender());
     }
-
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: get customer
+    */
     @Override
-    public Customer findCustomer(Customer customer) {
-        return iCustomerRepository.findCustomer(customer.getCustomerName(), customer.getPhoneNumber(), customer.getDateOfBirth());
+    public Customer getNewCustomer() {
+        return iCustomerRepository.getNewCreateCustomer();
     }
 
 

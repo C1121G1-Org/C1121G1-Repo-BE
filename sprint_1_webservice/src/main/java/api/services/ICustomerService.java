@@ -73,9 +73,21 @@ Function: find customer object by id from database
 
 
 
+    /*
+       Created by LongNHL
+       Time: 21:30 31/05/2022
+       Function: get customer
+       */
+
     void createCustomer(Customer customer);
 
-    Customer findCustomer(Customer customer);
+       /*
+       Created by LongNHL
+       Time: 21:30 31/05/2022
+       Function: get customer
+       */
+    Customer getNewCustomer();
+
 
 
 }

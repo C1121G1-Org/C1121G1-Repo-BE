@@ -29,10 +29,11 @@ public class Invoice {
     @Column(name = "create_date", nullable = false, length = 50)
     private String createDate;
 
-    @Column(name = "payments", nullable = false, length = 50)
-    private String payments;
     @Column(name = "total_money", nullable = false)
     private Double totalMoney;
+
+    @Column(name = "payments", nullable = false, length = 50)
+    private String payments;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
