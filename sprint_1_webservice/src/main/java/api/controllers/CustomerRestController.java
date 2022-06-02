@@ -51,11 +51,11 @@ public class CustomerRestController {
       */
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id) {
-        Customer customer = iCustomerService.findById(id);
-        if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Customer> customer = iCustomerService.findById(id);
+        if (customer.isPresent()) {
+            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
     }
 
     /*

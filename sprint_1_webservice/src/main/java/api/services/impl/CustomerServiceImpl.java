@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
@@ -73,8 +75,8 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public Customer findById(long id) {
-        return iCustomerRepository.findById(id).get();
+    public Optional<Customer>findById(long id) {
+        return iCustomerRepository.findById(id);
     }
 
     /*
