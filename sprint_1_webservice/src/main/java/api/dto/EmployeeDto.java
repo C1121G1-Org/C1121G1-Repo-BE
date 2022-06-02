@@ -13,7 +13,7 @@ import org.springframework.validation.Validator;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeDto implements Validator {
-    private Long   id;
+    private Long id;
     private String employeeName;
     private String dateOfBirth;
     private String address;
@@ -24,6 +24,10 @@ public class EmployeeDto implements Validator {
     private PositionDto positionDto;
     private AccountDto accountDto;
     private IAccountService iAccountService;
+
+    public EmployeeDto() {
+        setDeleteFlag(false);
+    }
 
     public void setAccountService(IAccountService iAccountService) {
     }
@@ -36,3 +40,4 @@ public class EmployeeDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
     }
+}

@@ -53,11 +53,6 @@ public class EmployeeRestController {
         return new ResponseEntity<>(new ResponseObject(true, "OK", new HashMap<>(), positionList), HttpStatus.OK);
     }
 
-    @ModelAttribute("positionObj")
-    public List<Position> getAllPosition() {
-        return iPositionService.findAll();
-    }
-
     /*
         Created by HuyNH
         Time: 19:00 31/05/2022
@@ -99,9 +94,7 @@ public class EmployeeRestController {
         BeanUtils.copyProperties(employeeDto, employee);
         account.setIsEnabled(true);
 
-
         return null;
-
     }
 
     @PatchMapping(value = "/update")
@@ -120,7 +113,8 @@ public class EmployeeRestController {
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        iEmployeeService.delete(id);
+        employee.setDeleteFlag(true);
+        iEmployeeService.saveDelete(employee);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

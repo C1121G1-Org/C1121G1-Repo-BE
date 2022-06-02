@@ -15,22 +15,20 @@ public class EmployeeServiceImpl implements IEmployeeService {
     IEmployeeRepository iEmployeeRepository;
 
     /*
-    Created by HuyNH
-    Time: 19:00 31/05/2022
-    Function:     findAllEmployee = abstract method to find all employee
-
-*/
+        Created by HuyNH
+        Time: 19:00 31/05/2022
+        Function:     findAllEmployee = abstract method to find all employee
+    */
     @Override
     public Page<Employee> findAllEmployee(Pageable pageable, String key) {
         return iEmployeeRepository.pageFindAll(pageable, key);
     }
 
     /*
-    Created by HuyNH
-    Time: 19:00 31/05/2022
-    Function:     findAllEmployee = abstract method to save a employee
-
-*/
+        Created by HuyNH
+        Time: 19:00 31/05/2022
+        Function:     findAllEmployee = abstract method to save a employee
+    */
     @Override
     public void save(Employee employee) {
         this.iEmployeeRepository.save(employee);
@@ -42,14 +40,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     /*
-   Created by HuyNH
-   Time: 19:00 31/05/2022
-   Function:     findAllEmployee = abstract method to delete a employee
-
-*/
+       Created by HuyNH
+       Time: 19:00 31/05/2022
+       Function:     findAllEmployee = abstract method to delete a employee
+    */
     @Override
-    public void delete(Long id) {
-        iEmployeeRepository.deleteFlag(id);
+    public void saveDelete(Employee employee) {
+        iEmployeeRepository.saveDelete(employee);
     }
 
 }
