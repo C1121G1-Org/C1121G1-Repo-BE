@@ -2,20 +2,21 @@ package api.repositories;
 
 import api.models.Account;
 import api.models.Employee;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
     /*
-   Created by Khoa PTD
-   Time: 09:00 02/06/2022
-   Function: createEmployee
-   */
+       Created by Khoa PTD
+       Time: 09:00 02/06/2022
+       Function: createEmployee
+    */
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO employee (`id`,`employee_name`, `date_of_birth`, " +
@@ -25,10 +26,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     void createEmployee(Employee employee);
 
     /*
-   Created by Khoa PTD
-   Time: 09:00 02/06/2022
-   Function: updateEmployee
-   */
+       Created by Khoa PTD
+       Time: 09:00 02/06/2022
+       Function: updateEmployee
+    */
     @Transactional
     @Modifying
     @Query(value = "update employee join `account`on employee.account_id = `account`.`id` " +
@@ -46,14 +47,29 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "where employee.`id`= :#{#employee.id}", nativeQuery = true)
     void updateEmployee(Employee employee , Account account);
 
-
-
     /*
-Created by Khoa PTD
-Time: 09:00 02/06/2022
-Function: findEmployeeById
-*/
+        Created by Khoa PTD
+        Time: 09:00 02/06/2022
+        Function: find Employee by id.
+    */
     @Query(value = "SELECT * FROM employee  WHERE employee.id= :id",nativeQuery = true)
     Employee findEmployeeById(@Param("id") Long id);
 
+    /*
+       Created by HuyNH
+       Time: 19:00 31/05/2022
+       Function:     pageFindAll = abstract method to find all employee and pagination and search
+    */
+    @Query(value = "select * from employee where delete_flag = 1 and employee_name like concat('%', :name ,'%') "
+            , nativeQuery = true,
+            countQuery = "select count(*) from employee where delete_flag = 1 and employee_name like concat('%', :name ,'%') ")
+    Page<Employee> pageFindAll(Pageable pageable, @Param("name") String keyword);
+
+    /*
+       Created by HuyNH
+       Time: 19:00 31/05/2022
+       Function: deleteFlag = abstract method to delete flag a employee.
+    */
+    @Query(value = "update employee set delete_flag = 1 where employee.id = :id ", nativeQuery = true)
+    void deleteFlag(Long id);
 }
