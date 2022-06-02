@@ -1,20 +1,21 @@
 package api.repositories;
 
+import api.dto.HistoryInvoiceDto;
 import api.models.Invoice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
-
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
+/*
+    Created by CongNV
+    Date:  01/06/2022
+    Function: find all history
+*/
 
-
-    @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
-            "FROM  invoice " +
+    @Query(value = "SELECT invoice.id as invoiceId,create_date as createDate,create_time as createTime,`name`as productName, customer_name as customerName,total_money as totalMoney,payments as payments ,quantity FROM  invoice " +
             "   join invoice_detail on invoice.id = invoice_detail.invoice_id " +
             "   join product on invoice_detail.product_id = product.id " +
             "   join customer on invoice.customer_id = customer.id " +
@@ -22,15 +23,23 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "or  create_date like concat('%',:keyword,'%') " +
             "or  total_money like concat('%',:keyword,'%') " +
             "or  customer_id like concat('%',:keyword,'%') " +
-            "or  product_id like concat('%',:keyword,'%') ",
-             nativeQuery = true)
-//            "order by " +
-//            "case when :sorts = 'sortDateAsc' then create_date end desc ," +
+            "or  product_id like concat('%',:keyword,'%') " +
+            "order by case when :sorts = 'sortDateAsc' then create_date end desc ",
+            countQuery = "SELECT invoice.id,create_date,create_time,`name`as product_name,total_money,payments FROM  invoice " +
+                    "   join invoice_detail on invoice.id = invoice_detail.invoice_id " +
+                    "   join product on invoice_detail.product_id = product.id " +
+                    "   join customer on invoice.customer_id = customer.id " +
+                    "   where create_time like concat('%',:keyword,'%') " +
+                    "or  create_date like concat('%',:keyword,'%') " +
+                    "or  total_money like concat('%',:keyword,'%') " +
+                    "or  customer_id like concat('%',:keyword,'%') " +
+                    "or  product_id like concat('%',:keyword,'%') " +
+                    "order by case when :sorts = 'sortDateAsc' then create_date end desc"
 //            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
 //            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
 //            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
-
-    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable );
+             ,nativeQuery = true)
+    Page<HistoryInvoiceDto> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable, @Param("sorts") String sort );
 
 //    @Query(value = "select * from land_information " +
 //            "join direction on direction.id = land_information.direction_id " +
@@ -51,5 +60,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 //                    "case when :sorts ='sortPriceAsc'then price end asc ," +
 //                    "case when :sorts ='sortPriceDesc' then price end desc ", nativeQuery = true)
 //    Page<LandInformation> pageFindAll(Pageable pageable, @Param("prices") String keyWord1, @Param("areas") String keyWord2, @Param("directions") String keyWord3, @Param("sorts") String sort);
+
+
 }
 

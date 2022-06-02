@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.dto.HistoryInvoiceDto;
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -35,12 +36,18 @@ public class InvoiceRestController {
         return iInvoiceService.listProduct();
     }
 
+    /*
+    Created by CongNV
+    Date:  01/06/2022
+    Function: find all history
+*/
+
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Invoice>> list(@RequestParam(value = "keyword", defaultValue = "") String keyword,
+    public ResponseEntity<Page<HistoryInvoiceDto>> list(@RequestParam(value = "keyword", defaultValue = "") String keyword,
                                                @RequestParam("page") Optional<Integer> page,
                                                @RequestParam(defaultValue = "",required = false) String sort) {
         Pageable pageable = PageRequest.of(page.orElse(0), 10);
-        Page<Invoice> invoices = iInvoiceService.findAll(keyword, pageable);
+        Page<HistoryInvoiceDto> invoices = iInvoiceService.findAll(keyword, pageable , sort);
         if (invoices.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
