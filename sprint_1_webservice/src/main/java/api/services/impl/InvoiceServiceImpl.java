@@ -28,11 +28,16 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     IProductRepository iProductRepository;
 
+    @Override
+    public Page<Invoice> findAll(String keyword, Pageable pageable) {
+        return null;
+    }
+
     /*
-    Created by LongNHL
-    Time: 21:30 31/05/2022
-    Function: create invoice
-    */
+        Created by LongNHL
+        Time: 21:30 31/05/2022
+        Function: create invoice
+        */
     @Override
     public void saveNewInvoice(Invoice invoice) {
         invoice.setCreateDate(LocalDate.now().toString());
@@ -40,10 +45,11 @@ public class InvoiceServiceImpl implements IInvoiceService {
         iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
     }
 
-    @Override
-    public Page<Invoice> findAll(String keyword, Pageable pageable) {
-         return iInvoiceRepository.findAllByKeyWord(keyword,pageable);
-    }
+
+//    @Override
+//    public Page<Invoice> findAll(String keyword, Pageable pageable,String sort) {
+//         return iInvoiceRepository.findAllByKeyWord(keyword,pageable,sort);
+//    }
 
     @Override
     public Invoice findById(Long id) {

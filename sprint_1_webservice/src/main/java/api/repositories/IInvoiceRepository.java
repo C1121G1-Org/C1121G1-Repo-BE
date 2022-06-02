@@ -19,25 +19,25 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
         Function: create invoice
         */
 
-
-    @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
-            "FROM  invoice " +
-            "   join invoice_detail on invoice.id = invoice_detail.invoice_id " +
-            "   join product on invoice_detail.product_id = product.id " +
-            "   join customer on invoice.customer_id = customer.id " +
-            "   where create_time like concat('%',:keyword,'%') " +
-            "or  create_date like concat('%',:keyword,'%') " +
-            "or  total_money like concat('%',:keyword,'%') " +
-            "or  customer_id like concat('%',:keyword,'%') " +
-            "or  product_id like concat('%',:keyword,'%') ",
-             nativeQuery = true)
-//            "order by " +
-//            "case when :sorts = 'sortDateAsc' then create_date end desc ," +
-//            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
-//            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
-//            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
-
-    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable );
+//
+//    @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
+//            "FROM  invoice " +
+//            "   join invoice_detail on invoice.id = invoice_detail.invoice_id " +
+//            "   join product on invoice_detail.product_id = product.id " +
+//            "   join customer on invoice.customer_id = customer.id " +
+//            "   where create_time like concat('%',:keyword,'%') " +
+//            "or  create_date like concat('%',:keyword,'%') " +
+//            "or  total_money like concat('%',:keyword,'%') " +
+//            "or  customer_id like concat('%',:keyword,'%') " +
+//            "or  product_id like concat('%',:keyword,'%') ",
+//             nativeQuery = true)
+////            "order by " +
+////            "case when :sorts = 'sortDateAsc' then create_date end desc ," +
+////            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
+////            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
+////            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
+//
+//    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable ,String sort);
 
 //    @Query(value = "select * from land_information " +
 //            "join direction on direction.id = land_information.direction_id " +

@@ -13,7 +13,7 @@ public interface IInvoiceService {
 
     Page<Invoice> findAll(String keyword, Pageable pageable);
     void saveNewInvoice(Invoice invoice);
-    Page<Invoice> findAll(String keyword, Pageable pageable ,String sort);
+//    Page<Invoice> findAll(String keyword, Pageable pageable ,String sort);
     Invoice findById(Long id);
     List<Customer> listCustomer();
     List<Product> listProduct();
