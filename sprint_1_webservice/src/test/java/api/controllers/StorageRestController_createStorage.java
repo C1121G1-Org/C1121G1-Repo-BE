@@ -16,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /*
     Created by khoaVC
     Time: 15:22 01/06/2022
+    Fixed by khoaVC
+    Time: 12:22 02/06/2022
     Function: create 12 test for method create Storage
  */
 
@@ -29,6 +31,10 @@ public class StorageRestController_createStorage {
     @Autowired
     private ObjectMapper objectMapper;
 
+    //Test case: create Storage with
+    // createdDate = null, createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_createdDate_13() throws Exception {
 
@@ -49,6 +55,11 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    //Test case: create Storage with
+    // createdDate = "", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_createdDate_14() throws Exception {
 
@@ -69,6 +80,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-12-12", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_createdDate_15() throws Exception {
 
@@ -89,6 +104,34 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with (max date is 01-01-3000)
+    // createdDate = "3000-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
+    @Test
+    public void createStorage_createdDate_17() throws Exception {
+
+        StorageDto storageDto = new StorageDto();
+        storageDto.setCreatedDate("3001-01-01");
+        storageDto.setCreatedEmployeeDto(1L);
+        storageDto.setProductDto(1L);
+        storageDto.setSupplierDto(1L);
+        storageDto.setQuantity("100");
+        storageDto.setStatus(true);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/api/storage/create")
+                        .content(this.objectMapper.writeValueAsString(storageDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: success 2xx
+    //Actual Result: success 2xx
     @Test
     public void createStorage_18() throws Exception {
 
@@ -109,6 +152,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is2xxSuccessful());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = null, status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_quantity_13() throws Exception {
 
@@ -129,6 +176,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_quantity_14() throws Exception {
 
@@ -149,6 +200,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "abc", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_quantity_15() throws Exception {
 
@@ -169,6 +224,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "-10", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_quantity_16() throws Exception {
 
@@ -189,6 +248,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 1L, quantity = "100", status = null
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_status_13() throws Exception {
 
@@ -209,6 +272,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 100L, productDto = 1L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_createdEmployeeDto_13() throws Exception {
 
@@ -231,6 +298,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 100L, supplierDto = 1L, quantity = "100", status = true
+    //Expected Result: Error 4xx
+    //Actual Result: Error 4xx
     @Test
     public void createStorage_productDto_13() throws Exception {
 
@@ -253,6 +324,10 @@ public class StorageRestController_createStorage {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Test case: create Storage with
+    // createdDate = "2022-01-01", createdEmployeeDto = 1L, productDto = 1L, supplierDto = 100L, quantity = "100", status = true
+    //Expected Result: error 4xx
+    //Actual Result: error 4xx
     @Test
     public void createStorage_supplierDto_13() throws Exception {
 

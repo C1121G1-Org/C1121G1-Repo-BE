@@ -63,10 +63,15 @@ public class StorageDto implements Validator {
             errors.rejectValue("createdDate", "createdDate.notBlank", "Created Date must not be blank!");
         } else {
             LocalDate currentDate = LocalDate.now();
+            LocalDate limitDate = LocalDate.of(3000, 1, 1);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate createdDate = LocalDate.parse(storageDto.getCreatedDate(), formatter);
             if (createdDate.isAfter(currentDate)) {
                 errors.rejectValue("createdDate", "createdDate.afterCurrentDate", "Created Date must be before today!");
+            }
+
+            if (createdDate.isAfter(limitDate)) {
+                errors.rejectValue("createdDate", "createdDate.afterCurrentDate", "Created Date must be before date 01-01-3000!");
             }
         }
     }
