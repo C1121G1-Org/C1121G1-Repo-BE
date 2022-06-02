@@ -25,15 +25,18 @@ public class QRCodeController_check {
     @Test
     public void check_18() throws Exception {
         String path1 = "D:\\sprint-1\\test-qrcode\\PD-1.png";
-        String path2 = "D:\\sprint-1\\test-qrcode\\PD-1.png";
+        String path2 = "D:\\sprint-1\\test-qrcode\\PD-2.png";
 
         ByteArrayResource bytes1 = new ByteArrayResource(Files.readAllBytes(Paths.get(path1)));
         ByteArrayResource bytes2 = new ByteArrayResource(Files.readAllBytes(Paths.get(path2)));
-
-        mockMvc.perform(MockMvcRequestBuilders.post("api/qrcode/check").content(bytes1.getByteArray())
+        mockMvc.perform(MockMvcRequestBuilders.post("api/qrcode/check")
+                        .content(bytes1.getByteArray())
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                        .content(bytes2.getByteArray()).contentType(MediaType.MULTIPART_FORM_DATA)).andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                        .content(bytes2.getByteArray())
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                        .andDo(print())
+                        .andExpect(status().is2xxSuccessful());
+
 
     }
 
@@ -48,6 +51,6 @@ public class QRCodeController_check {
         mockMvc.perform(MockMvcRequestBuilders.post("api/qrcode/check").content(bytes1.getByteArray())
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                         .content(bytes2.getByteArray()).contentType(MediaType.MULTIPART_FORM_DATA)).andDo(print())
-                .andExpect(status().is4xxClientError());
+                        .andExpect(status().is4xxClientError());
     }
 }

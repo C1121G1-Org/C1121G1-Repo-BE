@@ -34,8 +34,11 @@ public class QRCodeRestController_encode {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(productDTO);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/encode")
-                        .content(json).contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print()).andExpect(status().is4xxClientError());
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .andDo(print())
+                        .andExpect(status().is4xxClientError());
+
 
     }
 
@@ -48,8 +51,9 @@ public class QRCodeRestController_encode {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/encode")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
+                        .andDo(print())
+                        .andExpect(status().is4xxClientError());
+
     }
 
     @Test
@@ -64,6 +68,6 @@ public class QRCodeRestController_encode {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/encode")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
+                        .andDo(print()).andExpect(status().is2xxSuccessful());
     }
 }

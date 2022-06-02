@@ -33,7 +33,13 @@ public class SaleReportRestController_saleReportList {
     @Test
     public void saleReportList_6() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/sale-report"))
-                .andDo(print()).andExpect(status().is2xxSuccessful());
+                .andDo(print()).andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("product1"))
+                .andExpect(jsonPath("$[0].price").value(200D))
+                .andExpect(jsonPath("$[0].qrScan").value("qrScan1"))
+                .andExpect(jsonPath("$[0].deleteFlag").value(false));
+
     }
 
 }

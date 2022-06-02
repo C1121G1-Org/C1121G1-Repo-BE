@@ -52,6 +52,9 @@ public class ProductRestController {
 
     /*
           Created by tamHT and hieuMMT
+
+    /*
+          Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
@@ -80,6 +83,7 @@ public class ProductRestController {
     public String updateProduct() {
         return null;
     }
+
 
 
     /*

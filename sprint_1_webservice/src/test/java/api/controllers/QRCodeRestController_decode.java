@@ -34,18 +34,21 @@ public class QRCodeRestController_decode {
     public void decode_13() throws Exception {
         String path = "";
         ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(Paths.get(path)));
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/decode").content(byteArrayResource.getByteArray())
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/decode")
+                        .content(byteArrayResource.getByteArray())
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)).andDo(print())
-                .andExpect(status().is4xxClientError());
+                        .andExpect(status().is4xxClientError());
     }
 
     @Test
     public void decode_18() throws Exception {
         String path = "D:\\sprint-1\\test-qrcode\\PD-1.png";
         ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(Paths.get(path)));
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/decode").content(byteArrayResource.getByteArray())
-                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)).andDo(print())
-                .andExpect(status().is2xxSuccessful());
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/qrcode/decode")
+                        .content(byteArrayResource.getByteArray())
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                        .andDo(print())
+                        .andExpect(status().is2xxSuccessful());
     }
 
 
