@@ -41,6 +41,11 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
 
     @Override
+    public Page<Invoice> findAll(String keyword, Pageable pageable, String sort) {
+        return null;
+    }
+
+    @Override
     public Page<Invoice> findAll(String keyword, Pageable pageable) {
          return iInvoiceRepository.findAllByKeyWord(keyword,pageable);
     }

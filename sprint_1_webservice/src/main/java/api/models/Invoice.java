@@ -32,8 +32,6 @@ public class Invoice {
 
     @Column(name = "payments", nullable = false, length = 50)
     private String payments;
-    @Column(name = "total_money", nullable = false)
-    private Double totalMoney;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
