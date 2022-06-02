@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface IProductRepository extends JpaRepository<Product, Long> {
@@ -23,6 +24,14 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
+
+     /*
+        Created by TamT
+        Time: 12:00 2/06/2022
+        Function: get id product
+    */
+     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
+    Optional<Product> findById(@Param("id") Long id);
 
     /*
         Created by TamT
