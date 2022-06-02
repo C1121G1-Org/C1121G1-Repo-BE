@@ -22,8 +22,10 @@ public class CustomerRestController_getInfoCustomer {
     @Autowired
     private ObjectMapper objectMapper;
 
+
+    //test id=null, return error
     @Test
-    public void getInfoCustomer_id_1() throws Exception {
+    public void getInfoCustomer_id_null() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/api/Customer/{id}", "null"))
@@ -31,6 +33,20 @@ public class CustomerRestController_getInfoCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+    //test id="", return error
+    @Test
+    public void getInfoCustomer_id_empty() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/api/Customer/{id}", ""))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+
+
+
+    //test id=4, return object
     @Test
     public void getInfoCustomer_id_4() throws Exception {
 

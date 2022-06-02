@@ -22,9 +22,9 @@ public class CustomerRestController_getListCustomer {
     @Autowired
     private ObjectMapper objectMapper;
 
-
+    //Case list size=0
     @Test
-    public void getListCustomer_5() throws Exception {
+    public void getListCustomer_size0() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/customer/list"))
@@ -32,8 +32,9 @@ public class CustomerRestController_getListCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+    //Case list size=34, 4 elements per page
     @Test
-    public void getListStudent_6() throws Exception {
+    public void getListStudent_sizeNotNull() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/customer/list"))
@@ -41,7 +42,7 @@ public class CustomerRestController_getListCustomer {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.totalPages").value(4))
                 .andExpect(jsonPath("$.totalElements").value(34))
-                .andExpect(jsonPath("$.content[1].customerName").value("Đặng Quang Huy"))
+                .andExpect(jsonPath("$.content[2].customerName").value("Đặng Quang Huy"))
                 .andExpect(jsonPath("$.content[2].dateOfBirth").value("1992-06-02"))
                 .andExpect(jsonPath("$.content[2].phoneNumber").value("0912456785"))
                 .andExpect(jsonPath("$.content[2].email").value("vanc@codegym.com"))
@@ -51,9 +52,9 @@ public class CustomerRestController_getListCustomer {
     }
 
 
-
+    //input search key phone =a, wrong type of search
     @Test
-    public void getListStudent_7() throws Exception {
+    public void getListStudent_SearchFall1() throws Exception {
         this.mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/api/customer/list?keyPhone=a"))
@@ -62,6 +63,7 @@ public class CustomerRestController_getListCustomer {
         ;
     }
 
+    //Input search = Vie, right input search
     @Test
     public void getListCustomer_8() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -70,7 +72,7 @@ public class CustomerRestController_getListCustomer {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$.totalPages").value(1))
                 .andExpect(jsonPath("$.totalElements").value(1))
-                .andExpect(jsonPath("$.content[1].customerName").value("Nguyễn Thái Việt"))
+                .andExpect(jsonPath("$.content[2].customerName").value("Nguyễn Thái Việt"))
                 .andExpect(jsonPath("$.content[2].dateOfBirth").value("1993-02-11"))
                 .andExpect(jsonPath("$.content[2].phoneNumber").value("0912423785"))
                 .andExpect(jsonPath("$.content[2].email").value("hoangduy@gmail.com"))
@@ -78,6 +80,8 @@ public class CustomerRestController_getListCustomer {
                 .andExpect(jsonPath("$.content[2].gender").value(true));
     }
 
+
+    //input search key name =12, wrong type of search
     @Test
     public void getListCustomer_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -86,6 +90,8 @@ public class CustomerRestController_getListCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    //search 2 fields of search, successfull return
     @Test
     public void getListCustomer_10() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -102,17 +108,5 @@ public class CustomerRestController_getListCustomer {
                 .andExpect(jsonPath("$.content[2].gender").value(true));
     }
 
-//    @Test
-//    public void getListStudent_6() {
-//        ResponseEntity<Page<Student>> responseEntity
-//                = this.studentRestController.getListStudent(PageRequest.of(0, 2));
-//
-//        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
-//        Assertions.assertEquals(3, responseEntity.getBody().getTotalPages());
-//        Assertions.assertEquals(5, responseEntity.getBody().getTotalElements());
-//        Assertions.assertEquals("Nguyễn Văn Bình",
-//                responseEntity.getBody().getContent().get(1).getName());
-//        Assertions.assertEquals("2001-10-05",
-//                responseEntity.getBody().getContent().get(1).getDateOfBirth());
-//    }
+
 }
