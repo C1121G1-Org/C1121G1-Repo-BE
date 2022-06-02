@@ -1,6 +1,9 @@
 package api.controllers;
 
 import api.dto.CustomerDto;
+
+import api.dto.PurchaseHistoryDto;
+import api.dto.ReportCustomerDto;
 import api.models.Customer;
 import api.models.ResponseObject;
 import api.services.ICustomerService;
@@ -15,10 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -29,6 +30,7 @@ public class CustomerRestController {
     ICustomerService iCustomerService;
 
     /*
+<<<<<<< HEAD
     Created By hoangDH,
     Time: 15:00 PM 2022-06-01
     Function: find customer object by id from database
@@ -44,11 +46,11 @@ public class CustomerRestController {
 
 
 
-    @PostMapping(value = "/create")
-    public String createCustomer(){
-        return null;
-    }
-
+    /*
+          Created by tamHT
+          Time: 18:15 31/05/2022
+          Function: get  all page customer and search of customer
+      */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
                                                        @RequestParam Optional<String> keyPhone) {
@@ -61,6 +63,31 @@ public class CustomerRestController {
         }
         return new ResponseEntity<>(customerPage, HttpStatus.OK);
     }
+
+
+    /*
+    Created by LongNHL
+    Time: 11:30 31/05/2022
+    Function: create invoice
+    */
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<ResponseObject> createCustomer(@Valid @RequestBody CustomerDto customerDto,
+                                 BindingResult bindingResult){
+        Map<String, String> errorMap = new HashMap<>();
+        if(bindingResult.hasErrors()){
+            bindingResult.getFieldErrors()
+                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+            return new ResponseEntity<>(new ResponseObject(false,"Failed!", errorMap, new ArrayList()),
+                    HttpStatus.BAD_REQUEST);
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
+        iCustomerService.createCustomer(customer);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
     /*
     Created By hoangDH,
@@ -89,14 +116,113 @@ public class CustomerRestController {
             BeanUtils.copyProperties(customerDto, customer);
             iCustomerService.editCustomer(customer,id);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
+        }}
+
+
 
     @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteCustomer(){
+    public String deleteCustomer() {
         return null;
     }
 
+    /*
+        Created by TuanNQ
+        Time: 18:00 31/05/2022
+        Function: Show all list report customer
+    */
+    @GetMapping(value = "/report-customer")
+    public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomer(
+            @PageableDefault Pageable pageable) {
+
+        Page<ReportCustomerDto> reportCustomerDtoPage = iCustomerService.filterAll(pageable);
+
+        if (reportCustomerDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
+        return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by gender
+    */
+    @GetMapping(value = "/report-customer-search-gender")
+    public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchGender(
+            @PageableDefault Pageable pageable, @RequestParam Boolean gender) {
+
+        Page<ReportCustomerDto> reportCustomerDtoPage =
+                iCustomerService.filterByGender(pageable, gender);
+
+        if (reportCustomerDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
+        return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by age
+    */
+    @GetMapping(value = "/report-customer-search-age")
+    public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchAge(
+            @PageableDefault Pageable pageable, @RequestParam Integer age) {
+
+        Page<ReportCustomerDto> reportCustomerDtoPage =
+                iCustomerService.filterByAge(pageable, age);
+
+        if (reportCustomerDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
+        return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 18:00 31/05/2022
+        Function: Show list of customer reports by age and gender
+    */
+    @GetMapping(value = "/report-customer-search")
+    public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearch(
+            @PageableDefault Pageable pageable, @RequestParam Boolean gender,
+            @RequestParam Integer age) {
+
+        Page<ReportCustomerDto> reportCustomerDtoPage =
+                iCustomerService.filterByGenderAndAge(pageable, gender, age);
+
+        if (reportCustomerDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
+        return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 18:15 31/05/2022
+        Function: Show detail purchase history of customer
+    */
+    @GetMapping(value = "/purchase-history/{id}")
+    public ResponseEntity<Page<PurchaseHistoryDto>> showDetailPurchaseHistory(
+            @PathVariable Long id, @PageableDefault Pageable pageable) {
+
+        Page<PurchaseHistoryDto> purchaseHistoryDtoPage = iCustomerService.detailPurchaseHistory(id, pageable);
+
+        if (purchaseHistoryDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+//            List<PurchaseHistoryDto> purchaseHistoryDtos = purchaseHistoryDtoPage.toList();
+            return new ResponseEntity<>(purchaseHistoryDtoPage, HttpStatus.OK);
+        }
+    }
 
 
 }
