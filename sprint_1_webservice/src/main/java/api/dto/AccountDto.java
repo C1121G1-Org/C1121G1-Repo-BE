@@ -12,7 +12,6 @@ import lombok.Setter;
 public class AccountDto {
     private Long id;
 
-
     private String userName;
 
     private String encryptPassword;
@@ -20,6 +19,9 @@ public class AccountDto {
     private String email;
 
     private Boolean isEnabled;
+
+    private String verificationCode;
+
 
 
 }

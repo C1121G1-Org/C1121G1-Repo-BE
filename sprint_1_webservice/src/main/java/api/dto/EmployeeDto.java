@@ -23,14 +23,14 @@ public class EmployeeDto implements Validator {
     private String address;
     private String idCard;
     private String phoneNumber;
+    private String image;
 
-    private String encryptPassword ;
 
     private PositionDto positionDto ;
 
     private AccountDto accountDto ;
 
-    private IAccountService iAccountService ;
+
 
 
 
@@ -48,7 +48,6 @@ public class EmployeeDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
 
     }
 }

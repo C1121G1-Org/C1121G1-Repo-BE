@@ -1,5 +1,6 @@
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,7 @@ public class Employee {
     private Account account;
 
     @OneToMany(mappedBy = "createdEmployee")
+    @JsonBackReference
     private Set<Storage> storageSet;
 
     @Column(name = "delete_flag", nullable = false)
