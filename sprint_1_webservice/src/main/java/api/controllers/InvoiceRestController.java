@@ -42,17 +42,15 @@ public class InvoiceRestController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<ResponseObject> list(@RequestParam(value = "keyword", defaultValue = "") String keyword,
+    public ResponseEntity<Page<Invoice>> list(@RequestParam(value = "keyword", defaultValue = "") String keyword,
                                                @RequestParam("page") Optional<Integer> page,
                                                @RequestParam(defaultValue = "",required = false) String sort) {
         Pageable pageable = PageRequest.of(page.orElse(0), 10);
-        Page<Invoice> invoices = iInvoiceService.findAll(keyword, pageable,sort);
-        ModelAndView modelAndView = new ModelAndView("/api/invoice", "invoice", invoices);
-        modelAndView.addObject("keyword", keyword);
+        Page<Invoice> invoices = iInvoiceService.findAll(keyword, pageable);
         if (invoices.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(invoices,HttpStatus.OK);
     }
 
     /*

@@ -89,7 +89,7 @@ public class InvoiceDetailRestController {
         /*
          Created by LongNHL
          Time: 22:30 1/06/2022
-         Function: create invoiceDetail
+         Function: update quantity product
          */
     @PatchMapping("/updateQuantityProduct")
     public ResponseEntity<String> updateQuantityProduct(@RequestBody ProductInvoiceDto productInvoiceDto) {
