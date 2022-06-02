@@ -89,7 +89,7 @@ public class ProductRestController {
 //    }
 
     /*
-     Created by tuanPA
+     Created by tamHT
      Time: 18:15 31/05/2022
      Function: findById
  */
