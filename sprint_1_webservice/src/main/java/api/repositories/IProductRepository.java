@@ -72,7 +72,6 @@ Function: Query Create product
       Function: get All product and search
     */
 
-
     @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
             " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')" +
             "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id", nativeQuery = true)

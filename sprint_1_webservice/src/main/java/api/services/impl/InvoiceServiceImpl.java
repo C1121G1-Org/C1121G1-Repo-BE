@@ -1,5 +1,6 @@
 package api.services.impl;
 
+import api.dto.InvoiceDto;
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -36,12 +37,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
     public void saveNewInvoice(Invoice invoice) {
         invoice.setCreateDate(LocalDate.now().toString());
         invoice.setCreateTime(LocalTime.now().toString());
-        iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(), invoice.getPayments(), invoice.getCustomer().getId());
+        iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
     }
 
     @Override
-    public Page<Invoice> findAll(String keyword, Pageable pageable,String sort) {
-        return iInvoiceRepository.findAllByKeyWord(keyword,pageable,sort);
+    public Page<Invoice> findAll(String keyword, Pageable pageable, String sort) {
+        return null;
+    }
+
+    @Override
+    public Page<Invoice> findAll(String keyword, Pageable pageable) {
+         return iInvoiceRepository.findAllByKeyWord(keyword,pageable);
     }
 
     @Override
@@ -58,5 +64,15 @@ public class InvoiceServiceImpl implements IInvoiceService {
     public List<Product> listProduct() {
         return iProductRepository.findAll();
 
+    }
+
+    @Override
+    public void createInvoice(InvoiceDto invoiceDto) {
+
+    }
+
+    @Override
+    public Invoice getNewInvoice() {
+        return iInvoiceRepository.getNewInvoice();
     }
 }
