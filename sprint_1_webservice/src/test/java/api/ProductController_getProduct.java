@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProductController_getProduct {
     @Autowired
     private MockMvc mockMvc;
-
+    //    test cho trường hợp size list =0
     @Test
     public void getListStudent_5() throws Exception {
 
@@ -26,7 +26,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test cho trường hợp trả về list thành công
     @Test
     public void getListProduct_6() throws Exception {
 
@@ -49,8 +49,8 @@ public class ProductController_getProduct {
                 .andExpect(jsonPath("$.content[0].screenSize").value("6 inch"))
                 .andExpect(jsonPath("$.content[0].selfie").value("12MP"));
     }
-//    check findById
 
+    //test cho tham số id = null
     @Test
     public void getInfoProduct_id_1() throws Exception {
 
@@ -59,6 +59,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+    //test cho tham số id = rỗng
     @Test
     public void getInfoProduct_id_2() throws Exception {
 
@@ -67,6 +68,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+    //test cho tham số id = quá lớn
     @Test
     public void getInfoProduct_id_3() throws Exception {
 
@@ -75,7 +77,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test cho tham số id tìm thấy . trả về thành công
     @Test
     public void getInfoProduct_id_4() throws Exception {
 
@@ -97,8 +99,8 @@ public class ProductController_getProduct {
     }
 
 
-    //    search
 
+    //test trường hợp tìm kiếm với tham số null
     @Test
     public void getListReportProduct_7() throws Exception {
 //        mặc định sẽ trả về susccess
@@ -108,7 +110,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test trường hợp tìm kiếm với tham số rỗng
     @Test
     public void getListSearchProduct_name_8() throws Exception {
 //        mặc định sẽ trả về susccess
@@ -118,7 +120,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test trường hợp tìm kiếm với tham số không đúng
     @Test
     public void getListReportProduct_name_9() throws Exception {
         this.mockMvc.perform(
@@ -127,7 +129,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test trường hợp tìm kiếm với tham số truyền vào đúng
     @Test
     public void getListReportProduct_name_11() throws Exception {
         this.mockMvc.perform(
@@ -149,7 +151,7 @@ public class ProductController_getProduct {
 
     }
 
-
+//test trường hợp tìm kiếm với tham số null
 
     @Test
     public void getListReportProduct_phone_7() throws Exception {
@@ -161,7 +163,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test trường hợp tìm kiếm với tham số rỗng
     @Test
     public void getListReportProduct_phone_8() throws Exception {
 //        mặc định sẽ trả về susccess
@@ -171,7 +173,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test trường hợp tìm kiếm với tham số không đúng
     @Test
     public void getListReportProduct_phone_9() throws Exception {
         this.mockMvc.perform(
@@ -180,7 +182,7 @@ public class ProductController_getProduct {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    //test trường hợp tìm kiếm với tham số truyền vào đúng
     @Test
     public void getListReportProduct_phone_11() throws Exception {
         this.mockMvc.perform(
