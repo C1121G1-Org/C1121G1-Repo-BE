@@ -20,10 +20,24 @@ public interface ICustomerService {
 
     /*
         Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by gender
+    */
+    Page<ReportCustomerDto> filterByGender(Pageable pageable, Boolean gender);
+
+    /*
+        Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by age
+    */
+    Page<ReportCustomerDto> filterByAge(Pageable pageable, Integer age);
+
+    /*
+        Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
 
     /*
         Created by TuanNQ

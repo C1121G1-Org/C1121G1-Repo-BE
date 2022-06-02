@@ -53,6 +53,40 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Page<PurchaseHistoryDto> detail(Long id, Pageable pageable);
 
     /*
+       Created by TuanNQ
+       Time: 17:00 01/06/2022
+       Function: Show list of customer reports by gender
+   */
+    @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+            "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+            "customer.email as email, customer.phone_number as phoneNumber, " +
+            "count(invoice.id) as purchaseTimes " +
+            "FROM customer " +
+            "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+            "WHERE gender = :gender " +
+            "GROUP BY customer.id",
+            nativeQuery = true)
+    Page<ReportCustomerDto> filterByGender(Pageable pageable, Boolean gender);
+
+    /*
+        Created by TuanNQ
+        Time: 17:00 01/06/2022
+        Function: Show list of customer reports by age
+    */
+    @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+            "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+            "customer.email as email, customer.phone_number as phoneNumber, " +
+            "count(invoice.id) as purchaseTimes " +
+            "FROM customer " +
+            "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+            "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+            "GROUP BY customer.id",
+            nativeQuery = true)
+    Page<ReportCustomerDto> filterByAge(Pageable pageable, Integer age);
+
+    /*
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
@@ -64,10 +98,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "count(invoice.id) as purchaseTimes " +
             "FROM customer " +
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
-            "WHERE gender = :gender and (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) like concat('%', :age, '%') " +
+            "WHERE gender = :gender and (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
             "GROUP BY customer.id",
             nativeQuery = true)
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
 
     /*
      Created by TamT
@@ -99,4 +133,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select product.*, storage.quantity from product inner join storage on product.id = storage.product_id", nativeQuery = true)
     <T> List<T> findProductUsingService(Class<T> classType);
+
+
 }
