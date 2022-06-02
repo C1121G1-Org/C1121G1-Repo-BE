@@ -60,16 +60,17 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
        Time: 19:00 31/05/2022
        Function:     pageFindAll = abstract method to find all employee and pagination and search
     */
-    @Query(value = "select * from employee where delete_flag = 1 and employee_name like concat('%', :name ,'%') "
+    @Query(value = "select * from employee where delete_flag = 0 and employee_name like concat('%', :name ,'%') "
             , nativeQuery = true,
-            countQuery = "select count(*) from employee where delete_flag = 1 and employee_name like concat('%', :name ,'%') ")
+            countQuery = "select count(*) from employee where delete_flag = 0 and employee_name like concat('%', :name ,'%') ")
     Page<Employee> pageFindAll(Pageable pageable, @Param("name") String keyword);
 
     /*
        Created by HuyNH
        Time: 19:00 31/05/2022
-       Function: deleteFlag = abstract method to delete flag a employee.
+       Function:     deleteFlag = abstract method to delete flag a employee
     */
+    @Transactional
     @Query(value = "update employee set delete_flag = 1 where employee.id = :id ", nativeQuery = true)
-    void deleteFlag(Long id);
+    void saveDelete(Employee employee);
 }

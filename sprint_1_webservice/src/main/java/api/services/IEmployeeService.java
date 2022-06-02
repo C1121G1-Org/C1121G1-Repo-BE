@@ -14,5 +14,11 @@ public interface IEmployeeService {
 
     Employee findById(long id);
 
+<<<<<<< HEAD
+    void saveDelete(Employee employee);
+
+}
+=======
     void delete(Long id);
 }
+>>>>>>> 6689f8a0aa24b8bb1414331091382f11bd2937fe

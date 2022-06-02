@@ -25,6 +25,10 @@ public class EmployeeDto implements Validator {
     private AccountDto accountDto;
     private IAccountService iAccountService;
 
+    public EmployeeDto() {
+        setDeleteFlag(false);
+    }
+
     public void setAccountService(IAccountService iAccountService) {
     }
 
@@ -36,3 +40,4 @@ public class EmployeeDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
     }
+}

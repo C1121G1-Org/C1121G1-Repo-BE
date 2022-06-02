@@ -47,4 +47,8 @@ public class Employee {
 
     @Column(name = "delete_flag", nullable = false)
     private boolean deleteFlag;
+
+    public Employee() {
+        setDeleteFlag(false);
+    }
 }
