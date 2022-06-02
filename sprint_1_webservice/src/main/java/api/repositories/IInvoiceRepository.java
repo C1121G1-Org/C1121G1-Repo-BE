@@ -6,12 +6,35 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
+
+
+
+    @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
+            "FROM  invoice " +
+            "   join invoice_detail on invoice.id = invoice_detail.invoice_id " +
+            "   join product on invoice_detail.product_id = product.id " +
+            "   join customer on invoice.customer_id = customer.id " +
+            "   where create_time like concat('%',:keyword,'%') " +
+            "or  create_date like concat('%',:keyword,'%') " +
+            "or  total_money like concat('%',:keyword,'%') " +
+            "or  customer_id like concat('%',:keyword,'%') " +
+            "or  product_id like concat('%',:keyword,'%') ",
+             nativeQuery = true)
+//            "order by " +
+//            "case when :sorts = 'sortDateAsc' then create_date end desc ," +
+//            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
+//            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
+//            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
+
+    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable );
+
+//    @Query(value = "select * from land_information " +
+//            "join direction on direction.id = land_information.direction_id " +
 
     @Transactional
     @Modifying
@@ -35,6 +58,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
     Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable , @Param("sorts") String sort);
 
 //    @Query(value = "select * from land_information join direction on direction.id = land_information.direction_id " +
+
 //            "where price like concat('%', :prices ,'%')" +
 //            " and area like concat('%', :areas ,'%')" +
 //            " and direction.`name` like concat('%', :directions ,'%')" +
