@@ -17,4 +17,5 @@ public class PositionServiceImpl implements IPositionService {
     public List<Position> findAll() {
         return this.iPositionRepository.findAll();
     }
+
 }

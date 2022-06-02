@@ -1,5 +1,6 @@
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,9 +35,11 @@ public class Account {
     private String verificationCode;
 
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Employee employee;
 
     @OneToMany(mappedBy = "account")
+    @JsonBackReference
     private Set<AccountRole> accountRoleSet;
 
 }
