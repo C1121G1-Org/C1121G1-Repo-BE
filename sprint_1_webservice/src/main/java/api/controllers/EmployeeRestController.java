@@ -1,5 +1,7 @@
 package api.controllers;
 
+import api.models.Employee;
+import api.models.Position;
 import api.dto.EmployeeDto;
 import api.models.*;
 import api.services.IEmployeeService;
@@ -7,11 +9,14 @@ import api.services.IPositionService;
 import api.services.IRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.validation.BindingResult;
+import java.util.Optional;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,10 +53,26 @@ public class EmployeeRestController {
         return new ResponseEntity<>(new ResponseObject(true, "OK", new HashMap<>(), positionList), HttpStatus.OK);
     }
 
+    @ModelAttribute("positionObj")
+    public List<Position> getAllPosition() {
+        return iPositionService.findAll();
+    }
 
-    @GetMapping(value = "/list")
-    public String listEmployee() {
-        return null;
+    /*
+        Created by HuyNH
+        Time: 19:00 31/05/2022
+        Function: findAllEmployee = list Employee.
+    */
+    @GetMapping(value = {"/list"})
+    public ResponseEntity<Page<Employee>>findAllEmployee(@PageableDefault(value = 2)Pageable pageable,
+                                                         @RequestParam Optional<String> keyName) {
+        String nameValue = keyName.orElse("");
+
+        Page<Employee> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
+        if (employeePage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employeePage, HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")
@@ -88,9 +109,18 @@ public class EmployeeRestController {
         return null;
     }
 
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteEmployee() {
-        return null;
+    /*
+        Created by HuyNH
+        Time: 19:00 31/05/2022
+        Function: findAllEmployee = delete flag employee.
+    */
+    @PatchMapping(value = "/delete/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long id) {
+        Employee employee = iEmployeeService.findById(id);
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        iEmployeeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
