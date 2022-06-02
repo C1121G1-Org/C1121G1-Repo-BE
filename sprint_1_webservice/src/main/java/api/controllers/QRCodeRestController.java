@@ -68,7 +68,6 @@ public class QRCodeRestController {
             if (productQRCode == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-
             return new ResponseEntity<>(productQRCode, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
