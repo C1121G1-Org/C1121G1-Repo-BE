@@ -29,8 +29,7 @@ public class CustomerRestController_editCustomer {
 
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private ICustomerService iCustomerService;
+
 
     //test id=null, return error
     @Test
