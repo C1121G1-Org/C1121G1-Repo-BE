@@ -24,7 +24,6 @@ public class StorageServiceImpl implements IStorageService {
     public List<Storage> getAllStorage() {
         return iStorageRepository.getAllStorage();
     }
-
     @Override
     public void createStorage(Storage storage) {
         iStorageRepository.createStorage(storage);
