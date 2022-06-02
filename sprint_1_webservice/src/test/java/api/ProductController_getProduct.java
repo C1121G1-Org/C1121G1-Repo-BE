@@ -39,17 +39,16 @@ public class ProductController_getProduct {
                 .andExpect(jsonPath("$.totalElements").value(1))
                 .andExpect(jsonPath("$.content[0].camera").value("2"))
                 .andExpect(jsonPath("$.content[0].cpu").value("snap889"))
-                .andExpect(jsonPath("$.content[0].delete_flag").value("0"))
+                .andExpect(jsonPath("$.content[0].deleteFlag").value("false"))
                 .andExpect(jsonPath("$.content[0].image").value("https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-gold-1-600x600.jpg"))
                 .andExpect(jsonPath("$.content[0].memory").value("64G"))
                 .andExpect(jsonPath("$.content[0].name").value("Samsung A72"))
-                .andExpect(jsonPath("$.content[0].other_description").value("new"))
-                .andExpect(jsonPath("$.content[0].price").value("100000001"))
-                .andExpect(jsonPath("$.content[0].qr_scan").value("gdfgfdgdf"))
-                .andExpect(jsonPath("$.content[0].screen_size").value("6 inch"))
+                .andExpect(jsonPath("$.content[0].otherDescription").value("new"))
+                .andExpect(jsonPath("$.content[0].price").value("1.00000001E8"))
+                .andExpect(jsonPath("$.content[0].qrScan").value("gdfgfdgdf"))
+                .andExpect(jsonPath("$.content[0].screenSize").value("6 inch"))
                 .andExpect(jsonPath("$.content[0].selfie").value("12MP"));
     }
-
 //    check findById
 
     @Test
