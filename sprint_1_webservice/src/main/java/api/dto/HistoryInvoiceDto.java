@@ -12,11 +12,11 @@ public interface HistoryInvoiceDto {
 
     String getPayments();
 
-    String getQuantity();
+    Integer getQuantity();
 
     String getCustomerName();
 
     String getProductName();
 
-    String getTotalMoney();
+    Double getTotalMoney();
 }

@@ -43,23 +43,23 @@ public class InvoiceControllerTest {
     // invoiceId = 1L, quantity = 6L, createTime = "12:00", createDate = "2022-01-21", customerName = "Nguyen Van A", productName = "xiaomi", totalMoney = 12000000
 
     @Test
-    public void getListStudent_6() throws Exception {
+    public void getList_6() throws Exception {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
                                 .get("/api/invoice/list"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-//                .andExpect(jsonPath("$.totalPages").value(3))
-//                .andExpect(jsonPath("$.totalElements").value(14))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.totalElements").value(4))
                 .andExpect(jsonPath("$.content[0].invoiceId").value(1))
                 .andExpect(jsonPath("$.content[0].quantity").value(6))
                 .andExpect(jsonPath("$.content[0].createTime").value("12:00"))
-                .andExpect(jsonPath("$.content[0].createDate").value("2022-01-21"))
-                .andExpect(jsonPath("$.content[0].customerName").value("Nguyen Van Cong"))
+                .andExpect(jsonPath("$.content[0].createDate").value("21/01/2022"))
+                .andExpect(jsonPath("$.content[0].customerName").value("Nguyen Van A"))
                 .andExpect(jsonPath("$.content[0].productName").value("xiaomi"))
                 .andExpect(jsonPath("$.content[0].payments").value("tien mat"))
-                .andExpect(jsonPath("$.content[0].totalMoney").value(12000000));
+                .andExpect(jsonPath("$.content[0].totalMoney").value(1200000.0));
     }
 
 }

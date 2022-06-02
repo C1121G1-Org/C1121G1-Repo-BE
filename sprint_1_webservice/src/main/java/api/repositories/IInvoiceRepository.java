@@ -25,13 +25,13 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "or  customer_id like concat('%',:keyword,'%') " +
             "or  product_id like concat('%',:keyword,'%') " +
             "order by case when :sorts = 'sortDateAsc' then create_date end desc ",
-            countQuery = "SELECT invoice.id,create_date,create_time,`name`as product_name,total_money,payments FROM  invoice " +
+            countQuery = "SELECT invoice.id as invoiceId,create_date as createDate,create_time as createTime,`name`as productName, customer_name as customerName,total_money as totalMoney,payments as payments ,quantity FROM  invoice " +
                     "   join invoice_detail on invoice.id = invoice_detail.invoice_id " +
                     "   join product on invoice_detail.product_id = product.id " +
                     "   join customer on invoice.customer_id = customer.id " +
                     "   where create_time like concat('%',:keyword,'%') " +
                     "or  create_date like concat('%',:keyword,'%') " +
-                    "or  total_money like concat('%',:keyword,'%') " +
+                    "or  total_money like concat('%',:keyword,'%')" +
                     "or  customer_id like concat('%',:keyword,'%') " +
                     "or  product_id like concat('%',:keyword,'%') " +
                     "order by case when :sorts = 'sortDateAsc' then create_date end desc"
