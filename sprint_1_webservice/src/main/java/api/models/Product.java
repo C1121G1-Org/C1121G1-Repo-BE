@@ -1,9 +1,8 @@
 package api.models;
 
-<<<<<<< HEAD
-=======
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
->>>>>>> d4e22ab7f3cd7d1d5c860991ebbf5904c208d0a6
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,19 +45,14 @@ public class Product {
     private String otherDescription;
 
     @OneToMany(mappedBy = "product")
-<<<<<<< HEAD
-=======
     @JsonBackReference
->>>>>>> d4e22ab7f3cd7d1d5c860991ebbf5904c208d0a6
+
     private Set<Storage> storageSet;
 
     @Column(name = "delete_flag", nullable = false, columnDefinition = "BIT(1) default 1")
     private boolean deleteFlag;
 
     @OneToMany(mappedBy = "product")
-<<<<<<< HEAD
-    private Set<InvoiceDetail> invoiceDetailSet;
-=======
     @JsonBackReference
     private Set<InvoiceDetail> invoiceDetailSet;
 
@@ -85,5 +79,5 @@ public class Product {
         return 22;
     }
 
->>>>>>> d4e22ab7f3cd7d1d5c860991ebbf5904c208d0a6
+
 }

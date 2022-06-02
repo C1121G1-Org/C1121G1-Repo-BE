@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
@@ -36,7 +38,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     /*
-    Created By hoangDH,
+    Created By hoangDH,TamHT
     Time: 13:42 PM 2022-06-01
     Function: find customer object by id from database
     */
@@ -106,7 +108,6 @@ public class CustomerServiceImpl implements ICustomerService {
     public Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2) {
         return iCustomerRepository.pageFindAll(pageable, key1, key2);
     }
-
 
 
 

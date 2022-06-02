@@ -1,11 +1,8 @@
 package api.models;
 
-<<<<<<< HEAD
 
-
-=======
 import com.fasterxml.jackson.annotation.JsonBackReference;
->>>>>>> d4e22ab7f3cd7d1d5c860991ebbf5904c208d0a6
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,16 +38,5 @@ public class Customer {
     @JsonBackReference
     private Set<Invoice> invoiceSet;
 
-<<<<<<< HEAD
 
-=======
-    public Customer(String customerName, String phoneNumber, String dateOfBirth, String email, String address, boolean gender) {
-        this.customerName = customerName;
-        this.phoneNumber = phoneNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.address = address;
-        this.gender = gender;
-    }
->>>>>>> d4e22ab7f3cd7d1d5c860991ebbf5904c208d0a6
 }
