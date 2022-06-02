@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,11 +62,6 @@ public class EmployeeRestController {
                 true, "OK", new HashMap<>(), positionList), HttpStatus.OK);
     }
 
-
-    @GetMapping(value = "/list")
-    public String listEmployee() {
-        return null;
-    }
 
 
     /*
@@ -190,9 +184,6 @@ public class EmployeeRestController {
 
     }
 
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteEmployee() {
-        return null;
-    }
+
 
 }

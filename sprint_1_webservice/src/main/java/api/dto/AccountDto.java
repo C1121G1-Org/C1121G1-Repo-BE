@@ -11,17 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AccountDto {
     private Long id;
-
     private String userName;
-
     private String encryptPassword;
-
     private String email;
-
     private Boolean isEnabled;
-
     private String verificationCode;
-
-
-
 }
