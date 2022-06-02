@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -24,6 +26,18 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     @Autowired
     IProductRepository iProductRepository;
+
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create invoice
+    */
+    @Override
+    public void saveNewInvoice(Invoice invoice) {
+        invoice.setCreateDate(LocalDate.now().toString());
+        invoice.setCreateTime(LocalTime.now().toString());
+        iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(), invoice.getPayments(), invoice.getCustomer().getId());
+    }
 
     @Override
     public Page<Invoice> findAll(String keyword, Pageable pageable) {
@@ -43,5 +57,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Override
     public List<Product> listProduct() {
         return iProductRepository.findAll();
+
     }
 }
