@@ -18,6 +18,9 @@ public class CustomerRestController_showDetailPurchaseHistory {
     @Autowired
     private MockMvc mockMvc;
 
+
+    // Test trường hợp id_customer = null
+    // Trả về lỗi 4xx
     @Test
     public void getDetailPurchaseHistory_id_7() throws Exception {
 
@@ -27,6 +30,8 @@ public class CustomerRestController_showDetailPurchaseHistory {
                 .andExpect(status().is4xxClientError());
     }
 
+    // Test trường hợp id_customer = rỗng ("")
+    // Trả về lỗi 4xx
     @Test
     public void getDetailPurchaseHistory_id_8() throws Exception {
 
@@ -36,6 +41,9 @@ public class CustomerRestController_showDetailPurchaseHistory {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    // Test trường hợp id_customer không tồn tài trong DB
+    // Trả về NO_CONTENT (Lỗi 2xx)
     @Test
     public void getDetailPurchaseHistory_id_9() throws Exception {
 
@@ -45,6 +53,9 @@ public class CustomerRestController_showDetailPurchaseHistory {
                 .andExpect(status().is2xxSuccessful());
     }
 
+
+    // Test trường hợp id_customer = 1 (Tồn tại trong DB)
+    // Trả về mảng json dữ liệu content[0]
     @Test
     public void getDetailPurchaseHistory_id_11() throws Exception {
 

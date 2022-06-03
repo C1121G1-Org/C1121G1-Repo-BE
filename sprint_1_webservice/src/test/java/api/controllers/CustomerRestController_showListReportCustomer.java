@@ -18,6 +18,7 @@ public class CustomerRestController_showListReportCustomer {
     @Autowired
     private MockMvc mockMvc;
 
+    // Test trường hợp list trả về là rỗng
     @Test
     public void getListReportCustomer_5() throws Exception {
         this.mockMvc.perform(
@@ -27,6 +28,8 @@ public class CustomerRestController_showListReportCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+    // Test trường hợp list trả về có giá trị
+    // Lấy record đầu tiên để test xem trả về đúng hay không
     @Test
     public void getListReportCustomer_6() throws Exception {
         this.mockMvc.perform(
