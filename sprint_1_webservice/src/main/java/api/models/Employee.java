@@ -1,5 +1,6 @@
 package api.models;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,6 +48,4 @@ public class Employee {
 
     @Column(name = "delete_flag", nullable = false, columnDefinition = "BIT(1) default 1")
     private boolean deleteFlag;
-
-
 }
