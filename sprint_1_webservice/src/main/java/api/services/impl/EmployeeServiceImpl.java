@@ -44,15 +44,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
     */
     @Override
     public Page<Employee> findAllEmployee(Pageable pageable, String key) {
-//        return iEmployeeRepository.pageFindAll(pageable, key);
-        return null;
+        return iEmployeeRepository.pageFindAll(pageable, key);
+
     }
 
 
 
     @Override
-    public void saveDelete(Employee employee) {
-//        iEmployeeRepository.saveDelete(employee);
+    public void saveDelete(Long id) {
+       iEmployeeRepository.saveDelete(id);
 
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
+
 import java.util.Optional;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -74,8 +75,8 @@ public class EmployeeRestController {
         Function: findAllEmployee = list Employee.
     */
     @GetMapping(value = {"/list"})
-    public ResponseEntity<Page<Employee>>findAllEmployee(@PageableDefault(value = 2)Pageable pageable,
-                                                         @RequestParam Optional<String> keyName) {
+    public ResponseEntity<Page<Employee>> findAllEmployee(@PageableDefault(value = 2) Pageable pageable,
+                                                          @RequestParam Optional<String> keyName) {
         String nameValue = keyName.orElse("");
 
         Page<Employee> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
@@ -206,15 +207,13 @@ public class EmployeeRestController {
         Time: 19:00 31/05/2022
         Function: findAllEmployee = delete flag employee.
     */
-    @PatchMapping(value = "/delete/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long id) {
-        Employee employee = iEmployeeService.findById(id);
-        if (employee == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        employee.setDeleteFlag(true);
-        iEmployeeService.saveDelete(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<?> deleteEmployee(Optional<Employee> employee) {
+        if (employee.isPresent()) {
+            iEmployeeService.saveDelete(employee.get().getId());
+            return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

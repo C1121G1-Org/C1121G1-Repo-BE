@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
@@ -64,10 +65,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
        Time: 19:00 31/05/2022
        Function:     pageFindAll = abstract method to find all employee and pagination and search
     */
-//    @Query(value = "select * from employee where delete_flag = 0 and employee_name like concat('%', :name ,'%') "
-//            , nativeQuery = true,
-//            countQuery = "select count(*) from employee where delete_flag = 0 and employee_name like concat('%', :name ,'%') ")
-//    Page<Employee> pageFindAll(Pageable pageable, @Param("name") String keyword);
+    @Query(value = "select * from employee where delete_flag = 0 and employee_name like concat('%', :name ,'%') "
+            , nativeQuery = true,
+            countQuery = "select count(*) from employee where delete_flag = 0 and employee_name like concat('%', :name ,'%') ")
+    Page<Employee> pageFindAll(Pageable pageable, @Param("name") String keyword);
 
     /*
        Created by HuyNH
@@ -75,9 +76,9 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
        Function:     deleteFlag = abstract method to delete flag a employee
     */
 
-//
-//    @Transactional
-//    @Modifying
-//    @Query(value = "update employee set delete_flag = 1 where employee.id = :id ", nativeQuery = true)
-//    void saveDelete(Employee employee);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update employee set delete_flag = 1 where employee.id = :id ; ", nativeQuery = true)
+    void saveDelete(@PathVariable("id") Long id);
 }
