@@ -4,6 +4,8 @@ import api.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Optional;
+
 
 
 public interface IProductService {
@@ -38,7 +40,7 @@ public interface IProductService {
      Time: 18:15 31/05/2022
      Function: findById
  */
-    Product findById(Long id);
+    Optional<Product> findById(Long id);
 
     /*
          Created by hieuMMT
@@ -47,6 +49,15 @@ public interface IProductService {
      */
     void deleteFlag(Long id);
 
+        /*
+     Created by tuanPA
+     Time: 18:15 31/05/2022
+     Function: updateProduct
+ */
+
     void updateProduct(Product product);
+
+    Product findProductByName(String name);
+
 
 }

@@ -1,6 +1,7 @@
 package api.services.impl;
 
 import api.models.ISaleReport;
+import api.models.Product;
 import api.repositories.ISaleReportRepository;
 import api.services.ISaleReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class SaleReportServiceImpl implements ISaleReportService {
     @Override
     public List<ISaleReport> findAllSaleReports() {
         return this.iSaleReportRepository.findAllSaleReport(ISaleReport.class);
+    }
+
+    @Override
+    public Product getLatestProduct() {
+        return this.iSaleReportRepository.getLatestProduct();
     }
 }
