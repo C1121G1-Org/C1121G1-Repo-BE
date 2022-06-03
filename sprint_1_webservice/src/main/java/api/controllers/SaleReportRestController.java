@@ -7,6 +7,7 @@ package api.controllers;
 */
 
 import api.models.ISaleReport;
+import api.models.Product;
 import api.services.ISaleReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

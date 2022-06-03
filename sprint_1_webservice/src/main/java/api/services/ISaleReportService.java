@@ -1,6 +1,7 @@
 package api.services;
 
 import api.models.ISaleReport;
+import api.models.Product;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ import java.util.List;
 */
 public interface ISaleReportService {
     List<ISaleReport> findAllSaleReports();
+
+    Product getLatestProduct();
 }

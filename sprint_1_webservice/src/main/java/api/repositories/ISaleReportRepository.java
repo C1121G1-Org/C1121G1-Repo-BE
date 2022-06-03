@@ -3,6 +3,7 @@ package api.repositories;
 import api.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 
 /*
@@ -18,4 +19,8 @@ public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
             "GROUP BY invoice.create_date ; ",
             nativeQuery = true)
     <T> List<T> findAllSaleReport(Class<T> t);
+
+    @Query(value = " select * from product order by id desc limit 1 ; ",
+            nativeQuery = true)
+    Product getLatestProduct();
 }
