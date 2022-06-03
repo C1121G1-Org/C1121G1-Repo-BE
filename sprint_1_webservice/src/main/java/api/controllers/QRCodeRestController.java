@@ -37,17 +37,16 @@ public class QRCodeRestController {
     /*
         Function: encode QR-Code
     */
-    @PostMapping(value = "encode", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<Resource> encode(@RequestBody ProductQRCode product) {
-        ProductQRCode productQRCode = new ProductQRCode();
-        BeanUtils.copyProperties(product, productQRCode);
-        String filePath = QRCodeUtils.encode(productQRCode);
+    @PostMapping(value = "/encode", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<Resource> encode(@RequestBody ProductQRCode productQRCode) {
+
         if (productQRCode.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (iProductService.findById(productQRCode.getId()) == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        String filePath = QRCodeUtils.encode(productQRCode);
         try {
             ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(Paths.get(filePath)));
             return ResponseEntity.status(HttpStatus.OK).contentLength(byteArrayResource.contentLength()).body(byteArrayResource);
