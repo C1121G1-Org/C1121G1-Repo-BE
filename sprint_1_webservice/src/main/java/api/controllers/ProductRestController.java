@@ -13,13 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 
 
 @RestController
@@ -76,6 +74,7 @@ public class ProductRestController {
 
 
 
+
     /*
      Created by tuanPA
      Time: 18:15 31/05/2022
@@ -89,6 +88,7 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto,bindingResult);
+
 //        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
@@ -117,6 +117,7 @@ public class ProductRestController {
      Function: findById
  */
 
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
@@ -135,7 +136,6 @@ public class ProductRestController {
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
 //        productDto.validate(productDto,bindingResult);
-
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult

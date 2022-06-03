@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /*
@@ -36,6 +37,12 @@ Function: Query Create product
     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Optional<Product> findById(@Param("id") Long id);
 
+    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
+            "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
+            "FROM product " +
+            "WHERE product.id = :id", nativeQuery = true)
+    Product findByProductById(@Param("id") Long id);
+
     /*
     Created by TuanPA
     Date: 14:01 01/06/2022
@@ -50,6 +57,7 @@ Function: Query Create product
             "price = :#{#product.price},qr_scan= :#{#product.qrScan},screen_size= :#{#product.screenSize},selfie= :#{#product.selfie} " +
             "WHERE id =:#{#product.id}", nativeQuery = true)
     void updateProduct(Product product);
+
 
       /*
     Created by TuanPA
@@ -93,6 +101,12 @@ Function: Query Create product
     @Query(value = "update product SET delete_flag = 1 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
 
+
+
+    @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
+            " and price like concat('%', :price ,'%')"
+            , nativeQuery = true)
+    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2);
 
 }
 

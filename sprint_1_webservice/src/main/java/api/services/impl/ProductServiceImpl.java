@@ -57,9 +57,9 @@ public class ProductServiceImpl implements IProductService {
      Function: findById
  */
     @Override
+
     public Optional<Product> findById(Long id) {
         return iProductRepository.findById(id);
-
     }
 
     /*
@@ -71,6 +71,7 @@ public class ProductServiceImpl implements IProductService {
     public void updateProduct(Product product) {
         this.iProductRepository.updateProduct(product);
     }
+
 
     /*
     Created by tuanPA
