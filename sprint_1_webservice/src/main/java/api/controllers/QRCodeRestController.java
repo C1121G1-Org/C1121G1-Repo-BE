@@ -24,6 +24,7 @@ import java.nio.file.Paths;
     Created by HauPV
     Time: 11:50 31/05/2022
     Function: encode and decode QR-Code
+    Role : Admin , Storekeeper , Seller
 */
 
 @RestController
