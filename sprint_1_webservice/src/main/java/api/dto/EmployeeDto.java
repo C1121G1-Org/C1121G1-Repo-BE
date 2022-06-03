@@ -25,13 +25,6 @@ public class EmployeeDto implements Validator {
     private AccountDto accountDto;
     private IAccountService iAccountService;
 
-    public EmployeeDto() {
-        setDeleteFlag(false);
-    }
-
-    public void setAccountService(IAccountService iAccountService) {
-    }
-
     @Override
     public boolean supports(Class<?> clazz) {
         return false;

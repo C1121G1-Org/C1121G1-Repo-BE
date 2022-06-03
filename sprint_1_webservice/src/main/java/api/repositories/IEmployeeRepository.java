@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
@@ -22,7 +23,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     @Query(value = "INSERT INTO employee (`id`,`employee_name`, `date_of_birth`, " +
             "`delete_flag`,`address`, `id_card`,`phone_number`,`image`," +
             "`account_id`,`position_id`)" +
-            " VALUES (:#{#employee.id},:#{#employee.employeeName},:#{#employee.dateOfBirth},:#{#employee.deleteFlag},:#{#employee.address},:#{#employee.idCard},:#{#employee.phoneNumber},:#{#employee.image},:#{#employee.account.id},:#{#employee.position.id});", nativeQuery = true)
+            " VALUES (:#{#employee.id},:#{#employee.employeeName},:#{#employee.dateOfBirth}," +
+            ":#{#employee.deleteFlag},:#{#employee.address},:#{#employee.idCard}," +
+            ":#{#employee.phoneNumber},:#{#employee.image},:#{#employee.account.id}," +
+            ":#{#employee.position.id});", nativeQuery = true)
     void createEmployee(Employee employee);
 
     /*
@@ -45,14 +49,15 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "`account`.`encrypt_password`= :#{#account.encryptPassword}, " +
             "`account`.`user_name`= :#{#account.userName} " +
             "where employee.`id`= :#{#employee.id}", nativeQuery = true)
-    void updateEmployee(Employee employee , Account account);
+    void updateEmployee(Employee employee, Account account);
+
 
     /*
         Created by Khoa PTD
         Time: 09:00 02/06/2022
         Function: find Employee by id.
     */
-    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id",nativeQuery = true)
+    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id", nativeQuery = true)
     Employee findEmployeeById(@Param("id") Long id);
 
     /*
@@ -70,7 +75,10 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
        Time: 19:00 31/05/2022
        Function:     deleteFlag = abstract method to delete flag a employee
     */
+
+
     @Transactional
-    @Query(value = "update employee set delete_flag = 1 where employee.id = :id ", nativeQuery = true)
-    void saveDelete(Employee employee);
+    @Modifying
+    @Query(value = "update employee set delete_flag = 1 where employee.id = :id ; ", nativeQuery = true)
+    void saveDelete(@PathVariable("id") Long id);
 }

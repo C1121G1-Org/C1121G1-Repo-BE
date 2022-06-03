@@ -12,13 +12,10 @@ public interface IEmployeeService {
   
     void update(Employee employee, Account account);
 
-    Employee findById(long id);
 
-<<<<<<< HEAD
-    void saveDelete(Employee employee);
+    void saveDelete(Long id);
+
+
+    Employee findById(Long id);
 
 }
-=======
-    void delete(Long id);
-}
->>>>>>> 6689f8a0aa24b8bb1414331091382f11bd2937fe
