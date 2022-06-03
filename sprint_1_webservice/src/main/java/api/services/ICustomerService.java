@@ -1,6 +1,7 @@
 package api.services;
 
 import api.dto.PurchaseHistoryDto;
+import api.dto.PurchaseProductDto;
 import api.dto.ReportCustomerDto;
 
 import api.models.Customer;
@@ -25,6 +26,13 @@ public interface ICustomerService {
 
     /*
         Created by TuanNQ
+        Time: 22:50 02/06/2022
+        Function: Get info customer in customer report by customer_id
+    */
+    ReportCustomerDto getInfoCustomer(Long id);
+
+    /*
+        Created by TuanNQ
         Time: 17:00 01/06/2022
         Function: Show list of customer reports by age
     */
@@ -43,6 +51,13 @@ public interface ICustomerService {
         Function: Show detail purchase history of customer
     */
     Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable);
+
+    /*
+        Created by TuanNQ
+        Time: 11:00 02/06/2022
+        Function: Show all purchase products by ivoice.id
+    */
+    Page<PurchaseProductDto> getPurchaseProducts(Long id, Pageable pageable);
 
     /*
           Created by tamHT
