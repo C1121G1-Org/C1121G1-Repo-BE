@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -30,7 +29,6 @@ public class QRCodeController_check {
 
         ByteArrayResource bytes1 = new ByteArrayResource(Files.readAllBytes(Paths.get(path1)));
         ByteArrayResource bytes2 = new ByteArrayResource(Files.readAllBytes(Paths.get(path2)));
-
         mockMvc.perform(MockMvcRequestBuilders.post("api/qrcode/check")
                         .content(bytes1.getByteArray())
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -38,6 +36,7 @@ public class QRCodeController_check {
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                         .andDo(print())
                         .andExpect(status().is2xxSuccessful());
+
 
     }
 

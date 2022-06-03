@@ -2,6 +2,7 @@ package api.models;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.Objects;
 
 /*
@@ -9,6 +10,7 @@ import java.util.Objects;
     Time: 10:00 02/06/2022
     Function: display QR Code information
 */
+
 
 @Getter
 @Setter

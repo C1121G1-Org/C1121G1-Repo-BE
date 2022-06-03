@@ -39,6 +39,7 @@ public class SaleReportRestController_saleReportList {
                 .andExpect(jsonPath("$[0].price").value(200D))
                 .andExpect(jsonPath("$[0].qrScan").value("qrScan1"))
                 .andExpect(jsonPath("$[0].deleteFlag").value(false));
+
     }
 
 }

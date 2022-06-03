@@ -39,6 +39,7 @@ public class QRCodeRestController_encode {
                         .andDo(print())
                         .andExpect(status().is4xxClientError());
 
+
     }
 
     @Test
@@ -52,6 +53,7 @@ public class QRCodeRestController_encode {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andDo(print())
                         .andExpect(status().is4xxClientError());
+
     }
 
     @Test
