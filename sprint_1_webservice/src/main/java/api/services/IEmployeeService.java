@@ -16,6 +16,12 @@ public interface IEmployeeService {
     void saveDelete(Long id);
 
 
-    Employee findById(Long id);
+//    Employee findById(Long id);
 
+    /*
+        Created by khoaVC
+        Time: 21:54 31/05/2022
+        Function: 1/    findEmployee() = abstract method to find Employee by id
+    */
+    Employee findEmployee(Long createdEmployeeDto);
 }

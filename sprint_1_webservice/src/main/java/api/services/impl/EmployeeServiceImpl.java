@@ -1,8 +1,9 @@
 package api.services.impl;
 
+
 import api.models.Account;
 import api.models.Employee;
-import api.models.Position;
+
 import api.repositories.IEmployeeRepository;
 import api.services.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public void update(Employee employee, Account account) {
-        iEmployeeRepository.updateEmployee(employee,account);
+        iEmployeeRepository.updateEmployee(employee, account);
     }
 
-    @Override
-    public Employee findById(Long id) {
-        return iEmployeeRepository.findEmployeeById(id);
-    }
-  
+//    @Override
+//    public Employee findById(Long id) {
+//        return iEmployeeRepository.findEmployeeById(id);
+//    }
+
     /*
         Created by HuyNH
         Time: 19:00 31/05/2022
@@ -49,10 +50,18 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
 
-
     @Override
     public void saveDelete(Long id) {
-       iEmployeeRepository.saveDelete(id);
+        iEmployeeRepository.saveDelete(id);
+    }
 
+    /*
+        Created by khoaVC
+        Time: 21:54 31/05/2022
+        Function: 1/    findEmployee() = call repo to find Employee by id
+    */
+    @Override
+    public Employee findEmployee(Long createdEmployeeDto) {
+        return iEmployeeRepository.findEmployee(createdEmployeeDto);
     }
 }

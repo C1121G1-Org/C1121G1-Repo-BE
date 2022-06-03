@@ -12,6 +12,7 @@ import org.springframework.validation.Validator;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class EmployeeDto implements Validator {
     private Long id;
     private String employeeName;

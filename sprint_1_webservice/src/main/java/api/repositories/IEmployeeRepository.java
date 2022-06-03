@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
     /*
+<<<<<<< HEAD
        Created by Khoa PTD
        Time: 09:00 02/06/2022
        Function: createEmployee
@@ -57,8 +58,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
         Time: 09:00 02/06/2022
         Function: find Employee by id.
     */
-    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id", nativeQuery = true)
-    Employee findEmployeeById(@Param("id") Long id);
+//    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id", nativeQuery = true)
+//    Employee findEmployeeById(@Param("id") Long id);
 
     /*
        Created by HuyNH
@@ -81,4 +82,12 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     @Modifying
     @Query(value = "update employee set delete_flag = 1 where employee.id = :id ; ", nativeQuery = true)
     void saveDelete(@PathVariable("id") Long id);
+    /*
+        Created by khoaVC
+        Time: 21:54 31/05/2022
+        Function: 1/    findEmployee() = write a native query to find Employee by id
+    */
+
+    @Query(value = "select * from employee where delete_flag = 0 and id = :id ", nativeQuery = true)
+    Employee findEmployee(@Param("id") Long createdEmployeeDto);
 }

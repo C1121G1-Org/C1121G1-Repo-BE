@@ -133,7 +133,7 @@ public class EmployeeRestController {
     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable Long id) {
-        Employee employee = this.iEmployeeService.findById(id);
+        Employee employee = this.iEmployeeService.findEmployee(id);
 
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
