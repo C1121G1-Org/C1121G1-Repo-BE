@@ -25,12 +25,12 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
-     /*
-        Created by TamT
-        Time: 12:00 2/06/2022
-        Function: get id product
-    */
-     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
+    /*
+       Created by TamT
+       Time: 12:00 2/06/2022
+       Function: get id product
+   */
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Optional<Product> findById(@Param("id") Long id);
 
     /*
@@ -38,14 +38,13 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
-    @Query(value = "select * , storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%')" +
+    @Query(value = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
+            " storage on product.id = storage.product_id   where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
             "and price >= :price  and storage.quantity >= :quantity  group by product.id ",
-            countQuery = "select count(*) from product inner join" +
-                    " storage on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%')" +
+            countQuery = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
+                    " storage on product.id = storage.product_id  where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
                     "and price >= :price  and storage.quantity >= :quantity  group by product.id ", nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
+    <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
+
 }
-//    select name, price , cpu , memory, storage.quantity from product inner join
-//        storage on product.id = storage.product_id where product.delete_flag = false and name like "%sa%"
-//        and price >=""and storage.quantity >=50 group by product.id;
+

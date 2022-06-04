@@ -17,7 +17,7 @@ public class CustomerController_getCustomer {
     @Autowired
     private MockMvc mockMvc;
 
-//    test cho trường hợp size list =0
+    //    test cho trường hợp size list =0
     @Test
     public void getListStudent_5() throws Exception {
 
@@ -27,7 +27,8 @@ public class CustomerController_getCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-//test cho trường hợp trả về list thành công
+
+    //test cho trường hợp trả về list thành công
     @Test
     public void getListStudent_6() throws Exception {
 
@@ -46,7 +47,7 @@ public class CustomerController_getCustomer {
     }
 
 
-//test cho tham số id = null
+    //test cho tham số id = null
     @Test
     public void getInfoCustomer_id_1() throws Exception {
 
@@ -65,6 +66,7 @@ public class CustomerController_getCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
     //test cho tham số id = quá lớn
     @Test
     public void getInfoCustomer_id_3() throws Exception {
@@ -76,9 +78,9 @@ public class CustomerController_getCustomer {
     }
     //test cho tham số id tìm thấy . trả về thành công
 
+
     @Test
     public void getInfoCustomer_id_4() throws Exception {
-
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/{id}", "1"))
                 .andDo(print())
@@ -91,7 +93,7 @@ public class CustomerController_getCustomer {
     }
 
 
-//test trường hợp tìm kiếm với tham số null
+    //test trường hợp tìm kiếm với tham số null
     @Test
     public void getListReportCustomer_customer_7() throws Exception {
 //        mặc định sẽ trả về susccess
@@ -141,6 +143,7 @@ public class CustomerController_getCustomer {
                 .andExpect(jsonPath("$.content[0].gender").value("false"));
 
     }
+
     //test trường hợp tìm kiếm với tham số null
     @Test
     public void getListReportCustomer_phone_7() throws Exception {
@@ -151,6 +154,7 @@ public class CustomerController_getCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
     //test trường hợp tìm kiếm với tham số rỗng
     @Test
     public void getListReportCustomer_customer_phone_8() throws Exception {
@@ -161,6 +165,7 @@ public class CustomerController_getCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
     //test trường hợp tìm kiếm với tham số không đúng
     @Test
     public void getListReportCustomer_phone_9() throws Exception {
@@ -170,6 +175,7 @@ public class CustomerController_getCustomer {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
+
     //test trường hợp tìm kiếm với tham số truyền vào đúng
     @Test
     public void getListReportCustomer_phone_11() throws Exception {
@@ -187,4 +193,14 @@ public class CustomerController_getCustomer {
                 .andExpect(jsonPath("$.content[0].address").value("số 978 Trần Hưng Đạo, phường 7, quận 5, Tp. Hồ Chí Minh"))
                 .andExpect(jsonPath("$.content[0].gender").value("false"));
     }
+//    test cho trường hợp chọn thành công và gửi object lên server
+
+//    @Test
+//    public void getListReportCustomer_phone_11() throws Exception {
+//        this.mockMvc.perform(
+//                MockMvcRequestBuilders.get("/api/customer/list?keyPhone=0912123785"))
+//
+//    }
+
+
 }

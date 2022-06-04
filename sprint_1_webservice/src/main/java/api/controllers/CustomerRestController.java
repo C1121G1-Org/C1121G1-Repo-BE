@@ -33,7 +33,7 @@ public class CustomerRestController {
           Function: get  all page customer and search of customer
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value =4) Pageable pageable, @RequestParam Optional<String> keyName,
                                                        @RequestParam Optional<String> keyPhone) {
         String keyNameValue = keyName.orElse("");
         String keyPhoneValue = keyPhone.orElse("");
