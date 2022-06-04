@@ -50,7 +50,7 @@ public interface ICustomerService {
         Time: 18:15 31/05/2022
         Function: Show detail purchase history of customer
     */
-    Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable);
+    Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, String startDate, String endDate, Pageable pageable);
 
     /*
         Created by TuanNQ

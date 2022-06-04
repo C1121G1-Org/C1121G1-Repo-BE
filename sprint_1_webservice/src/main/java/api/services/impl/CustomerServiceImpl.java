@@ -73,8 +73,8 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show detail purchase history of customer
     */
     @Override
-    public Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable) {
-        return iCustomerRepository.detail(id, pageable);
+    public Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, String startDate, String endDate, Pageable pageable) {
+        return iCustomerRepository.detail(id, startDate, endDate, pageable);
     }
 
     /*

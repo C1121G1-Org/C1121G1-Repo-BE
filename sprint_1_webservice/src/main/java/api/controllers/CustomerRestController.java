@@ -10,6 +10,7 @@ import api.services.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -196,9 +197,13 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/purchase-history/{id}")
     public ResponseEntity<Page<PurchaseHistoryDto>> showDetailPurchaseHistory(
-            @PathVariable Long id, @PageableDefault Pageable pageable) {
+            @PathVariable(value = "id") Long id,
+            @RequestParam(value = "startDate", defaultValue = "01-01-1900") String startDate,
+            @RequestParam(value = "endDate", defaultValue = "31-12-2100") String endDate,
+            @PageableDefault Pageable pageable) {
 
-        Page<PurchaseHistoryDto> purchaseHistoryDtoPage = iCustomerService.detailPurchaseHistory(id, pageable);
+        Page<PurchaseHistoryDto> purchaseHistoryDtoPage =
+                iCustomerService.detailPurchaseHistory(id, startDate, endDate, pageable);
 
         if (purchaseHistoryDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

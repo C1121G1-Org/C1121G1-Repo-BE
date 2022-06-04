@@ -69,7 +69,9 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
             "INNER JOIN invoice_detail on invoice.id = invoice_detail.invoice_id " +
             "INNER JOIN product ON invoice_detail.product_id = product.id " +
-            "WHERE customer.id = :id " +
+            "WHERE customer.id = :id and " +
+            "(STR_TO_DATE(invoice.create_date, '%d-%m-%Y') " +
+            "BETWEEN STR_TO_DATE(:startDate, '%Y-%m-%d') AND STR_TO_DATE(:endDate, '%Y-%m-%d')) " +
             "GROUP BY invoice_detail.invoice_id",
             countQuery = "SELECT invoice.id as id, customer.customer_name as name, " +
                     "customer.date_of_birth as dateOfBirth, " +
@@ -81,10 +83,12 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     "INNER JOIN invoice ON customer.id = invoice.customer_id " +
                     "INNER JOIN invoice_detail on invoice.id = invoice_detail.invoice_id " +
                     "INNER JOIN product ON invoice_detail.product_id = product.id " +
-                    "WHERE customer.id = :id " +
+                    "WHERE customer.id = :id and " +
+                    "(STR_TO_DATE(invoice.create_date, '%d-%m-%Y') " +
+                    "BETWEEN STR_TO_DATE(:startDate, '%Y-%m-%d') AND STR_TO_DATE(:endDate, '%Y-%m-%d')) " +
                     "GROUP BY invoice_detail.invoice_id",
             nativeQuery = true)
-    Page<PurchaseHistoryDto> detail(Long id, Pageable pageable);
+    Page<PurchaseHistoryDto> detail(Long id, String startDate, String endDate, Pageable pageable);
 
     /*
         Created by TuanNQ
@@ -168,8 +172,19 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "count(invoice.id) as purchaseTimes " +
             "FROM customer " +
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
-            "WHERE gender = :gender and (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+            "WHERE gender = :gender and " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
             "GROUP BY customer.id",
+            countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+                    "customer.email as email, customer.phone_number as phoneNumber, " +
+                    "count(invoice.id) as purchaseTimes " +
+                    "FROM customer " +
+                    "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+                    "WHERE gender = :gender and " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+                    "GROUP BY customer.id",
             nativeQuery = true)
     Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
 
