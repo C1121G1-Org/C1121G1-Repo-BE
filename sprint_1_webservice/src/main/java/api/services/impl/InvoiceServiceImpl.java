@@ -1,6 +1,6 @@
 package api.services.impl;
 
-import api.dto.InvoiceDto;
+
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -67,10 +67,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     }
 
-    @Override
-    public void createInvoice(InvoiceDto invoiceDto) {
 
-    }
 
     @Override
     public Invoice getNewInvoice() {

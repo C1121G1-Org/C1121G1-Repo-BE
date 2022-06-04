@@ -15,6 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductInvoiceDto {
-    private Long productId;
+    private Long id;
+    private String name;
     private Long quantity;
+    private Double price;
 }

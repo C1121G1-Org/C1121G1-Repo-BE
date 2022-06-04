@@ -14,21 +14,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Optional;
+import java.util.*;
 
 
 import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -168,6 +163,13 @@ public class ProductRestController {
         }
         iProductService.deleteFlag(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = { "/listTest"})
+    public ResponseEntity<List<Product>> showListCustomer() {
+        List<Product> productTest = iProductService.findAllTest();
+        return new ResponseEntity<>(productTest, HttpStatus.OK);
     }
 
 }

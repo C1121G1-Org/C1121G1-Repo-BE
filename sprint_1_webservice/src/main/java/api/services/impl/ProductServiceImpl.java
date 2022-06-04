@@ -69,6 +69,12 @@ public class ProductServiceImpl implements IProductService {
     public void updateProduct(Product product) {
         this.iProductRepository.updateProduct(product);
     }
+
+    @Override
+    public List<Product> findAllTest() {
+        return iProductRepository.findAll();
+    }
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022

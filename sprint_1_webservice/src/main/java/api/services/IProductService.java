@@ -49,4 +49,5 @@ public interface IProductService {
 
     void updateProduct(Product product);
 
+    List<Product> findAllTest();
 }
