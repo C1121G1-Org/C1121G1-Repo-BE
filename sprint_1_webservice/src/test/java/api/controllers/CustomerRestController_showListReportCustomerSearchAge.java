@@ -18,6 +18,8 @@ public class CustomerRestController_showListReportCustomerSearchAge {
     @Autowired
     private MockMvc mockMvc;
 
+    // Test trường hợp age = null
+    // Trả về lỗi 4xx
     @Test
     public void getListReportCustomerSearchAge_age_7() throws Exception {
         this.mockMvc.perform(
@@ -27,6 +29,9 @@ public class CustomerRestController_showListReportCustomerSearchAge {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    // Test trường hợp age = rỗng ("")
+    // Trả về lỗi 4xx
     @Test
     public void getListReportCustomerSearchAge_age_8() throws Exception {
         this.mockMvc.perform(
@@ -36,6 +41,9 @@ public class CustomerRestController_showListReportCustomerSearchAge {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    // Test trường hợp age không có trong DB
+    // Trả về NO_CONTENT (2xx)
     @Test
     public void getListReportCustomerSearchAge_age_9() throws Exception {
         this.mockMvc.perform(
@@ -45,6 +53,10 @@ public class CustomerRestController_showListReportCustomerSearchAge {
                 .andExpect(status().is2xxSuccessful());
     }
 
+
+    // Test trường hợp search theo age ra được kết quả list có trong db
+    // Trả về OK (2xx)
+    // Lấy phần tử đầu tiên ra để kiểm tra
     @Test
     public void getListReportCustomerSearchAge_age_11() throws Exception {
         this.mockMvc.perform(

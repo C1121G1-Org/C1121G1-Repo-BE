@@ -1,5 +1,6 @@
 package api.services.impl;
 
+import api.dto.PurchaseProductDto;
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,16 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public Page<ReportCustomerDto> filterAll(Pageable pageable) {
         return iCustomerRepository.filterAll(pageable);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 22:50 02/06/2022
+        Function: Get info customer in customer report by customer_id
+    */
+    @Override
+    public ReportCustomerDto getInfoCustomer(Long id) {
+        return iCustomerRepository.getInfoCustomer(id);
     }
 
     /*
@@ -64,8 +75,18 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show detail purchase history of customer
     */
     @Override
-    public Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable) {
-        return iCustomerRepository.detail(id, pageable);
+    public Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, String startDate, String endDate, Pageable pageable) {
+        return iCustomerRepository.detail(id, startDate, endDate, pageable);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 11:00 02/06/2022
+        Function: Show all purchase products by ivoice.id
+    */
+    @Override
+    public Page<PurchaseProductDto> getPurchaseProducts(Long id, Pageable pageable) {
+        return iCustomerRepository.getPurchaseProducts(id, pageable);
     }
 
 

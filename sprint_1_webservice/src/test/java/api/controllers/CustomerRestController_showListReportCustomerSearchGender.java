@@ -18,6 +18,9 @@ public class CustomerRestController_showListReportCustomerSearchGender {
     @Autowired
     private MockMvc mockMvc;
 
+
+    // Test trường hợp gender = null
+    // Trả về lỗi 4xx
     @Test
     public void getListReportCustomerSearchGender_gender_7() throws Exception {
         this.mockMvc.perform(
@@ -27,6 +30,9 @@ public class CustomerRestController_showListReportCustomerSearchGender {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    // Test trường hợp gender = rỗng ("")
+    // Trả về lỗi 4xx
     @Test
     public void getListReportCustomerSearchGender_gender_8() throws Exception {
         this.mockMvc.perform(
@@ -36,6 +42,9 @@ public class CustomerRestController_showListReportCustomerSearchGender {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    // Test trường hợp gender không có trong DB
+    // Trả về NO_CONTENT (2xx)
     @Test
     public void getListReportCustomerSearchGender_gender_9() throws Exception {
         this.mockMvc.perform(
@@ -45,6 +54,10 @@ public class CustomerRestController_showListReportCustomerSearchGender {
                 .andExpect(status().is4xxClientError());
     }
 
+
+    // Test trường hợp search theo gender ra được kết quả list có trong db
+    // Trả về OK (2xx)
+    // Lấy phần tử đầu tiên ra để kiểm tra
     @Test
     public void getListReportCustomerSearchGender_gender_11() throws Exception {
         this.mockMvc.perform(
