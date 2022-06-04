@@ -15,10 +15,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+=======
+
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.*;
+
+
+import org.springframework.validation.BindingResult;
+
+import javax.validation.Valid;
+
+
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +73,10 @@ public class ProductRestController {
 
     /*
           Created by tamHT and hieuMMT
+<<<<<<< HEAD
+=======
+>>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 
     /*
           Created by tamHT
@@ -78,12 +97,26 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 
 
 //    @PostMapping(value = "/create")
 //    public String createProduct() {
 //        return null;
 //    }
+<<<<<<< HEAD
+=======
+
+
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 
 
 
@@ -100,10 +133,14 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
+<<<<<<< HEAD
 
         productDtoErrors.validate(productDto, bindingResult);
 
 
+=======
+        productDtoErrors.validate(productDto,bindingResult);
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 //        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
@@ -141,9 +178,14 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: findById
  */
+<<<<<<< HEAD
 
 
     @GetMapping(value = "/{id}")
+=======
+    @GetMapping(value = "/{id}")
+
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
         if (product.isPresent()) {
@@ -160,8 +202,11 @@ public class ProductRestController {
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
+<<<<<<< HEAD
 //        productDto.validate(productDto,bindingResult);
 
+=======
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -169,7 +214,10 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
         Product product = new Product();
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
@@ -201,13 +249,29 @@ public class ProductRestController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
 
+<<<<<<< HEAD
         Optional<Product> product = iProductService.findById(id);
 
+=======
+//        Product product = iProductService.findById(id);
+        Optional<Product> product = iProductService.findById(id);
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         iProductService.deleteFlag(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    /*
+         Created by LongNHL
+         Time: 15:00 2/06/2022
+         Function: use test create invoiec
+     */
+    @GetMapping(value = {"/listTest"})
+    public ResponseEntity<List<Product>> showListCustomer() {
+        List<Product> productTest = iProductService.findAllTest();
+        return new ResponseEntity<>(productTest, HttpStatus.OK);
     }
 
 }

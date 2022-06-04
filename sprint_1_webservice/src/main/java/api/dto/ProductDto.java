@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+<<<<<<< HEAD
+=======
+
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 import org.hibernate.validator.constraints.Length;
 
 import org.springframework.validation.Errors;
@@ -14,6 +18,10 @@ import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+<<<<<<< HEAD
+=======
+
+>>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 
 @Getter
 @Setter
