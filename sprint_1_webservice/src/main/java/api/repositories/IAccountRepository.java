@@ -15,6 +15,8 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
         Time: 10:28 31/05/2022
         Function: get account object by username from database using naming query method support by JpaRepository.
     */
+    Account findByEmail(String email);
+
     Account findByUserName(String username);
 
     /*
@@ -34,4 +36,8 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
     @Modifying
     @Query(value = "UPDATE account SET verification_code = :code WHERE (user_name = :username); ", nativeQuery = true)
     void setVetification(@Param("username") String username, @Param("code") String code);
+
+    @Modifying
+    @Query(value = "UPDATE `account` SET verification_code = null WHERE (user_name = :username); ", nativeQuery = true)
+    void refreshCode(@Param("username") String username);
 }

@@ -4,7 +4,9 @@ import api.dto.PersonalDto;
 import api.models.Account;
 import api.models.Employee;
 import api.payload.request.ChangePasswordRequest;
+import api.payload.request.CheckVerificationCodeRequest;
 import api.payload.request.LoginRequest;
+import api.payload.request.ResetPasswordRequest;
 import api.payload.response.JwtResponse;
 import api.security.JwtFilter;
 import api.security.JwtUtility;
@@ -23,7 +25,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,33 +80,47 @@ public class SecurityRestController {
         List<String> roles = accountDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(new JwtResponse(jwt, accountDetails.getId(), accountDetails.getUsername(), roles), HttpStatus.OK);
+        return new ResponseEntity<>(new JwtResponse(jwt, accountDetails.getId(), accountDetails.getUsername(), accountDetails.getImageLink(), roles), HttpStatus.OK);
     }
 
     /*
         Function: This findByUserName() method checks the existence of the account and sends the password
                   change confirmation code to that account's email.
     */
-    @GetMapping(value = "/find-by-username")
-    public ResponseEntity<Account> findByUserName(@RequestParam("username") String username) {
-        Account account = iAccountService.findByUserName(username);
+    @PostMapping(value = "/find-by-email")
+    public ResponseEntity<Account> findByUserName(@RequestBody String email) throws MessagingException, UnsupportedEncodingException {
+        Account account = iAccountService.findAccountByEmail(email);
         if (account != null) {
             String code = iAccountService.setVetificationCode(account);
-            emailSendService.setMail(account.getEmail(), "Xác nhận", "Mã xác nhận " + code);
+            emailSendService.sendEmail(account.getEmail(), account.getEmployee().getEmployeeName(), code);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /*
+        Function: This findByUserName() method checks the existence of the account and sends the password
+                  change confirmation code to that account's email.
+    */
+    @PatchMapping(value = "/refresh-code")
+    public ResponseEntity<Account> refreshCode(@RequestBody String email) {
+        Account account = iAccountService.findAccountByEmail(email);
+        if (account != null) {
+            iAccountService.refreshCode(account.getUserName());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    /*
         Function: This checkVerificationCode() method checks if the VerificationCode sent from the client
                   matches the VerificationCode stored in that account object.
     */
-    @GetMapping(value = "/check-code")
-    public ResponseEntity<Boolean> checkVerificationCode(@RequestParam("username") String username, @RequestParam("code") String code) {
-        Account account = iAccountService.findByUserName(username);
+    @PostMapping(value = "/check-code")
+    public ResponseEntity<Boolean> checkVerificationCode(@RequestBody CheckVerificationCodeRequest checkVerificationCodeRequest) {
+        Account account = iAccountService.findAccountByEmail(checkVerificationCodeRequest.getEmail());
         if (account != null) {
-            if (account.getVerificationCode().equals(code)) {
+            if (account.getVerificationCode().equals(checkVerificationCodeRequest.getCode())) {
                 return new ResponseEntity<>(true, HttpStatus.OK);
             }
         }
@@ -151,6 +170,24 @@ public class SecurityRestController {
             String encryptPassword = encoder.encode(changePasswordRequest.getNewPassword());
             iAccountService.changePassword(encryptPassword, account.getId());
             return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    /*
+        Created by KhaiTT
+        Date: 19:34 03/06/2022
+        Function: This method reset account password.
+    */
+    @PatchMapping(value = "/reset-password")
+    public ResponseEntity<Account> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
+        Account account = iAccountService.findAccountByEmail(resetPasswordRequest.getEmail());
+        if (account != null) {
+            if (resetPasswordRequest.getNewPassword().equals(resetPasswordRequest.getConfirmNewPassword())) {
+                String encryptPassword = encoder.encode(resetPasswordRequest.getNewPassword());
+                iAccountService.changePassword(encryptPassword, account.getId());
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

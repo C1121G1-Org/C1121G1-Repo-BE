@@ -22,16 +22,17 @@ public class AccountDetailsImpl implements UserDetails {
     private Long id;
     private String username;
     private Boolean enabled;
-
+    private String imageLink;
     @JsonIgnore
     private String password;
     List<GrantedAuthority> authorities = null;
 
-    public AccountDetailsImpl(Long id, String username, Boolean enabled, String password, List<GrantedAuthority> authorities) {
+    public AccountDetailsImpl(Long id, String username, Boolean enabled, String password, String imageLink, List<GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.enabled = enabled;
         this.password = password;
+        this.imageLink = imageLink;
         this.authorities = authorities;
     }
 
@@ -43,17 +44,21 @@ public class AccountDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities = account.getAccountRoleSet().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleName()))
                 .collect(Collectors.toList());
-        System.out.println("build() at AccountDetailsImpl in service package.");
         return new AccountDetailsImpl(
                 account.getId(),
-                account.getUserName(),
+                account.getEmployee().getEmployeeName(),
                 account.getIsEnabled(),
                 account.getEncryptPassword(),
+                account.getEmployee().getImage(),
                 authorities);
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getImageLink() {
+        return imageLink;
     }
 
     @Override

@@ -13,15 +13,17 @@ public class JwtResponse {
     private String type = "Bearer";
     private Long id;
     private String username;
+    private String imageLink;
     private List<String> roles;
 
     public JwtResponse() {
     }
 
-    public JwtResponse(String token, Long id, String username, List<String> roles) {
+    public JwtResponse(String token, Long id, String username, String imageLink, List<String> roles) {
         this.token = token;
         this.id = id;
         this.username = username;
+        this.imageLink = imageLink;
         this.roles = roles;
     }
 
@@ -55,6 +57,14 @@ public class JwtResponse {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     public List<String> getRoles() {
