@@ -83,6 +83,7 @@ public class ProductServiceImpl implements IProductService {
         return this.iProductRepository.findProductByName(name);
     }
 
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
@@ -93,5 +94,13 @@ public class ProductServiceImpl implements IProductService {
         this.iProductRepository.deleteFlag(id);
     }
 
-
+    /*
+      Created by LongNHL
+     Time: 15:00 2/06/2022
+     Function: use test create invoice
+      */
+    @Override
+    public List<Product> findAllTest() {
+        return iProductRepository.findAll();
+    }
 }

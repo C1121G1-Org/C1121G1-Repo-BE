@@ -60,4 +60,11 @@ public interface IProductService {
     Product findProductByName(String name);
 
 
+    /*
+             Created by LongNHL
+             Time: 15:00 2/06/2022
+             Function: use test create invoiec
+         */
+    List<Product> findAllTest();
+
 }
