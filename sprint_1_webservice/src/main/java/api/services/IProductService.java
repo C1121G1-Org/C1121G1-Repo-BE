@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+
+
 public interface IProductService {
     /*
         Created by khoaVC
@@ -19,7 +21,7 @@ public interface IProductService {
     Product findProduct(Long productDto);
 
     /*
-               Created by tamHT
+               Created by hieuMMT and tamHT
                Time: 18:15 31/05/2022
                Function: get all product
            */
@@ -39,6 +41,24 @@ public interface IProductService {
      Time: 18:15 31/05/2022
      Function: findById
  */
-   Optional<Product> findById(Long id);
+    Optional<Product> findById(Long id);
+
+    /*
+         Created by hieuMMT
+         Time: 14:15 1/06/2022
+         Function: delete product
+     */
+    void deleteFlag(Long id);
+
+        /*
+     Created by tuanPA
+     Time: 18:15 31/05/2022
+     Function: updateProduct
+ */
+
+    void updateProduct(Product product);
+
+    Product findProductByName(String name);
+
 
 }

@@ -53,11 +53,11 @@ public class CustomerRestController {
       */
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id) {
-        Optional<Customer> customer = iCustomerService.findById(id);
-        if (customer.isPresent()) {
-            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
+        Customer customer = iCustomerService.findById(id);
+        if (customer == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     /*
@@ -177,7 +177,7 @@ public class CustomerRestController {
     @GetMapping(value = "/report-customer-search")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearch(
             @PageableDefault Pageable pageable, @RequestParam Boolean gender,
-            @RequestParam Integer age) {
+            @RequestParam String age) {
 
         Page<ReportCustomerDto> reportCustomerDtoPage =
                 iCustomerService.filterByGenderAndAge(pageable, gender, age);
