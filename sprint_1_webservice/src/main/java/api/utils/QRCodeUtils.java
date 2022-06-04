@@ -25,7 +25,7 @@ import java.util.Hashtable;
 
 public class QRCodeUtils {
 
-    private static final String PATH = "D:\\sprint-1\\test-qrcode\\";
+    private static final String PATH = "D:\\qrcode\\";
 
     public static String encode(ProductQRCode productQRCode) {
         String filePath = PATH + "PD-" + productQRCode.getId() + ".png";
