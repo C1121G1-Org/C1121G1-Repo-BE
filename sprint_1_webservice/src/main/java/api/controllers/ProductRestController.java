@@ -100,7 +100,9 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
+
         productDtoErrors.validate(productDto, bindingResult);
+
 
 //        productDto.validate(productDto,bindingResult);
 
@@ -198,7 +200,9 @@ public class ProductRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+
         Optional<Product> product = iProductService.findById(id);
+
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
