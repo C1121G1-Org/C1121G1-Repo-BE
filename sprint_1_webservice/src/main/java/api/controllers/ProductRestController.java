@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.dto.IProductDto;
 import api.dto.ProductDto;
 import api.models.Product;
 import api.services.IProductService;
@@ -46,14 +47,14 @@ public class ProductRestController {
           Function: get  all page product and search of product
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 3) Pageable pageable, @RequestParam Optional<String> keyName,
                                                         @RequestParam Optional<String> keyPrice,
                                                         @RequestParam Optional<String> keyQuantity) {
         String keyNameValue = keyName.orElse("");
-        String keyQuantityValue = keyQuantity.orElse("");
-        String keyPriceValue = keyPrice.orElse("");
+        String keyQuantityValue = keyQuantity.orElse("0");
+        String keyPriceValue = keyPrice.orElse("0");
 
-        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
+        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

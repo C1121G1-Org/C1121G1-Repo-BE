@@ -1,5 +1,6 @@
 package api.services;
 
+import api.dto.IProductDto;
 import api.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public interface IProductService {
                Time: 18:15 31/05/2022
                Function: get all product
            */
-    Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
+    Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
 
     /*

@@ -195,9 +195,9 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
      Time: 18:00 31/05/2022
      Function: get All customer and search
  */
-    @Query(value = "select * from customer where customer_name like concat('%', :name ,'%')" +
+    @Query(value = "select  id , address , customer_name , date_of_birth , email , gender , phone_number from customer where customer_name like concat('%', :name ,'%')" +
             " and phone_number like concat('%', :phone,'%')",
-            countQuery = "select * from customer where customer_name like concat('%', :name ,'%')" +
+            countQuery = "select  id , address , customer_name , date_of_birth , email , gender , phone_number from customer where customer_name like concat('%', :name ,'%')" +
                     "and phone_number like concat('%', :phone,'%')"
             , nativeQuery = true)
     Page<Customer> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("phone") String keyWord2);
