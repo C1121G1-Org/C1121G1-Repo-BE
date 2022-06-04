@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
     /*
-     Created by LongNHL
+     Created by LongNHL Hoang
      Time: 9:30 1/06/2022
      Function: create CustomerDto
      */
@@ -31,8 +31,6 @@ public class CustomerDto {
     private String phoneNumber;
 
     @NotBlank(message = "Vui lòng nhập ngày sinh khách hàng")
-    private String dateOfBirth;
-
     @Pattern(regexp = "^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,}){1,}$", message = "vui lòng nhập đúng định dạng")
     private String email;
     @NotBlank(message = "Vui lòng nhập địa chỉ ")

@@ -19,4 +19,5 @@ public class ProductInvoiceDto {
     private String name;
     private Long quantity;
     private Double price;
+
 }

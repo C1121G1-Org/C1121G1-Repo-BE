@@ -17,7 +17,5 @@ public interface IInvoiceService {
     List<Customer> listCustomer();
     List<Product> listProduct();
 
-
-
     Invoice getNewInvoice();
 }

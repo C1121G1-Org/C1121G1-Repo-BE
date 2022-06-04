@@ -49,7 +49,6 @@ public class InvoiceRestController {
         return new ResponseEntity<>(invoices,HttpStatus.OK);
     }
 
-
     @PatchMapping(value = "/update")
     public String updateInvoice(){
         return null;

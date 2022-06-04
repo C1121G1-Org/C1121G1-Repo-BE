@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,8 +23,14 @@ import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://localhost:8080")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -47,23 +54,28 @@ public class ProductRestController {
 
     /*
           Created by tamHT and hieuMMT
+>>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
+
+    /*
+          Created by tamHT and hieuMMT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
-        @GetMapping(value = "/listProduct")
-        public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                @RequestParam Optional<String> keyPhone ,
-                @RequestParam Optional<String> keyQuality) {
-            String keyNameValue = keyName.orElse("");
-            String keyPhoneValue = keyPhone.orElse("");
-            String keyQualityValue = keyQuality.orElse("");
+    @GetMapping(value = "/listProduct")
+    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                        @RequestParam Optional<String> keyPhone,
+                                                        @RequestParam Optional<String> keyQuality) {
+        String keyNameValue = keyName.orElse("");
+        String keyPhoneValue = keyPhone.orElse("");
+        String keyQualityValue = keyQuality.orElse("");
 
-            Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue ,keyQualityValue);
-            if (productPage.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(productPage, HttpStatus.OK);
+        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue, keyQualityValue);
+        if (productPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
+    }
+
 
 
 //    @PostMapping(value = "/create")
@@ -71,10 +83,14 @@ public class ProductRestController {
 //        return null;
 //    }
 
-    @PatchMapping(value = "/update")
-    public String updateProduct() {
-        return null;
-    }
+
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+
+
 
 
     /*
@@ -82,10 +98,15 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: create new product
  */
+
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
                                                         BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
+        ProductDto productDtoErrors = new ProductDto();
+        productDtoErrors.setIProductService(iProductService);
+        productDtoErrors.validate(productDto,bindingResult);
+//        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -94,9 +115,12 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
-
+//        change price of Dto become Double
+        Double price = Double.valueOf(productDto.getPrice());
         Product product = new Product();
+
         BeanUtils.copyProperties(productDto, product);
+        product.setPrice(price);
         product.setDeleteFlag(false);
 
         this.iProductService.save(product);
@@ -110,15 +134,14 @@ public class ProductRestController {
      Function: findById
  */
     @GetMapping(value = "/{id}")
+
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
-
-        Product product = this.iProductService.findById(id);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Product> product = this.iProductService.findById(id);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 
     /*
      Created by tuanPA
@@ -128,7 +151,6 @@ public class ProductRestController {
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -136,9 +158,9 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
-
-
         Product product = new Product();
+        Double price = Double.valueOf(productDto.getPrice());
+        product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
 
         this.iProductService.updateProduct(product);
@@ -157,7 +179,9 @@ public class ProductRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        Product product = iProductService.findById(id);
+
+//        Product product = iProductService.findById(id);
+        Optional<Product> product = iProductService.findById(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -165,8 +189,12 @@ public class ProductRestController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-
-    @GetMapping(value = { "/listTest"})
+    /*
+         Created by LongNHL
+         Time: 15:00 2/06/2022
+         Function: use test create invoiec
+     */
+    @GetMapping(value = {"/listTest"})
     public ResponseEntity<List<Product>> showListCustomer() {
         List<Product> productTest = iProductService.findAllTest();
         return new ResponseEntity<>(productTest, HttpStatus.OK);

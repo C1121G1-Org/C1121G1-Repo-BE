@@ -2,7 +2,7 @@ package api.controllers;
 
 import api.dto.IProductBestsellerDto;
 import api.dto.InvoiceDetailDto;
-import api.dto.ProductDto;
+
 import api.dto.ProductInvoiceDto;
 import api.models.*;
 import api.services.ICustomerService;
@@ -93,7 +93,7 @@ public class InvoiceDetailRestController {
          */
     @PatchMapping("/updateQuantityProduct")
     public ResponseEntity<String> updateQuantityProduct(@RequestBody InvoiceDetailDto invoiceDetailDto) {
-        String messageError ="";
+        String messageError = "";
         if (invoiceDetailDto.getProducts().isEmpty()) {
             for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
                 Storage storage = iStorageService.getStorageByIdProduct(productDto.getId());
@@ -108,8 +108,8 @@ public class InvoiceDetailRestController {
                 }
             }
         }
-        messageError ="Bạn chưa chọn sản phẩm";
-            return new ResponseEntity<>(messageError,HttpStatus.BAD_REQUEST);
-
+        messageError = "Bạn chưa chọn sản phẩm";
+        return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
     }
+
 }
