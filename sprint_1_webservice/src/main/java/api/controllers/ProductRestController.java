@@ -23,7 +23,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -33,7 +33,6 @@ public class ProductRestController {
 
     /*
           Created by tamHT and hieuMMT
-
     /*
           Created by tamHT
           Time: 18:15 31/05/2022
