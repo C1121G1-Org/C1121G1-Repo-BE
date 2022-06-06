@@ -74,10 +74,10 @@ Function: Query Create product
                   2/    getAllProduct() = write a native query to get all Products from DB
     */
 
-    @Query(value = "select * from product where delete_flag = 1 ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 ", nativeQuery = true)
     List<Product> getAllProduct();
 
-    @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
 
@@ -99,7 +99,8 @@ Function: Query Create product
      Time: 14:15 1/06/2022
      Function: delete product
  */
-    @Query(value = "update product SET delete_flag = 1 WHERE product_id = ?;", nativeQuery = true)
+
+    @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
 
 
@@ -108,12 +109,16 @@ Function: Query Create product
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
-    @Query(value = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id   where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
-            "and price >= :price  and storage.quantity >= :quantity  group by product.id ",
-            countQuery = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
-                    " storage on product.id = storage.product_id  where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
-                    "and price >= :price  and storage.quantity >= :quantity  group by product.id ", nativeQuery = true)
+    @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
+            "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
+            "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
+            "and price >= :price group by product.id " +
+            ") as temp where quantity >= :quantity ",
+            countQuery = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
+                    "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
+                    "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
+                    "and price >= :price group by product.id " +
+                    ") as temp where quantity >= :quantity ", nativeQuery = true)
     <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
 
 }
