@@ -30,7 +30,6 @@ public class CustomerRestController {
     ICustomerService iCustomerService;
 
     /*
-<<<<<<< HEAD
     Created By hoangDH,
     Time: 15:00 PM 2022-06-01
     Function: find customer object by id from database

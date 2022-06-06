@@ -46,8 +46,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     Time: 13:42 PM 2022-06-01
     Function: find customer object by id from database
      */
-    @Query(nativeQuery=true,value="select * from `sprint-1-db`.`customer` where `id`=:id")
+    @Query(nativeQuery=true,value="select id,address,customer_name, " +
+            "date_of_birth,email,gender,phone_number from `sprint-1-db`.`customer` where `id`=:id")
     Optional<Customer> findById(@Param("id") Long id);
+
 
 
     /*
