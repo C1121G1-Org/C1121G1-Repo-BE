@@ -1,6 +1,6 @@
 package api.services.impl;
 
-
+import api.dto.EmployeeInterface;
 import api.models.Account;
 import api.models.Employee;
 
@@ -44,7 +44,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         Function: findAllEmployee = abstract method to find all employee.
     */
     @Override
-    public Page<Employee> findAllEmployee(Pageable pageable, String key) {
+    public Page<EmployeeInterface> findAllEmployee(Pageable pageable, String key) {
         return iEmployeeRepository.pageFindAll(pageable, key);
 
     }

@@ -1,6 +1,7 @@
 package api.controllers;
 
 import api.dto.AccountDto;
+import api.dto.EmployeeInterface;
 import api.models.Employee;
 import api.models.Position;
 import api.dto.EmployeeDto;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
+import java.util.Optional;
 import java.util.*;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -25,9 +27,6 @@ import java.util.stream.Collectors;
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/employee")
 public class EmployeeRestController {
-
-//    @Autowired
-//    private PasswordEncoder encoder;
 
     @Autowired
     IEmployeeService iEmployeeService;
@@ -72,11 +71,12 @@ public class EmployeeRestController {
         Function: findAllEmployee = list Employee.
     */
     @GetMapping(value = {"/list"})
-    public ResponseEntity<Page<Employee>> findAllEmployee(@PageableDefault(value = 2) Pageable pageable,
+
+    public ResponseEntity<Page<EmployeeInterface>> findAllEmployee(@PageableDefault(value = 7) Pageable pageable,
                                                           @RequestParam Optional<String> keyName) {
         String nameValue = keyName.orElse("");
 
-        Page<Employee> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
+        Page<EmployeeInterface> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
         if (employeePage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
