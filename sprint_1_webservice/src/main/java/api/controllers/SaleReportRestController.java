@@ -8,11 +8,18 @@ package api.controllers;
 */
 
 import api.models.ISaleReport;
+import api.models.Product;
+import api.models.ProductQRCode;
 import api.services.ISaleReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -33,6 +40,12 @@ public class SaleReportRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(saleReportList, HttpStatus.OK);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<Product> getLatestProduct() {
+        Product product = this.iSaleReportService.getLatestProduct();
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 }
