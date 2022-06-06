@@ -1,4 +1,5 @@
 package api.services.impl;
+import api.dto.IProductDto;
 import api.models.Product;
 import api.repositories.IProductRepository;
 import api.services.IProductService;
@@ -37,8 +38,8 @@ public class ProductServiceImpl implements IProductService {
             Function: search Products
         */
     @Override
-    public Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3) {
-        return iProductRepository.pageFindAll(pageable,key1, key2 , key3);
+    public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3) {
+        return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3);
     }
 
     /*
@@ -57,7 +58,6 @@ public class ProductServiceImpl implements IProductService {
      Function: findById
  */
     @Override
-
     public Optional<Product> findById(Long id) {
         return iProductRepository.findById(id);
     }
@@ -82,7 +82,6 @@ public class ProductServiceImpl implements IProductService {
     public Product findProductByName(String name) {
         return this.iProductRepository.findProductByName(name);
     }
-
 
     /*
          Created by hieuMMT

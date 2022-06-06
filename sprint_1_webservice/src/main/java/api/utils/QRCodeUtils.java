@@ -8,7 +8,6 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -23,6 +22,10 @@ import java.util.Hashtable;
 public class QRCodeUtils {
 
     private static final String PATH = "D:\\qrcode\\";
+
+    protected QRCodeUtils() {
+    }
+
 
     public static String encode(ProductQRCode productQRCode) {
         String filePath = PATH + "PD-" + productQRCode.getId() + ".png";

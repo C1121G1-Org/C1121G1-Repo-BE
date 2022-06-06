@@ -46,6 +46,9 @@ public class SupplierRestController {
                                                       @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
                                                       @RequestParam(name = "em", required = false, defaultValue = "") String email){
         Page<Supplier> suppliers =iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
+        if (suppliers.isEmpty()){
+            return new ResponseEntity<>(suppliers, HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
 
