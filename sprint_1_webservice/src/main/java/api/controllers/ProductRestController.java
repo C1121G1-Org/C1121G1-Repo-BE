@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.dto.IProductDto;
 import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ResponseObject;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +23,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -29,51 +31,28 @@ public class ProductRestController {
     IProductService iProductService;
 
 
-//    @GetMapping(value = "/list")
-//    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-//                                                       @RequestParam Optional<String> keyPhone) {
-//    /*
-//        Created by khoaVC
-//        Time: 21:54 31/05/2022
-//        Function: list all Products from DB
-//    */
-
-//    @GetMapping(value = "/list")
-//    public List<Product> listProduct() {
-//        return iProductService.getAllProduct();
-//    }
-
     /*
           Created by tamHT and hieuMMT
-
     /*
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
-        @GetMapping(value = "/listProduct")
-        public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                @RequestParam Optional<String> keyPhone ,
-                @RequestParam Optional<String> keyQuality) {
-            String keyNameValue = keyName.orElse("");
-            String keyPhoneValue = keyPhone.orElse("");
-            String keyQualityValue = keyQuality.orElse("");
 
-            Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue ,keyQualityValue);
-            if (productPage.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(productPage, HttpStatus.OK);
+    @GetMapping(value = "/list")
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 6) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyPrice,
+                                                            @RequestParam Optional<String> keyQuantity) {
+        String keyNameValue = keyName.orElse("");
+        String keyQuantityValue = keyQuantity.orElse("0");
+        String keyPriceValue = keyPrice.orElse("0");
+
+        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
+        if (productPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
-
-
-
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
+    }
 
     /*
      Created by tuanPA
@@ -87,7 +66,7 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
-        productDtoErrors.validate(productDto,bindingResult);
+        productDtoErrors.validate(productDto, bindingResult);
 
 //        productDto.validate(productDto,bindingResult);
 
@@ -116,8 +95,6 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: findById
  */
-
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
@@ -133,7 +110,8 @@ public class ProductRestController {
      Function: edit product
  */
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto
+            productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
 //        productDto.validate(productDto,bindingResult);
 
@@ -166,7 +144,7 @@ public class ProductRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-       Optional<Product> product = iProductService.findById(id);
+        Optional<Product> product = iProductService.findById(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -34,14 +34,11 @@ Function: Query Create product
     Date: 14:01 01/06/2022
     Function: Query findById product
 */
-    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
-    Optional<Product> findById(@Param("id") Long id);
-
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
             "WHERE product.id = :id", nativeQuery = true)
-    Product findByProductById(@Param("id") Long id);
+   Optional<Product>findByProductById(@Param("id") Long id);
 
     /*
     Created by TuanPA
@@ -82,16 +79,6 @@ Function: Query Create product
     @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
-    /*
-      Created by hieuMMT and tamHT
-      Time: 14:00 1/06/2022
-      Function: get All product and search
-    */
-
-    @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')" +
-            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id", nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quality") String keyWord3);
 
     /*
      Created by hieuMMT
@@ -102,11 +89,18 @@ Function: Query Create product
     void deleteFlag(@PathVariable("id") Long id);
 
 
-
-    @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
-            " and price like concat('%', :price ,'%')"
-            , nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2);
+    /*
+           Created by hieuMMT and tamHT
+        Time: 18:00 31/05/2022
+        Function: get All product and search
+    */
+    @Query(value = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
+            " storage on product.id = storage.product_id   where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
+            "and price >= :price  and storage.quantity >= :quantity  group by product.id ",
+            countQuery = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
+                    " storage on product.id = storage.product_id  where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
+                    "and price >= :price  and storage.quantity >= :quantity  group by product.id ", nativeQuery = true)
+    <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
 
 }
 
