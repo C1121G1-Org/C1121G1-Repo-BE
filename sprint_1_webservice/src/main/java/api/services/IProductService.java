@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface IProductService {
     /*
         Created by khoaVC
@@ -24,7 +23,6 @@ public interface IProductService {
                Time: 18:15 31/05/2022
                Function: get all product
            */
-
     Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
 
@@ -45,7 +43,6 @@ public interface IProductService {
  */
 
     void updateProduct(Product product);
-
 
 
     /*

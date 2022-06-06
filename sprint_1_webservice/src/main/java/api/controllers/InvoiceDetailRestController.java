@@ -75,7 +75,6 @@ public class InvoiceDetailRestController {
         invoice.setPayments(invoiceDetailDto.getPayments());
         invoice.setCustomer(customer);
         iInvoiceService.saveNewInvoice(invoice);
-        System.out.println(invoice);
 
         Invoice newInvoice = iInvoiceService.getNewInvoice();
         List<ProductInvoiceDto> list = invoiceDetailDto.getProducts();

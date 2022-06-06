@@ -5,7 +5,6 @@ import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
-import api.repositories.ISaleReportRepository;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -16,14 +15,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+
+
+
 
 import javax.validation.Valid;
 
-
-import java.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,17 +61,16 @@ public class ProductRestController {
 //        return iProductService.getAllProduct();
 //    }
 
-
     /*
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 2) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyPrice,
-                                                            @RequestParam Optional<String> keyQuantity) {
-
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyQuantity,
+                                                            @RequestParam Optional<String> keyPrice
+    ) {
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -92,6 +90,12 @@ public class ProductRestController {
 
 
 
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+
 
     /*
      Created by tuanPA
@@ -106,7 +110,7 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
 
-        productDtoErrors.validate(productDto, bindingResult);
+        productDtoErrors.validate(productDto,bindingResult);
 
 //        productDto.validate(productDto,bindingResult);
 
@@ -146,6 +150,8 @@ public class ProductRestController {
      Function: findById
  */
 
+
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
@@ -170,7 +176,6 @@ public class ProductRestController {
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
-
         Product product = new Product();
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
@@ -201,8 +206,9 @@ public class ProductRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-
+//        Product product = iProductService.findById(id);
         Optional<Product> product = iProductService.findById(id);
+
 
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -211,15 +217,5 @@ public class ProductRestController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    /*
-         Created by LongNHL
-         Time: 15:00 2/06/2022
-         Function: use test create invoiec
-     */
-    @GetMapping(value = {"/listTest"})
-    public ResponseEntity<List<Product>> showListCustomer() {
-        List<Product> productTest = iProductService.findAllTest();
-        return new ResponseEntity<>(productTest, HttpStatus.OK);
-    }
 
 }

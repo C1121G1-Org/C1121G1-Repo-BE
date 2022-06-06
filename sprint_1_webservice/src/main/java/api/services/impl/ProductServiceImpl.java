@@ -38,7 +38,6 @@ public class ProductServiceImpl implements IProductService {
             Function: search Products
         */
     @Override
-
     public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3) {
         return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3);
     }
@@ -59,8 +58,10 @@ public class ProductServiceImpl implements IProductService {
      Function: findById
  */
     @Override
+
+
     public Optional<Product> findById(Long id) {
-        return iProductRepository.findByProductById(id);
+        return iProductRepository.findById(id);
     }
 
     /*
@@ -84,7 +85,6 @@ public class ProductServiceImpl implements IProductService {
         return this.iProductRepository.findProductByName(name);
     }
 
-
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
@@ -104,7 +104,4 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> findAllTest() {
         return iProductRepository.findAll();
     }
-
-
-
 }
