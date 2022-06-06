@@ -13,12 +13,19 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Hashtable;
 
+    /*
+     Created by HauPV
+     Time: 20:20 31/05/2022
+     Function: QRCode Maker
+ */
+
 public class QRCodeUtils {
 
     private static final String PATH = "D:\\qrcode\\";
 
     protected QRCodeUtils() {
     }
+
 
     public static String encode(ProductQRCode productQRCode) {
         String filePath = PATH + "PD-" + productQRCode.getId() + ".png";

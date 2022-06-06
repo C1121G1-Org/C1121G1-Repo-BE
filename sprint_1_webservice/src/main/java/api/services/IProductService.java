@@ -1,11 +1,11 @@
 package api.services;
 
+import api.dto.IProductDto;
 import api.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
-
 
 
 public interface IProductService {
@@ -24,7 +24,7 @@ public interface IProductService {
                Time: 18:15 31/05/2022
                Function: get all product
            */
-    Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
+    Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
 
     /*
@@ -34,13 +34,20 @@ public interface IProductService {
  */
     void save(Product product);
 
-
-    /*
+        /*
      Created by tuanPA
      Time: 18:15 31/05/2022
-     Function: findById
+     Function: updateProduct
  */
-    Optional<Product> findById(Long id);
+
+    void updateProduct(Product product);
+    /*
+             Created by LongNHL
+             Time: 15:00 2/06/2022
+             Function: use test create invoiec
+         */
+    List<Product> findAllTest();
+
 
     /*
          Created by hieuMMT
@@ -49,24 +56,13 @@ public interface IProductService {
      */
     void deleteFlag(Long id);
 
-        /*
-     Created by tuanPA
-     Time: 18:15 31/05/2022
-     Function: updateProduct
- */
-
-    void updateProduct(Product product);
-
+    /*
+ Created by tuanPA
+ Time: 18:15 31/05/2022
+ Function: updateProduct
+*/
     Product findProductByName(String name);
 
-<<<<<<< HEAD
+    Optional<Product> findById(Long id);
 
-=======
-    /*
-             Created by LongNHL
-             Time: 15:00 2/06/2022
-             Function: use test create invoiec
-         */
-    List<Product> findAllTest();
->>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 }

@@ -40,7 +40,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
         iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
     }
 
-
     @Override
     public Page<Invoice> findAll(String keyword, Pageable pageable) {
          return iInvoiceRepository.findAllByKeyWord(keyword,pageable);
