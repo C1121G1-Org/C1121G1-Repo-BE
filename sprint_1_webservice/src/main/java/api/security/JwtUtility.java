@@ -16,7 +16,7 @@ import java.util.Date;
 @Component
 public class JwtUtility implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
-    private final String jwtSecret = "secretkey";
+    private static final String jwtSecret = "C1121G1_CODEGYM_DANANG_2022";
 
     /*
         Function: This generateJwtToken() method will generate jwt code with below parameters.

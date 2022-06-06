@@ -25,7 +25,7 @@ public class AccountDetailsImpl implements UserDetails {
     private String imageLink;
     @JsonIgnore
     private String password;
-    List<GrantedAuthority> authorities = null;
+    private List<GrantedAuthority> authorities = null;
 
     public AccountDetailsImpl(Long id, String username, Boolean enabled, String password, String imageLink, List<GrantedAuthority> authorities) {
         this.id = id;
@@ -106,4 +106,8 @@ public class AccountDetailsImpl implements UserDetails {
         return Objects.equals(id, account.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, enabled, imageLink, password, authorities);
+    }
 }

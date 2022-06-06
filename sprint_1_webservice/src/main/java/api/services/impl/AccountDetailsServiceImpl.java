@@ -28,7 +28,6 @@ public class AccountDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("username: " + username);
         Account account = iAccountRepository.findByUserName(username);
         if (account == null) {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");

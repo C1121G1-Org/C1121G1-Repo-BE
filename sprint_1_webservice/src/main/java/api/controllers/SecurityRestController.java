@@ -15,6 +15,7 @@ import api.services.IEmployeeService;
 import api.services.impl.AccountDetailsImpl;
 import api.services.impl.EmailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -119,10 +121,8 @@ public class SecurityRestController {
     @PostMapping(value = "/check-code")
     public ResponseEntity<Boolean> checkVerificationCode(@RequestBody CheckVerificationCodeRequest checkVerificationCodeRequest) {
         Account account = iAccountService.findAccountByEmail(checkVerificationCodeRequest.getEmail());
-        if (account != null) {
-            if (account.getVerificationCode().equals(checkVerificationCodeRequest.getCode())) {
-                return new ResponseEntity<>(true, HttpStatus.OK);
-            }
+        if (account != null && account.getVerificationCode().equals(checkVerificationCodeRequest.getCode())) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     }
@@ -150,7 +150,7 @@ public class SecurityRestController {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = bindingResult.getFieldErrors()
                     .stream().collect(Collectors.toMap(
-                            e -> e.getField(), e -> e.getDefaultMessage()));
+                            FieldError::getField, DefaultMessageSourceResolvable::getDefaultMessage));
             return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
         }
         iEmployeeService.updatePersonalInforamation(personalDto);
@@ -182,12 +182,10 @@ public class SecurityRestController {
     @PatchMapping(value = "/reset-password")
     public ResponseEntity<Account> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
         Account account = iAccountService.findAccountByEmail(resetPasswordRequest.getEmail());
-        if (account != null) {
-            if (resetPasswordRequest.getNewPassword().equals(resetPasswordRequest.getConfirmNewPassword())) {
-                String encryptPassword = encoder.encode(resetPasswordRequest.getNewPassword());
-                iAccountService.changePassword(encryptPassword, account.getId());
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
+        if (account != null && resetPasswordRequest.getNewPassword().equals(resetPasswordRequest.getConfirmNewPassword())) {
+            String encryptPassword = encoder.encode(resetPasswordRequest.getNewPassword());
+            iAccountService.changePassword(encryptPassword, account.getId());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
