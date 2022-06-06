@@ -1,5 +1,6 @@
 package api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,7 @@ public class Invoice {
     private Customer customer;
 
     @OneToMany(mappedBy = "invoice")
+    @JsonBackReference
     private Set<InvoiceDetail> invoiceDetailSet;
 
 }

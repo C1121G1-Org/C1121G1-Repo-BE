@@ -16,4 +16,5 @@ public class AccountDto {
     private String email;
     private Boolean isEnabled;
     private String verificationCode;
+    private EmployeeDto employeeDto;
 }

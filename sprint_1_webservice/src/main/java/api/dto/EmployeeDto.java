@@ -1,6 +1,6 @@
 package api.dto;
 
-import api.services.IAccountService;
+//import api.services.IAccountService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.validation.Validator;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class EmployeeDto implements Validator {
     private Long id;
     private String employeeName;
@@ -23,14 +24,7 @@ public class EmployeeDto implements Validator {
     private boolean deleteFlag;
     private PositionDto positionDto;
     private AccountDto accountDto;
-    private IAccountService iAccountService;
-
-    public EmployeeDto() {
-        setDeleteFlag(false);
-    }
-
-    public void setAccountService(IAccountService iAccountService) {
-    }
+//    private IAccountService iAccountService;
 
     @Override
     public boolean supports(Class<?> clazz) {

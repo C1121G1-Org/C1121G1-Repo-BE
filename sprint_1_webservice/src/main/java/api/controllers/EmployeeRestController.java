@@ -1,6 +1,7 @@
 package api.controllers;
 
 import api.dto.AccountDto;
+import api.dto.EmployeeInterface;
 import api.models.Employee;
 import api.models.Position;
 import api.dto.EmployeeDto;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
+
 import java.util.Optional;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -27,9 +29,6 @@ import java.util.Map;
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/employee")
 public class EmployeeRestController {
-
-//    @Autowired
-//    private PasswordEncoder encoder;
 
     @Autowired
     IEmployeeService iEmployeeService;
@@ -74,11 +73,11 @@ public class EmployeeRestController {
         Function: findAllEmployee = list Employee.
     */
     @GetMapping(value = {"/list"})
-    public ResponseEntity<Page<Employee>>findAllEmployee(@PageableDefault(value = 2)Pageable pageable,
-                                                         @RequestParam Optional<String> keyName) {
+    public ResponseEntity<Page<EmployeeInterface>> findAllEmployee(@PageableDefault(value = 7) Pageable pageable,
+                                                          @RequestParam Optional<String> keyName) {
         String nameValue = keyName.orElse("");
 
-        Page<Employee> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
+        Page<EmployeeInterface> employeePage = iEmployeeService.findAllEmployee(pageable, nameValue);
         if (employeePage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -113,13 +112,13 @@ public class EmployeeRestController {
 
         account.setIsEnabled(true);
         iAccountService.save(account);
-//        Account acc = iAccountService.findByUserName(account.getUserName());
         Role role = iRoleService.findById(position.getId());
-        accountRole.setAccount(account);//sửa lại thành acc
+        accountRole.setAccount(account);
         accountRole.setRole(role);
         iAccountRoleService.save(accountRole);
         employee.setPosition(position);
         employee.setAccount(account);
+        employee.setDeleteFlag(false);
         iEmployeeService.save(employee);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -132,7 +131,7 @@ public class EmployeeRestController {
     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable Long id) {
-        Employee employee = this.iEmployeeService.findById(id);
+        Employee employee = this.iEmployeeService.findEmployee(id);
 
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -206,15 +205,13 @@ public class EmployeeRestController {
         Time: 19:00 31/05/2022
         Function: findAllEmployee = delete flag employee.
     */
-    @PatchMapping(value = "/delete/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable("id") Long id) {
-        Employee employee = iEmployeeService.findById(id);
-        if (employee == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        employee.setDeleteFlag(true);
-        iEmployeeService.saveDelete(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<?> deleteEmployee(Optional<Employee> employee) {
+        if (employee.isPresent()) {
+            iEmployeeService.saveDelete(employee.get().getId());
+            return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

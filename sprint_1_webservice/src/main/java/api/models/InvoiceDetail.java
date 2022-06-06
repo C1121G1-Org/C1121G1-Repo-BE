@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "invoice_detail")
@@ -27,7 +25,7 @@ public class InvoiceDetail {
     @JoinColumn(name = "invoice_id", nullable = false, referencedColumnName = "id")
     private Invoice invoice;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id", nullable = false, referencedColumnName = "id")
     private Product product;
 

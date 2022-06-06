@@ -45,10 +45,8 @@ public class Employee {
     @JsonBackReference
     private Set<Storage> storageSet;
 
-    @Column(name = "delete_flag", nullable = false)
+    @Column(name = "delete_flag", nullable = false, columnDefinition = "BIT(1) default 1")
     private boolean deleteFlag;
 
-    public Employee() {
-        setDeleteFlag(false);
-    }
+
 }
