@@ -23,6 +23,7 @@ import java.util.*;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
+
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/employee")
@@ -90,42 +91,60 @@ public class EmployeeRestController {
     */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createEmployee(@Valid @RequestBody EmployeeDto employeeDto,
-                                                     BindingResult bindingResult) {
-//        AccountDto accountDto = new AccountDto();
-//        BeanUtils.copyProperties(employeeDto.getAccountDto(),accountDto);
-//        accountDto.setIAccountService(iAccountService);
-        employeeDto.validate(employeeDto,bindingResult);
+                                                         BindingResult bindingResult) {
 
-//        accountDto.validate(accountDto, bindingResult);
+        employeeDto.setIEmployeeService(iEmployeeService);
+        employeeDto.validate(employeeDto, bindingResult);
+
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = bindingResult.getFieldErrors()
                     .stream().collect(Collectors.toMap(
                             e -> e.getField(), e -> e.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        String checkEmail = employeeDto.getAccountDto().getEmail();
+        Account account1 = this.iAccountService.findByEmail(employeeDto.getAccountDto().getEmail());
+        if (account1 != null && account1.getEmail().equals(checkEmail)) {
+            Map<String, String> errorMap = bindingResult.getFieldErrors()
+                    .stream().collect(Collectors.toMap(
+                            e -> e.getField(), e -> e.getDefaultMessage()));
+            errorMap.put("email", " email tồn tại ! ");
+            return new ResponseEntity<>(new ResponseObject(false, "Failed", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        Employee employee = new Employee();
-        Account account = new Account();
-        AccountRole accountRole = new AccountRole();
+        String checkUserName = employeeDto.getAccountDto().getUserName();
+        Account account = this.iAccountService.findByUserName(employeeDto.getAccountDto().getUserName());
+        if (account != null && account.getUserName().equals(checkUserName)) {
+            Map<String, String> errorMap = bindingResult.getFieldErrors()
+                    .stream().collect(Collectors.toMap(
+                            e -> e.getField(), e -> e.getDefaultMessage()));
+            errorMap.put("userName", "tên đăng nhập tồn tại ! ");
+            return new ResponseEntity<>(new ResponseObject(false, "Failed", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
 
-        Position position = new Position();
-        BeanUtils.copyProperties(employeeDto, employee);
-        BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
-        System.out.println(account);
-        BeanUtils.copyProperties(employeeDto.getPositionDto(), position);
-        account.setVerificationCode("");
-        account.setIsEnabled(true);
-        iAccountService.save(account);
-        Role role = iRoleService.findById(position.getId());
-        accountRole.setAccount(account);
-        accountRole.setRole(role);
-        iAccountRoleService.save(accountRole);
-        employee.setPosition(position);
-        employee.setAccount(account);
-        employee.setDeleteFlag(false);
-        iEmployeeService.save(employee);
+        } else {
+            account = new Account();
+            Employee employee = new Employee();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            AccountRole accountRole = new AccountRole();
+
+            Position position = new Position();
+            BeanUtils.copyProperties(employeeDto, employee);
+            BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
+            BeanUtils.copyProperties(employeeDto.getPositionDto(), position);
+            account.setVerificationCode("");
+            account.setIsEnabled(true);
+            iAccountService.save(account);
+            Role role = iRoleService.findById(position.getId());
+            accountRole.setAccount(account);
+            accountRole.setRole(role);
+            iAccountRoleService.save(accountRole);
+            employee.setPosition(position);
+            employee.setAccount(account);
+            employee.setDeleteFlag(false);
+            iEmployeeService.save(employee);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     /*
@@ -166,7 +185,8 @@ public class EmployeeRestController {
     public ResponseEntity<ResponseObject> updateEmployee(@PathVariable Integer id,
                                                          @Valid @RequestBody EmployeeDto employeeDto,
                                                          BindingResult bindingResult) {
-
+        employeeDto.setIEmployeeService(iEmployeeService);
+        employeeDto.validate(employeeDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
 
         if (bindingResult.hasFieldErrors()) {
@@ -175,33 +195,34 @@ public class EmployeeRestController {
                     .stream()
                     .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
+        } else {
+
+
+            Employee employee = new Employee();
+            Account account = new Account();
+
+
+            Position position = new Position();
+            employeeDto.setId(Long.valueOf(id));
+            BeanUtils.copyProperties(employeeDto, employee);
+            BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
+            BeanUtils.copyProperties(employeeDto.getPositionDto(), position);
+
+            account.setIsEnabled(true);
+
+            AccountRole accountRole = iAccountRoleService.findByIdAccount(account.getId());
+            System.out.println("id position" + position.getId());
+            iAccountRoleService.setRoleId(accountRole.getId(), position.getId());
+
+
+            employee.setPosition(position);
+            employee.setAccount(account);
+            System.out.println(employee.getId());
+
+            this.iEmployeeService.update(employee, account);
+
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-
-        Employee employee = new Employee();
-        Account account = new Account();
-
-
-        Position position = new Position();
-        employeeDto.setId(Long.valueOf(id));
-        BeanUtils.copyProperties(employeeDto, employee);
-        BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
-        BeanUtils.copyProperties(employeeDto.getPositionDto(), position);
-
-        account.setIsEnabled(true);
-
-        AccountRole accountRole = iAccountRoleService.findByIdAccount(account.getId());
-        System.out.println("id position" + position.getId());
-        iAccountRoleService.setRoleId(accountRole.getId(), position.getId());
-
-
-        employee.setPosition(position);
-        employee.setAccount(account);
-        System.out.println(employee.getId());
-
-        this.iEmployeeService.update(employee, account);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     /*

@@ -22,11 +22,11 @@ Function: setRoleId
             " VALUES (:#{#account.email},:#{#account.encryptPassword},:#{#account.isEnabled},:#{#account.userName},:#{#account.verificationCode}); ", nativeQuery = true)
     void createAccount(Account account);
 
-    @Query(value = "SELECT * FROM account WHERE account.user_name = :userName",countQuery = "SELECT * FROM account WHERE account.user_name = :userName",nativeQuery = true)
+    @Query(value = "SELECT * FROM `sprint-1-db`.`account` WHERE `account`.user_name = :userName",countQuery = "SELECT * FROM account WHERE account.user_name = :userName",nativeQuery = true)
     Account findByUserName(@Param("userName") String userName);
 
 
-    @Query(value = "SELECT * FROM account WHERE  account.email = :email", nativeQuery = true)
+    @Query(value = "SELECT * FROM `sprint-1-db`.`account` WHERE  `account`.email = :email", nativeQuery = true)
     Account findByEmail(@Param("email")String email);
 
 

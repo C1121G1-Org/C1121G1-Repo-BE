@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -35,7 +36,7 @@ public class EmployeeDto implements Validator {
     @Size(min = 5, max = 100)
     private String address;
     @NotBlank
-    @Pattern(regexp = "^\\d{9}|\\d{11}$", message = "9 - 10 number please")
+    @Pattern(regexp = "^[0-9_-]{9,12}$", message = "9 - 10 number please")
     private String idCard;
     @NotBlank
     @Pattern(regexp = "((09|03|07|08|05)+([0-9]{8})\\b)", message = "invalid phone number ex:0901234567")
@@ -46,7 +47,6 @@ public class EmployeeDto implements Validator {
     private PositionDto positionDto;
     @Valid
     private AccountDto accountDto;
-//    private IAccountService iAccountService;
     private IAccountService iAccountService;
 
     @Valid
@@ -59,13 +59,12 @@ public class EmployeeDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        EmployeeDto employeeDto = (EmployeeDto) target;
-        String checkUserName = employeeDto.getIdCard();
-        Employee employee = this.iEmployeeService.findByIdCard(employeeDto.getIdCard());
-        if (employee != null) {
-            if (employee.getIdCard().equals(checkUserName)) {
-                errors.rejectValue("idCard", "", "số chứng minh  tồn tại");
-            }
-        }
+//        EmployeeDto employeeDto = (EmployeeDto) target;
+//        String checkIdCard = employeeDto.getIdCard();
+//       Employee employee = this.iEmployeeService.findByIdCard(employeeDto.getIdCard());
+//        if (employee != null && employee.getIdCard().equals(checkIdCard)) {
+//                errors.rejectValue("idCard", "", "số chứng minh  tồn tại");
+//        }
     }
+
 }
