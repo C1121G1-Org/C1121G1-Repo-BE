@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-
 import java.util.*;
 
 import java.util.ArrayList;
@@ -49,19 +48,31 @@ public class ProductRestController {
     ISaleReportService iSaleReportService;
 
 
-    /*
-          Created by tamHT and hieuMMT
+//    @GetMapping(value = "/list")
+//    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+//                                                       @RequestParam Optional<String> keyPhone) {
+//    /*
+//        Created by khoaVC
+//        Time: 21:54 31/05/2022
+//        Function: list all Products from DB
+//    */
+
+//    @GetMapping(value = "/list")
+//    public List<Product> listProduct() {
+//        return iProductService.getAllProduct();
+//    }
+
 
     /*
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
-
     @GetMapping(value = "/list")
     public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 2) Pageable pageable, @RequestParam Optional<String> keyName,
                                                             @RequestParam Optional<String> keyPrice,
                                                             @RequestParam Optional<String> keyQuantity) {
+
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -72,6 +83,15 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+
+
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+
+
 
     /*
      Created by tuanPA
@@ -85,6 +105,7 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
+
         productDtoErrors.validate(productDto, bindingResult);
 
 //        productDto.validate(productDto,bindingResult);
@@ -124,6 +145,7 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: findById
  */
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
@@ -139,8 +161,7 @@ public class ProductRestController {
      Function: edit product
  */
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto
-            productDto, BindingResult bindingResult) {
+    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -161,7 +182,7 @@ public class ProductRestController {
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
         ProductQRCode productQRCode = new ProductQRCode();
-        BeanUtils.copyProperties(product,productQRCode);
+        BeanUtils.copyProperties(product, productQRCode);
         QRCodeUtils.encode(productQRCode);
 
         this.iProductService.updateProduct(product);
