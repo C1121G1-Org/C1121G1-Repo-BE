@@ -23,7 +23,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -135,8 +135,6 @@ public class ProductRestController {
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
 //        productDto.validate(productDto,bindingResult);
-
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()

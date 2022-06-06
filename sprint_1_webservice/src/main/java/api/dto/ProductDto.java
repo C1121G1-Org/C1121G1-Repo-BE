@@ -68,7 +68,7 @@ public class ProductDto implements Validator {
         Product product = this.iProductService.findProductByName(productDto.getName());
         if (product != null) {
             if (product.getName().equals(inputtedProductName)) {
-                errors.rejectValue("name", "", "this product already existed in database");
+                errors.rejectValue("name", "", "Tên sản phẩm đã tồn tại");
             }
         }
     }
