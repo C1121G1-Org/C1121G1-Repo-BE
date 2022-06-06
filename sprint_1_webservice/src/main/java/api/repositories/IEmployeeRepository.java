@@ -13,7 +13,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
         Function: 1/    findEmployee() = write a native query to find Employee by id
     */
 
-    @Query(value = "select * from employee where delete_flag = 1 and id = :id ", nativeQuery = true)
+    @Query(value = "select * from employee where delete_flag = 0 and id = :id ", nativeQuery = true)
     Employee findEmployee(@Param("id") Long createdEmployeeDto);
 
 }

@@ -12,4 +12,16 @@ public interface IProductDto {
     String getEmail();
 
     String getMemory();
+
+    String getImage();
+
+    String getQrScan();
+
+    String getScreenSize();
+
+    String getCamera();
+
+    String getSelfie();
+
+    String getOtherDescription();
 }

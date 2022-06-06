@@ -59,7 +59,7 @@ public class ProductRestController {
       */
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 6) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 2) Pageable pageable, @RequestParam Optional<String> keyName,
                                                             @RequestParam Optional<String> keyPrice,
                                                             @RequestParam Optional<String> keyQuantity) {
         String keyNameValue = keyName.orElse("");
