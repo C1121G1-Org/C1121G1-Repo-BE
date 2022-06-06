@@ -5,7 +5,6 @@ import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
-import api.repositories.ISaleReportRepository;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -86,8 +85,6 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto, bindingResult);
-
-//        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -173,10 +170,6 @@ public class ProductRestController {
      Time: 14:15 1/06/2022
      Function: delete product
  */
-//    @PatchMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-//    public void deleteProduct(Long id) {
-//         this.iProductService.deleteFlag(id);
-//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {

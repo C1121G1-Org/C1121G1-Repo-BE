@@ -37,7 +37,6 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 ////            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
 ////            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
 //
-//    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable ,String sort);
 
     @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
             "FROM  invoice " +
@@ -96,6 +95,5 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 //                    "case when :sorts = 'sortDateDesc' then start_date end desc," +
 //                    "case when :sorts ='sortPriceAsc'then price end asc ," +
 //                    "case when :sorts ='sortPriceDesc' then price end desc ", nativeQuery = true)
-//    Page<LandInformation> pageFindAll(Pageable pageable, @Param("prices") String keyWord1, @Param("areas") String keyWord2, @Param("directions") String keyWord3, @Param("sorts") String sort);
 }
 
