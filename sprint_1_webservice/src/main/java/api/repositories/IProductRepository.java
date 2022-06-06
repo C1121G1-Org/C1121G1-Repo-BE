@@ -38,7 +38,7 @@ Function: Query Create product
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
             "WHERE product.id = :id", nativeQuery = true)
-   Optional<Product>findByProductById(@Param("id") Long id);
+    Optional<Product> findByProductById(@Param("id") Long id);
 
     /*
     Created by TuanPA
@@ -94,13 +94,16 @@ Function: Query Create product
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
-    @Query(value = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id   where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
-            "and price >= :price  and storage.quantity >= :quantity  group by product.id ",
-            countQuery = "select product.id, name, price , cpu , memory, storage.quantity from product inner join" +
-                    " storage on product.id = storage.product_id  where product.delete_flag = 0 and storage.quantity>0 and `name` like  concat('%', :name ,'%')" +
-                    "and price >= :price  and storage.quantity >= :quantity  group by product.id ", nativeQuery = true)
+    @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
+            "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
+            "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
+            "and price >= :price group by product.id " +
+            ") as temp where quantity >= :quantity ",
+            countQuery = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
+                    "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
+                    "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
+                    "and price >= :price group by product.id " +
+                    ") as temp where quantity >= :quantity ", nativeQuery = true)
     <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
-
 }
 
