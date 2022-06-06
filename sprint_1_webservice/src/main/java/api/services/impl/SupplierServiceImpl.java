@@ -54,4 +54,9 @@ public class SupplierServiceImpl implements ISupplierService {
     public Supplier findBySupplierName(String supplierName) {
         return iSupplierRepository.findBySupplierName(supplierName);
     }
+
+    @Override
+    public Supplier findByEmail(String email) {
+        return iSupplierRepository.findByEmail(email);
+    }
 }

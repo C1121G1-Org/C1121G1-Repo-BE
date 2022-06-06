@@ -30,4 +30,5 @@ public interface ISupplierService {
 
     Supplier findBySupplierName(String supplierName);
 
+    Supplier findByEmail(String email);
 }

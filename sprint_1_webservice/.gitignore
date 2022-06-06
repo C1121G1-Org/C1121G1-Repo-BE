@@ -15,8 +15,12 @@ build/
 .sts4-cache
 bin/
 !**/src/main/**/bin/
+<<<<<<< HEAD
 !**/src/test/**/bin/
 src/test
+=======
+!**/src/test/**
+>>>>>>> 0611b511c23ced5496e0d07287623fd1cc0c6267
 
 ### IntelliJ IDEA ###
 .idea
@@ -24,8 +28,10 @@ src/test
 *.iml
 *.ipr
 out/
+
 !**/src/main/**/out/
-!**/src/test/**/out/
+!**/src/test/**
+
 
 ### NetBeans ###
 /nbproject/private/

@@ -66,6 +66,7 @@ public class SupplierRestController {
                             e -> e.getField(), e -> e.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
         Supplier supplier = new Supplier();
         BeanUtils.copyProperties(supplierDto, supplier);
         iSupplierService.save(supplier);
