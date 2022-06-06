@@ -5,16 +5,24 @@ package api.controllers;
     Time: 19:16 31/05/2022
     Function: display list sale report
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     Role : Admin , Business Staff
 >>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
+=======
+    Role : Admin , Business Staff
+>>>>>>> ac3f8f86f7da4a6b078f7a2b93341c38566f3ea2
 */
 
 import api.models.ISaleReport;
+import api.models.Product;
+import api.models.ProductQRCode;
 import api.services.ISaleReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
@@ -35,7 +42,6 @@ public class SaleReportRestController {
     ISaleReportService iSaleReportService;
 
     @GetMapping("")
-
     public ResponseEntity<List<ISaleReport>> saleReportList(@RequestParam(required = false, defaultValue = "1990-01-01") String startDay,
                                                             @RequestParam(required = false, defaultValue = "3000-01-01") String endDay,
                                                             @RequestParam(required = false, defaultValue = "") String productId) {
@@ -45,6 +51,12 @@ public class SaleReportRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(saleReportList, HttpStatus.OK);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<Product> getLatestProduct() {
+        Product product = this.iSaleReportService.getLatestProduct();
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 }

@@ -3,8 +3,11 @@ package api.controllers;
 import api.dto.IProductDto;
 import api.dto.ProductDto;
 import api.models.Product;
+import api.models.ProductQRCode;
 import api.models.ResponseObject;
 import api.services.IProductService;
+import api.services.ISaleReportService;
+import api.utils.QRCodeUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,14 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.*;
-
-
 import org.springframework.validation.BindingResult;
+
+
+
 
 import javax.validation.Valid;
 
@@ -38,6 +38,14 @@ public class ProductRestController {
     @Autowired
     IProductService iProductService;
 
+    /*
+      Created by HauPV
+      Time: 20:20 04/06/2022
+      Function: QRCode Create with new Product
+    */
+    @Autowired
+    ISaleReportService iSaleReportService;
+
 
 //    @GetMapping(value = "/list")
 //    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
@@ -54,11 +62,7 @@ public class ProductRestController {
 //    }
 
     /*
-          Created by tamHT and hieuMMT
->>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
-
-    /*
-          Created by tamHT and hieuMMT
+          Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
@@ -79,19 +83,17 @@ public class ProductRestController {
     }
 
 
-
 //    @PostMapping(value = "/create")
 //    public String createProduct() {
 //        return null;
 //    }
 
 
+
 //    @PostMapping(value = "/create")
 //    public String createProduct() {
 //        return null;
 //    }
-
-
 
 
 
@@ -107,7 +109,9 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
+
         productDtoErrors.validate(productDto,bindingResult);
+
 //        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
@@ -127,6 +131,16 @@ public class ProductRestController {
 
         this.iProductService.save(product);
 
+     /*
+        Created by HauPV
+        Time: 20:20 04/06/2022
+        Function: Create QRCode on local storage => D:/qrcode
+    */
+        Product latestProduct = this.iSaleReportService.getLatestProduct();
+        ProductQRCode productQRCode = new ProductQRCode();
+        BeanUtils.copyProperties(latestProduct, productQRCode);
+        QRCodeUtils.encode(productQRCode);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -135,8 +149,10 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: findById
  */
-    @GetMapping(value = "/{id}")
 
+
+
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
         if (product.isPresent()) {
@@ -165,6 +181,15 @@ public class ProductRestController {
         product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
 
+    /*
+        Created by HauPV
+        Time: 20:20 04/06/2022
+        Function: Update QRCode base on Edited Product on local storage => D:/qrcode
+    */
+        ProductQRCode productQRCode = new ProductQRCode();
+        BeanUtils.copyProperties(product, productQRCode);
+        QRCodeUtils.encode(productQRCode);
+
         this.iProductService.updateProduct(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -181,9 +206,10 @@ public class ProductRestController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-
 //        Product product = iProductService.findById(id);
         Optional<Product> product = iProductService.findById(id);
+
+
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -191,15 +217,5 @@ public class ProductRestController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    /*
-         Created by LongNHL
-         Time: 15:00 2/06/2022
-         Function: use test create invoiec
-     */
-    @GetMapping(value = {"/listTest"})
-    public ResponseEntity<List<Product>> showListCustomer() {
-        List<Product> productTest = iProductService.findAllTest();
-        return new ResponseEntity<>(productTest, HttpStatus.OK);
-    }
 
 }

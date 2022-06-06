@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 
 
+
         /*
         Created by CongNv
         Time: 21:30 31/05/2022
@@ -49,7 +50,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "or  total_money like concat('%',:keyword,'%') " +
             "or  customer_id like concat('%',:keyword,'%') " +
             "or  product_id like concat('%',:keyword,'%') ",
-             nativeQuery = true)
+            nativeQuery = true)
 //            "order by " +
 //            "case when :sorts = 'sortDateAsc' then create_date end desc ," +
 //            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
@@ -98,4 +99,5 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 //                    "case when :sorts ='sortPriceDesc' then price end desc ", nativeQuery = true)
 //    Page<LandInformation> pageFindAll(Pageable pageable, @Param("prices") String keyWord1, @Param("areas") String keyWord2, @Param("directions") String keyWord3, @Param("sorts") String sort);
 }
+
 

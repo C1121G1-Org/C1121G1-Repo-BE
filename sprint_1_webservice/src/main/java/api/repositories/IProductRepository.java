@@ -24,8 +24,8 @@ Function: Query Create product
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO product(camera,`cpu`,image,`memory`,`name`,other_description,price,qr_scan,screen_size,selfie) " +
-            "VALUES(:camera,:cpu,:image,:memory,:name,:otherDescription,:price,:qrScan,:screenSize,:selfie)", nativeQuery = true)
+    @Query(value = "INSERT INTO product(camera,`cpu`,image,`memory`,`name`,other_description,price,qr_scan,screen_size,selfie,delete_flag) " +
+            "VALUES(:camera,:cpu,:image,:memory,:name,:otherDescription,:price,:qrScan,:screenSize,:selfie,0)", nativeQuery = true)
     void saveProduct(@Param("camera") String camera, @Param("cpu") String cpu, @Param("image") String image, @Param("memory") String memory, @Param("name") String name, @Param("otherDescription") String otherDescription,
                      @Param("price") Double price, @Param("qrScan") String qrScan, @Param("screenSize") String screenSize, @Param("selfie") String selfie);
 
@@ -34,14 +34,12 @@ Function: Query Create product
     Date: 14:01 01/06/2022
     Function: Query findById product
 */
-    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
-    Optional<Product> findById(@Param("id") Long id);
-
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
             "WHERE product.id = :id", nativeQuery = true)
-    Product findByProductById(@Param("id") Long id);
+    Optional<Product> findByProductById(@Param("id") Long id);
+
 
     /*
     Created by TuanPA
@@ -56,6 +54,7 @@ Function: Query Create product
             "memory = :#{#product.memory},name= :#{#product.name},other_description = :#{#product.otherDescription}, " +
             "price = :#{#product.price},qr_scan= :#{#product.qrScan},screen_size= :#{#product.screenSize},selfie= :#{#product.selfie} " +
             "WHERE id =:#{#product.id}", nativeQuery = true)
+
     void updateProduct(Product product);
 
 
@@ -82,7 +81,9 @@ Function: Query Create product
     @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
+
     /*
+
       Created by hieuMMT and tamHT
       Time: 14:00 1/06/2022
       Function: get All product and search
@@ -99,20 +100,15 @@ Function: Query Create product
                     "and price >= :price group by product.id " +
                     ") as temp where quantity >= :quantity ", nativeQuery = true)
     <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
-    /*
-     Created by hieuMMT
-     Time: 14:15 1/06/2022
-     Function: delete product
- */
+
+
+    /*     Created by hieuMMT
+         Time: 14:15 1/06/2022
+         Function: delete product
+     */
     @Query(value = "update product SET delete_flag = 1 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
-
-
-
-    @Query(value = "select name, price , cpu , memory from product where delete_flag = false and like concat('%', :name ,'%')" +
-            " and price like concat('%', :price ,'%')"
-            , nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2);
-
 }
+
+
 

@@ -56,6 +56,7 @@ public class InvoiceDetailRestController {
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
                                                               BindingResult bindingResult) {
+        System.out.println(invoiceDetailDto);
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors()

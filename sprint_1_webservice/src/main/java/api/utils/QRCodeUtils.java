@@ -23,9 +23,15 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Hashtable;
 
+    /*
+     Created by HauPV
+     Time: 20:20 31/05/2022
+     Function: QRCode Maker
+ */
+
 public class QRCodeUtils {
 
-    private static final String PATH = "D:\\sprint-1\\test-qrcode\\";
+    private static final String PATH = "D:\\qrcode\\";
 
     public static String encode(ProductQRCode productQRCode) {
         String filePath = PATH + "PD-" + productQRCode.getId() + ".png";
