@@ -1,5 +1,6 @@
 package api.services.impl;
 
+import api.dto.InvoiceDto;
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -61,12 +62,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     }
 
+    @Override
+    public void createInvoice(InvoiceDto invoiceDto) {
 
-        /*
-        Created by LongNHL
-        Time: 21:30 31/05/2022
-        Function: get invoice after create
-        */
+    }
+
+
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: get invoice after create
+    */
     @Override
     public Invoice getNewInvoice() {
         return iInvoiceRepository.getNewInvoice();

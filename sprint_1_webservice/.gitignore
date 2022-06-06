@@ -15,15 +15,11 @@ build/
 .sts4-cache
 bin/
 !**/src/main/**/bin/
-<<<<<<< HEAD
-!**/src/test/**/bin/
-/sprint_1_webservice/src/test/
-=======
 
 !**/src/test/**/bin/
 /sprint_1_webservice/src/test/
 
->>>>>>> 0cfab175adc0b788c3c20b43da5a74a2d13ae9e9
+
 
 ### IntelliJ IDEA ###
 .idea

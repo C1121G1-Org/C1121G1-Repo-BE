@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductInvoiceDto {
+    private Long productId;
     private Long id;
     private String name;
     @NotNull(message = "Vui lòng nhập số lượng sản phẩm.")

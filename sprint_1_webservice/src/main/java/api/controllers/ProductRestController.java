@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
@@ -61,6 +60,7 @@ public class ProductRestController {
 //        return iProductService.getAllProduct();
 //    }
 
+
     /*
 <<<<<<< HEAD
           Created by tamHT and hieuMMT
@@ -68,6 +68,8 @@ public class ProductRestController {
 =======
 >>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
 >>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
+=======
+>>>>>>> 70e7e596057a3997c8ee0de59be352a38b674093
 
     /*
 =======
@@ -78,9 +80,9 @@ public class ProductRestController {
       */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyQuantity,
-                                                            @RequestParam Optional<String> keyPrice
-    ) {
+                                                            @RequestParam Optional<String> keyPrice,
+                                                            @RequestParam Optional<String> keyQuantity) {
+
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -91,7 +93,6 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
-
 
 
 //    @PostMapping(value = "/create")
@@ -121,16 +122,7 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
-
-
         productDtoErrors.validate(productDto, bindingResult);
-
-
-
-
-        productDtoErrors.validate(productDto,bindingResult);
-
-
 //        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
@@ -210,7 +202,6 @@ public class ProductRestController {
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
         ProductQRCode productQRCode = new ProductQRCode();
-
         BeanUtils.copyProperties(product, productQRCode);
         QRCodeUtils.encode(productQRCode);
 

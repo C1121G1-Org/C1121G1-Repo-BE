@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /*
@@ -35,8 +34,10 @@ Function: Query Create product
     Function: Query findById product
 */
 
+
     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Optional<Product> findById(@Param("id") Long id);
+
 
 
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
@@ -90,6 +91,7 @@ Function: Query Create product
 
 
 
+
 /*     Created by hieuMMT
      Time: 14:15 1/06/2022
      Function: delete product
@@ -98,14 +100,11 @@ Function: Query Create product
     @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
 
-
-
     /*
            Created by hieuMMT and tamHT
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
-
 
     @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
             "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +

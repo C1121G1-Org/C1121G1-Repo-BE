@@ -24,8 +24,8 @@ public interface IProductService {
                Time: 18:15 31/05/2022
                Function: get all product
            */
-    Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
+    Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
     /*
      Created by tuanPA
@@ -34,13 +34,6 @@ public interface IProductService {
  */
     void save(Product product);
 
-        /*
-     Created by tuanPA
-     Time: 18:15 31/05/2022
-     Function: updateProduct
- */
-
-    void updateProduct(Product product);
     /*
              Created by LongNHL
              Time: 15:00 2/06/2022
@@ -48,6 +41,13 @@ public interface IProductService {
          */
     List<Product> findAllTest();
 
+        /*
+     Created by tuanPA
+     Time: 18:15 31/05/2022
+     Function: updateProduct
+ */
+
+    void updateProduct(Product product);
 
     /*
          Created by hieuMMT
@@ -55,6 +55,8 @@ public interface IProductService {
          Function: delete product
      */
     void deleteFlag(Long id);
+
+
 
     /*
  Created by tuanPA
@@ -64,5 +66,4 @@ public interface IProductService {
     Product findProductByName(String name);
 
     Optional<Product> findById(Long id);
-
 }
