@@ -1,15 +1,7 @@
 package api.controllers;
 
-/*
-    Created by HauPV
-    Time: 19:16 31/05/2022
-    Function: display list sale report
-    Role : Admin , Business Staff
-*/
-
 import api.models.ISaleReport;
 import api.models.Product;
-import api.models.ProductQRCode;
 import api.services.ISaleReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/*
+    Created by HauPV
+    Time: 19:16 31/05/2022
+    Function: display list sale report
+    Role : Admin , Business Staff
+*/
 
 import java.util.List;
 
