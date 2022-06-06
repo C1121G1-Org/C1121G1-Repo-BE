@@ -56,7 +56,6 @@ public class InvoiceDetailRestController {
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
                                                               BindingResult bindingResult) {
-        System.out.println(invoiceDetailDto);
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors()
@@ -75,7 +74,6 @@ public class InvoiceDetailRestController {
         invoice.setPayments(invoiceDetailDto.getPayments());
         invoice.setCustomer(customer);
         iInvoiceService.saveNewInvoice(invoice);
-        System.out.println(invoice);
 
         Invoice newInvoice = iInvoiceService.getNewInvoice();
         List<ProductInvoiceDto> list = invoiceDetailDto.getProducts();
@@ -92,24 +90,34 @@ public class InvoiceDetailRestController {
          Function: update quantity product
          */
     @PatchMapping("/updateQuantityProduct")
-    public ResponseEntity<String> updateQuantityProduct(@RequestBody InvoiceDetailDto invoiceDetailDto) {
-        String messageError = "";
-        if (invoiceDetailDto.getProducts().isEmpty()) {
+    public ResponseEntity<ResponseObject> updateQuantityProduct(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,BindingResult bindingResult) {
+        String errorQuantity = "";
+        Map<String, String> errorMap = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            bindingResult.getFieldErrors()
+                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if (!invoiceDetailDto.getProducts().isEmpty()) {
             for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
                 Storage storage = iStorageService.getStorageByIdProduct(productDto.getId());
                 if (productDto.getQuantity() > storage.getQuantity()) {
-                    messageError = "Số lượng sản phẩm trong kho: " + storage.getQuantity();
-                    return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
+                    errorQuantity = "Số lượng sản phẩm "+ storage.getProduct().getName() +" trong kho còn: " + storage.getQuantity();
+                    errorMap.put("quantity",errorQuantity);
+                    return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
+                            HttpStatus.BAD_REQUEST);
                 } else {
                     storage.setQuantity(storage.getQuantity() - productDto.getQuantity());
                     iStorageService.updateQuantityProduct(storage);
-                    messageError = "Cập nhật số lượng thành công";
-                    return new ResponseEntity<>(messageError, HttpStatus.OK);
                 }
             }
+            return new ResponseEntity<>( HttpStatus.OK);
         }
-        messageError = "Bạn chưa chọn sản phẩm";
-        return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
+        errorQuantity = "Bạn chưa chọn sản phẩm";
+        errorMap.put("productList",errorQuantity);
+        return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
+                HttpStatus.BAD_REQUEST);
     }
 
 }

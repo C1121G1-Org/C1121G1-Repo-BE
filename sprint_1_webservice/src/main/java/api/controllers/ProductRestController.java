@@ -1,5 +1,6 @@
 package api.controllers;
 
+import api.dto.IProductDto;
 import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ResponseObject;
@@ -30,7 +31,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -61,15 +62,16 @@ public class ProductRestController {
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
       */
-    @GetMapping(value = "/listProduct")
-    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                        @RequestParam Optional<String> keyPhone,
-                                                        @RequestParam Optional<String> keyQuality) {
+    @GetMapping(value = "/list")
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyQuantity,
+                                                            @RequestParam Optional<String> keyPrice
+    ) {
         String keyNameValue = keyName.orElse("");
-        String keyPhoneValue = keyPhone.orElse("");
-        String keyQualityValue = keyQuality.orElse("");
+        String keyQuantityValue = keyQuantity.orElse("0");
+        String keyPriceValue = keyPrice.orElse("0");
 
-        Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue, keyQualityValue);
+        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

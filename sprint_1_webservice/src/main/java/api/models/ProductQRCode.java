@@ -3,10 +3,6 @@ package api.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import java.util.Objects;
-
-
 import java.util.Objects;
 
 /*

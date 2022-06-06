@@ -88,11 +88,17 @@ Function: Query Create product
       Function: get All product and search
     */
 
-    @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')" +
-            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id", nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quality") String keyWord3);
-
+    @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
+            "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
+            "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
+            "and price >= :price group by product.id " +
+            ") as temp where quantity >= :quantity ",
+            countQuery = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
+                    "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
+                    "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
+                    "and price >= :price group by product.id " +
+                    ") as temp where quantity >= :quantity ", nativeQuery = true)
+    <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
     /*
      Created by hieuMMT
      Time: 14:15 1/06/2022

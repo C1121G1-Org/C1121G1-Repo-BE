@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.validation.Valid;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import java.util.List;
      Time: 9:30 1/06/2022
      Function: create invoiceDetailDto
      */
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -33,5 +31,6 @@ public class InvoiceDetailDto {
     @Valid
     private CustomerDto customerDto;
     @NotNull(message = "Vui lòng chọn sản phẩm muốn mua")
+    @Valid
     private List<ProductInvoiceDto> products;
 }
