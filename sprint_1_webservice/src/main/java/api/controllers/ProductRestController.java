@@ -69,7 +69,7 @@ public class ProductRestController {
           Function: get  all page product and search of product
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 2) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
                                                             @RequestParam Optional<String> keyPrice,
                                                             @RequestParam Optional<String> keyQuantity) {
 

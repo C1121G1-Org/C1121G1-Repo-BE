@@ -39,7 +39,7 @@ Function: Query Create product
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
             "WHERE product.id = :id", nativeQuery = true)
-   Optional<Product>findByProductById(@Param("id") Long id);
+    Optional<Product> findByProductById(@Param("id") Long id);
 
     /*
     Created by TuanPA
@@ -120,6 +120,5 @@ Function: Query Create product
                     "and price >= :price group by product.id " +
                     ") as temp where quantity >= :quantity ", nativeQuery = true)
     <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
-
 }
 
