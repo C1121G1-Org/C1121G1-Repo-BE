@@ -64,4 +64,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public Employee findEmployee(Long createdEmployeeDto) {
         return iEmployeeRepository.findEmployee(createdEmployeeDto);
     }
+
+    @Override
+    public Employee findByIdCard(String idCard) {
+        return iEmployeeRepository.findByIdCard(idCard);
+    }
 }

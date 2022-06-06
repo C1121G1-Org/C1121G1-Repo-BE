@@ -90,4 +90,9 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query(value = "select * from employee where delete_flag = 0 and id = :id ", nativeQuery = true)
     Employee findEmployee(@Param("id") Long createdEmployeeDto);
+
+
+    @Query(value = "select * from employee where delete_flag = 0 and id_card = :idCard ", nativeQuery = true)
+    Employee findByIdCard(@Param("idCard") String idCard);
+
 }

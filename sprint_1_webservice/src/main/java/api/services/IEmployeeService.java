@@ -24,4 +24,8 @@ public interface IEmployeeService {
         Function: 1/    findEmployee() = abstract method to find Employee by id
     */
     Employee findEmployee(Long createdEmployeeDto);
+
+
+    Employee findByIdCard(String idCard);
+
 }
