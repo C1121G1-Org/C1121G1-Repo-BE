@@ -1,4 +1,5 @@
 package api.services.impl;
+import api.dto.IProductDto;
 import api.models.Product;
 import api.repositories.IProductRepository;
 import api.services.IProductService;
@@ -37,8 +38,9 @@ public class ProductServiceImpl implements IProductService {
             Function: search Products
         */
     @Override
-    public Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3) {
-        return iProductRepository.pageFindAll(pageable,key1, key2 , key3);
+
+    public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3) {
+        return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3);
     }
 
     /*
@@ -58,8 +60,7 @@ public class ProductServiceImpl implements IProductService {
  */
     @Override
     public Optional<Product> findById(Long id) {
-        return iProductRepository.findById(id);
-
+        return iProductRepository.findByProductById(id);
     }
 
     /*
@@ -72,6 +73,7 @@ public class ProductServiceImpl implements IProductService {
         this.iProductRepository.updateProduct(product);
     }
 
+
     /*
     Created by tuanPA
     Time: 18:15 2/06/2022
@@ -82,6 +84,7 @@ public class ProductServiceImpl implements IProductService {
         return this.iProductRepository.findProductByName(name);
     }
 
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
@@ -91,6 +94,17 @@ public class ProductServiceImpl implements IProductService {
     public void deleteFlag(Long id) {
         this.iProductRepository.deleteFlag(id);
     }
+
+    /*
+      Created by LongNHL
+     Time: 15:00 2/06/2022
+     Function: use test create invoice
+      */
+    @Override
+    public List<Product> findAllTest() {
+        return iProductRepository.findAll();
+    }
+
 
 
 }

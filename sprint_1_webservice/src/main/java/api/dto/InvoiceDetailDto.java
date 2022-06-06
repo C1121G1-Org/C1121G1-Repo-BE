@@ -1,14 +1,15 @@
 package api.dto;
 
 
-import api.models.Invoice;
-import api.models.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.Valid;
+
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -30,4 +31,11 @@ public class InvoiceDetailDto {
     private InvoiceDto invoiceDto;
     @NotNull(message = "Vui lòng chọn sản phẩm muốn mua")
     private List<ProductInvoiceDto> productInvoiceDtoList;
+    private Double totalMoney;
+    @NotBlank(message = "Vui lòng nhập loại thanh toán")
+    private String payments;
+    @Valid
+    private CustomerDto customerDto;
+    @NotNull(message = "Vui lòng chọn sản phẩm muốn mua")
+    private List<ProductInvoiceDto> products;
 }

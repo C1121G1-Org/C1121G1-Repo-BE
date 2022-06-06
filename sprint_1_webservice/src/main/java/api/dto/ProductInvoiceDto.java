@@ -17,4 +17,8 @@ import lombok.Setter;
 public class ProductInvoiceDto {
     private Long productId;
     private Long quantity;
+    private Long id;
+    private String name;
+    private Double price;
+
 }
