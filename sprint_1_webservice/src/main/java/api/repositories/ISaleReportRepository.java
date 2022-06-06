@@ -21,7 +21,7 @@ public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
             "and product.id like concat('%', :productId ,'%') " +
             "GROUP BY invoice.create_date ; ",
             nativeQuery = true)
-    <T> List<T> findAllSaleReport(Class<T> t, String startDay, String endDay,@Param("productId") String productId);
+    <T> List<T> findAllSaleReport(Class<T> t, String startDay, String endDay, @Param("productId") String productId);
 
     @Query(value = " select * from product where delete_flag = 0 order by id desc limit 1 ; ",
             nativeQuery = true)

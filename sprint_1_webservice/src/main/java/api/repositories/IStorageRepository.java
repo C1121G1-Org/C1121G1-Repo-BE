@@ -18,7 +18,7 @@ public interface IStorageRepository extends JpaRepository<Storage, Long> {
                   2/    getAllStorage() = write a native query to get all Storages from DB
     */
 
-    @Query(value = "select * from storage where delete_flag = 1 ", nativeQuery = true)
+    @Query(value = "select * from storage where delete_flag = 0 ", nativeQuery = true)
     List<Storage> getAllStorage();
 
     @Transactional

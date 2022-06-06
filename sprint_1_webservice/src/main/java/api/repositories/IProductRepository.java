@@ -73,10 +73,10 @@ Function: Query Create product
                   2/    getAllProduct() = write a native query to get all Products from DB
     */
 
-    @Query(value = "select * from product where delete_flag = 1 ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 ", nativeQuery = true)
     List<Product> getAllProduct();
 
-    @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
 
@@ -85,7 +85,8 @@ Function: Query Create product
      Time: 14:15 1/06/2022
      Function: delete product
  */
-    @Query(value = "update product SET delete_flag = 1 WHERE product_id = ?;", nativeQuery = true)
+
+    @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
 
 
