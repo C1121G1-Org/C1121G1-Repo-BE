@@ -9,7 +9,10 @@
   </component>
 =======
   <component name="ChangeListManager">
-    <list default="true" id="f5963900-dda3-4edf-ab39-22637817c291" name="Changes" comment="" />
+    <list default="true" id="f5963900-dda3-4edf-ab39-22637817c291" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprint_1_webservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sprint_1_webservice/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,8 +45,17 @@
       <option name="presentableId" value="Default" />
       <updated>1654052691161</updated>
       <workItem from="1654052693446" duration="2000" />
+      <workItem from="1654054106082" duration="651000" />
+      <workItem from="1654056940841" duration="102000" />
+      <workItem from="1654057124835" duration="467000" />
     </task>
     <servers />
   </component>
+<<<<<<< HEAD
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+=======
 >>>>>>> f83cbe75b39a45e09e3ebd880bccff78f88f1194
+>>>>>>> 82cce4705e8eff492dd9edfc9f6a5aebc63c9c15
 </project>

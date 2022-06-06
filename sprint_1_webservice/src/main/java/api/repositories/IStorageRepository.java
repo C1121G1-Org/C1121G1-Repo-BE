@@ -4,6 +4,7 @@ import api.models.Storage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -26,4 +27,19 @@ public interface IStorageRepository extends JpaRepository<Storage, Long> {
             "values (:#{#storage.id}, :#{#storage.createdDate}, :#{#storage.quantity}, :#{#storage.status}, " +
             ":#{#storage.createdEmployee.id}, :#{#storage.product.id}, :#{#storage.supplier.id}) ", nativeQuery = true)
     void createStorage(Storage storage);
+
+
+    /*
+    Created by LongNHL
+    Time: 22:30 1/06/2022
+    Function: find storage by productId after create invoice
+    */
+
+    @Query(value = "select * from `storage` where product_id = :id", nativeQuery = true)
+    Storage getStorageByIdProduct(@Param("id") Long productId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE `storage` SET `quantity` = ?1 WHERE (`id` = ?2)",nativeQuery = true)
+    void updateQuantityProduct(Long quantity, Long id);
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -53,11 +54,10 @@ public class Product {
     @JsonBackReference
     private Set<InvoiceDetail> invoiceDetailSet;
 
-
     /*
-        Create by: hauPV
-        Penalty: 5k
-     */
+            Create by: hauPV
+            Penalty: 5k
+         */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
