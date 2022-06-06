@@ -1,1 +1,2 @@
 /sprint_1_webservice/src/test
+/sprint_1_webservice/src/main/resources/application.properties

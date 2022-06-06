@@ -5,7 +5,6 @@ import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
-import api.repositories.ISaleReportRepository;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -16,19 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-
 import java.util.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 
 @RestController
@@ -46,21 +37,6 @@ public class ProductRestController {
     */
     @Autowired
     ISaleReportService iSaleReportService;
-
-
-//    @GetMapping(value = "/list")
-//    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-//                                                       @RequestParam Optional<String> keyPhone) {
-//    /*
-//        Created by khoaVC
-//        Time: 21:54 31/05/2022
-//        Function: list all Products from DB
-//    */
-
-//    @GetMapping(value = "/list")
-//    public List<Product> listProduct() {
-//        return iProductService.getAllProduct();
-//    }
 
 
     /*
@@ -85,10 +61,6 @@ public class ProductRestController {
     }
 
 
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
 
 
 
@@ -107,8 +79,6 @@ public class ProductRestController {
         productDtoErrors.setIProductService(iProductService);
 
         productDtoErrors.validate(productDto, bindingResult);
-
-//        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult

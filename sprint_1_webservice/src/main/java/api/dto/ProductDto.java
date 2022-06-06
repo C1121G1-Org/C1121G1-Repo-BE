@@ -10,11 +10,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -53,7 +48,6 @@ public class ProductDto implements Validator {
     private String memory;
     private String otherDescription;
     private IProductService iProductService;
-//    private boolean deleteFlag;
 
 
     @Override
