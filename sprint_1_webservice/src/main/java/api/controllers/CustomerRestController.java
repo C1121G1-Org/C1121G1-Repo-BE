@@ -98,7 +98,7 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/report-customer")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomer(
-            @PageableDefault Pageable pageable) {
+            @PageableDefault(value = 5) Pageable pageable) {
 
         Page<ReportCustomerDto> reportCustomerDtoPage = iCustomerService.filterAll(pageable);
 
@@ -106,7 +106,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -125,7 +124,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDto, HttpStatus.OK);
     }
 
@@ -136,7 +134,7 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/report-customer-search-gender")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchGender(
-            @PageableDefault Pageable pageable, @RequestParam Boolean gender) {
+            @PageableDefault(value = 5) Pageable pageable, @RequestParam Boolean gender) {
 
         Page<ReportCustomerDto> reportCustomerDtoPage =
                 iCustomerService.filterByGender(pageable, gender);
@@ -145,7 +143,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -156,7 +153,7 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/report-customer-search-age")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchAge(
-            @PageableDefault Pageable pageable, @RequestParam Integer age) {
+            @PageableDefault(value = 5) Pageable pageable, @RequestParam Integer age) {
 
         Page<ReportCustomerDto> reportCustomerDtoPage =
                 iCustomerService.filterByAge(pageable, age);
@@ -165,7 +162,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -176,7 +172,7 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/report-customer-search")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearch(
-            @PageableDefault Pageable pageable, @RequestParam Boolean gender,
+            @PageableDefault(value = 5) Pageable pageable, @RequestParam Boolean gender,
             @RequestParam Integer age) {
 
         Page<ReportCustomerDto> reportCustomerDtoPage =
@@ -186,7 +182,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -200,7 +195,7 @@ public class CustomerRestController {
             @PathVariable(value = "id") Long id,
             @RequestParam(value = "startDate", defaultValue = "01-01-1900") String startDate,
             @RequestParam(value = "endDate", defaultValue = "31-12-2100") String endDate,
-            @PageableDefault Pageable pageable) {
+            @PageableDefault(value = 5) Pageable pageable) {
 
         Page<PurchaseHistoryDto> purchaseHistoryDtoPage =
                 iCustomerService.detailPurchaseHistory(id, startDate, endDate, pageable);
@@ -208,7 +203,6 @@ public class CustomerRestController {
         if (purchaseHistoryDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-//            List<PurchaseHistoryDto> purchaseHistoryDtos = purchaseHistoryDtoPage.toList();
             return new ResponseEntity<>(purchaseHistoryDtoPage, HttpStatus.OK);
         }
     }
@@ -220,7 +214,7 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/purchase-products/{id}")
     public ResponseEntity<Page<PurchaseProductDto>> showPurchaseProducts(
-            @PathVariable Long id, @PageableDefault Pageable pageable) {
+            @PathVariable Long id, @PageableDefault(value = 5) Pageable pageable) {
 
         Page<PurchaseProductDto> purchaseProductDtoPage = iCustomerService.getPurchaseProducts(id, pageable);
 
