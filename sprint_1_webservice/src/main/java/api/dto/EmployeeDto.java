@@ -1,5 +1,6 @@
 package api.dto;
 
+//import api.services.IAccountService;
 import api.models.Account;
 import api.models.Employee;
 import api.services.IAccountService;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class EmployeeDto implements Validator {
     private Long id;
     @NotBlank
@@ -45,8 +47,8 @@ public class EmployeeDto implements Validator {
     private PositionDto positionDto;
     @Valid
     private AccountDto accountDto;
-
     private IAccountService iAccountService;
+
     @Valid
     private IEmployeeService iEmployeeService ;
 
