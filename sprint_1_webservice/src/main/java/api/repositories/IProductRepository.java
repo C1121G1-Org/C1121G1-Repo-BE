@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface IProductRepository extends JpaRepository<Product, Long> {
 
     /*
@@ -24,8 +23,8 @@ Function: Query Create product
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO product(camera,`cpu`,image,`memory`,`name`,other_description,price,qr_scan,screen_size,selfie) " +
-            "VALUES(:camera,:cpu,:image,:memory,:name,:otherDescription,:price,:qrScan,:screenSize,:selfie)", nativeQuery = true)
+    @Query(value = "INSERT INTO product(camera,`cpu`,image,`memory`,`name`,other_description,price,qr_scan,screen_size,selfie,delete_flag) " +
+            "VALUES(:camera,:cpu,:image,:memory,:name,:otherDescription,:price,:qrScan,:screenSize,:selfie,0)", nativeQuery = true)
     void saveProduct(@Param("camera") String camera, @Param("cpu") String cpu, @Param("image") String image, @Param("memory") String memory, @Param("name") String name, @Param("otherDescription") String otherDescription,
                      @Param("price") Double price, @Param("qrScan") String qrScan, @Param("screenSize") String screenSize, @Param("selfie") String selfie);
 
@@ -34,6 +33,8 @@ Function: Query Create product
     Date: 14:01 01/06/2022
     Function: Query findById product
 */
+
+
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
@@ -81,7 +82,20 @@ Function: Query Create product
 
 
     /*
-     Created by hieuMMT
+<<<<<<< HEAD
+      Created by hieuMMT and tamHT
+      Time: 14:00 1/06/2022
+      Function: get All product and search
+    */
+
+    @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
+            " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')" +
+            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id", nativeQuery = true)
+    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quality") String keyWord3);
+
+
+
+/*     Created by hieuMMT
      Time: 14:15 1/06/2022
      Function: delete product
  */

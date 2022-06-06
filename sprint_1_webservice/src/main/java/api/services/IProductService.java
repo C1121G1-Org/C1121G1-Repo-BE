@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-
 public interface IProductService {
     /*
         Created by khoaVC
@@ -25,6 +24,7 @@ public interface IProductService {
                Time: 18:15 31/05/2022
                Function: get all product
            */
+
     Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
 
@@ -36,19 +36,7 @@ public interface IProductService {
     void save(Product product);
 
 
-    /*
-     Created by tuanPA
-     Time: 18:15 31/05/2022
-     Function: findById
- */
-    Optional<Product> findById(Long id);
 
-    /*
-         Created by hieuMMT
-         Time: 14:15 1/06/2022
-         Function: delete product
-     */
-    void deleteFlag(Long id);
 
         /*
      Created by tuanPA
@@ -58,7 +46,6 @@ public interface IProductService {
 
     void updateProduct(Product product);
 
-    Product findProductByName(String name);
 
 
     /*
@@ -68,4 +55,21 @@ public interface IProductService {
          */
     List<Product> findAllTest();
 
+    /*
+         Created by hieuMMT
+         Time: 14:15 1/06/2022
+         Function: delete product
+     */
+    void deleteFlag(Long id);
+
+
+
+    /*
+ Created by tuanPA
+ Time: 18:15 31/05/2022
+ Function: updateProduct
+*/
+    Product findProductByName(String name);
+
+    Optional<Product> findById(Long id);
 }
