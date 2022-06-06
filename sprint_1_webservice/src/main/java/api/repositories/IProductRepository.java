@@ -75,18 +75,29 @@ Function: Query Create product
                   2/    getAllProduct() = write a native query to get all Products from DB
     */
 
-    @Query(value = "select * from product where delete_flag = 1 ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 ", nativeQuery = true)
     List<Product> getAllProduct();
 
-    @Query(value = "select * from product where delete_flag = 1 and id = :id ", nativeQuery = true)
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Product findProduct(@Param("id") Long productDto);
 
 
-    /*
 
-      Created by hieuMMT and tamHT
-      Time: 14:00 1/06/2022
-      Function: get All product and search
+
+
+/*     Created by hieuMMT
+     Time: 14:15 1/06/2022
+     Function: delete product
+ */
+
+    @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
+    void deleteFlag(@PathVariable("id") Long id);
+
+
+    /*
+           Created by hieuMMT and tamHT
+        Time: 18:00 31/05/2022
+        Function: get All product and search
     */
 
     @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
@@ -101,13 +112,6 @@ Function: Query Create product
                     ") as temp where quantity >= :quantity ", nativeQuery = true)
     <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
 
-
-    /*     Created by hieuMMT
-         Time: 14:15 1/06/2022
-         Function: delete product
-     */
-    @Query(value = "update product SET delete_flag = 1 WHERE product_id = ?;", nativeQuery = true)
-    void deleteFlag(@PathVariable("id") Long id);
 }
 
 

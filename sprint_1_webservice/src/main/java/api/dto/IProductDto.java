@@ -25,4 +25,5 @@ public interface IProductDto {
 
     String getOtherDescription();
     String getQuantity();
+
 }
