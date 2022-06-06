@@ -1,6 +1,5 @@
 package api.services.impl;
 
-
 import api.dto.EmployeeInterface;
 import api.models.Account;
 import api.models.Employee;
@@ -64,5 +63,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public Employee findEmployee(Long createdEmployeeDto) {
         return iEmployeeRepository.findEmployee(createdEmployeeDto);
+    }
+
+    @Override
+    public Employee findByIdCard(String idCard) {
+        return iEmployeeRepository.findByIdCard(idCard);
     }
 }

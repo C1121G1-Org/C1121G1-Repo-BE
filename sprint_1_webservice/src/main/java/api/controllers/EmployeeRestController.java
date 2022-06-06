@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
 import java.util.Optional;
+import java.util.*;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -73,6 +71,7 @@ public class EmployeeRestController {
         Function: findAllEmployee = list Employee.
     */
     @GetMapping(value = {"/list"})
+
     public ResponseEntity<Page<EmployeeInterface>> findAllEmployee(@PageableDefault(value = 7) Pageable pageable,
                                                           @RequestParam Optional<String> keyName) {
         String nameValue = keyName.orElse("");
@@ -91,16 +90,20 @@ public class EmployeeRestController {
     */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createEmployee(@Valid @RequestBody EmployeeDto employeeDto,
-                                                         BindingResult bindingResult) {
-        employeeDto.validate(employeeDto, bindingResult);
-        Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasFieldErrors()) {
-            bindingResult
-                    .getFieldErrors()
-                    .stream()
-                    .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
-            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
+                                                     BindingResult bindingResult) {
+//        AccountDto accountDto = new AccountDto();
+//        BeanUtils.copyProperties(employeeDto.getAccountDto(),accountDto);
+//        accountDto.setIAccountService(iAccountService);
+        employeeDto.validate(employeeDto,bindingResult);
+
+//        accountDto.validate(accountDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = bindingResult.getFieldErrors()
+                    .stream().collect(Collectors.toMap(
+                            e -> e.getField(), e -> e.getDefaultMessage()));
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
         Employee employee = new Employee();
         Account account = new Account();
         AccountRole accountRole = new AccountRole();
@@ -108,8 +111,9 @@ public class EmployeeRestController {
         Position position = new Position();
         BeanUtils.copyProperties(employeeDto, employee);
         BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
+        System.out.println(account);
         BeanUtils.copyProperties(employeeDto.getPositionDto(), position);
-
+        account.setVerificationCode("");
         account.setIsEnabled(true);
         iAccountService.save(account);
         Role role = iRoleService.findById(position.getId());
