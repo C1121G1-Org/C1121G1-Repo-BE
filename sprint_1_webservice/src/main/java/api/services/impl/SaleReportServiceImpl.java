@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
     Created by HauPV
@@ -21,12 +22,13 @@ public class SaleReportServiceImpl implements ISaleReportService {
     ISaleReportRepository iSaleReportRepository;
 
     @Override
-    public List<ISaleReport> findAllSaleReports(String startDay, String endDay,String productId) {
-        return this.iSaleReportRepository.findAllSaleReport(ISaleReport.class, startDay, endDay,productId);
+    public List<ISaleReport> findAllSaleReports(String startDay, String endDay, String productId) {
+        return this.iSaleReportRepository.findAllSaleReport(ISaleReport.class, startDay, endDay, productId);
     }
 
     @Override
     public Product getLatestProduct() {
         return this.iSaleReportRepository.getLatestProduct();
     }
+
 }
