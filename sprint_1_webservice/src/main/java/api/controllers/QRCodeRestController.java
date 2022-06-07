@@ -19,11 +19,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 /*
     Created by HauPV
     Time: 11:50 31/05/2022
     Function: encode and decode QR-Code
+    Role : Admin , Storekeeper , Seller
 */
 
 @RestController
@@ -43,7 +45,8 @@ public class QRCodeRestController {
         if (productQRCode.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (iProductService.findById(productQRCode.getId()) == null) {
+        Optional<Product> product = iProductService.findById(productQRCode.getId());
+        if (product.isPresent() && product.get() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         String filePath = QRCodeUtils.encode(productQRCode);

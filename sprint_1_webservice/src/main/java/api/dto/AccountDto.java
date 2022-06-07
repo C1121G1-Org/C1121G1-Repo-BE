@@ -40,22 +40,6 @@ public class AccountDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-//        AccountDto accountDto = (AccountDto) target;
-//        String checkUserName = accountDto.getUserName();
-//        Account account = this.iAccountService.findByUserName(accountDto.getUserName());
-//        if (account != null) {
-//            if (account.getUserName().equals(checkUserName)) {
-//                errors.rejectValue("userName", "", "Tài khoản tồn tại");
-//            }
-//        }
-//        String checkEmail = accountDto.getEmail();
-//        Account account1 = this.iAccountService.findByEmail(accountDto.getEmail());
-//        if (account1 != null) {
-//            if (account1.getEmail().equals(checkEmail)) {
-//                errors.rejectValue("email", "", "email tồn tại");
-//            }
-//
-//        }
     }
 
 

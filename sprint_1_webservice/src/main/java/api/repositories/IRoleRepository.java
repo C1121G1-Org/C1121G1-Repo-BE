@@ -1,11 +1,11 @@
 package api.repositories;
 
-import api.models.Position;
+
 import api.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface IRoleRepository extends JpaRepository<Role, Integer> {
-     List<Role> findRoleById( Integer Id);
+    List<Role> findRoleById( Integer Id);
 }
