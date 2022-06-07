@@ -47,6 +47,30 @@ public class InvoiceDetailRestController {
         return new ResponseEntity<>(productBestsellers, HttpStatus.OK);
     }
 
+    //Create by chienLV
+//Time: 7h00 07/06/2022
+//Function: get list product newest from database
+    @GetMapping("/listProductNewest")
+    public ResponseEntity<List<IProductBestsellerDto>> getListProductNewest() {
+        List<IProductBestsellerDto> productNewests = iInvoiceDetailService.findListProductNewest();
+        if (productNewests.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productNewests, HttpStatus.OK);
+    }
+
+    //Create by chienLV
+//Time: 14h00 07/06/2022
+//Function: find list product bestseller by category from database
+    @GetMapping("/listProductBestseller/{id}")
+    public ResponseEntity<List<IProductBestsellerDto>> getListProductBestsellerByCategory(@PathVariable int id) {
+        List<IProductBestsellerDto> productBestsellerByCategories = iInvoiceDetailService.findListProductBestsellerByCategory(id);
+        if (productBestsellerByCategories.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productBestsellerByCategories, HttpStatus.OK);
+    }
+
 
     /*
      Created by LongNHL
@@ -85,40 +109,41 @@ public class InvoiceDetailRestController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-        /*
-         Created by LongNHL
-         Time: 22:30 1/06/2022
-         Function: update quantity product
-         */
+    /*
+      Created by LongNHL
+      Time: 22:30 1/06/2022
+      Function: update quantity product
+      */
     @PatchMapping("/updateQuantityProduct")
     public ResponseEntity<ResponseObject> updateQuantityProduct(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,BindingResult bindingResult) {
         String errorQuantity = "";
         Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors()
-                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
-            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
+        if (!bindingResult.hasErrors()) {
+//            bindingResult.getFieldErrors()
+//                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+//            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
+//                    HttpStatus.BAD_REQUEST);
+
+            if (!invoiceDetailDto.getProducts().isEmpty()) {
+                for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
+                    Storage storage = iStorageService.getStorageByIdProduct(productDto.getId());
+                    if (productDto.getQuantity() > storage.getQuantity()) {
+                        errorQuantity = "Số lượng sản phẩm "+ storage.getProduct().getName() +" trong kho còn: " + storage.getQuantity();
+                        errorMap.put("quantity",errorQuantity);
+                        return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
+                                HttpStatus.BAD_REQUEST);
+                    } else {
+                        storage.setQuantity(storage.getQuantity() - productDto.getQuantity());
+                        iStorageService.updateQuantityProduct(storage);
+                    }
+                }
+                return new ResponseEntity<>( HttpStatus.OK);
+            }
+            errorQuantity = "Bạn chưa chọn sản phẩm";
+            errorMap.put("productList",errorQuantity);
+            return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
                     HttpStatus.BAD_REQUEST);
         }
-        if (!invoiceDetailDto.getProducts().isEmpty()) {
-            for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
-                Storage storage = iStorageService.getStorageByIdProduct(productDto.getId());
-                if (productDto.getQuantity() > storage.getQuantity()) {
-                    errorQuantity = "Số lượng sản phẩm "+ storage.getProduct().getName() +" trong kho còn: " + storage.getQuantity();
-                    errorMap.put("quantity",errorQuantity);
-                    return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
-                            HttpStatus.BAD_REQUEST);
-                } else {
-                    storage.setQuantity(storage.getQuantity() - productDto.getQuantity());
-                    iStorageService.updateQuantityProduct(storage);
-                }
-            }
-            return new ResponseEntity<>( HttpStatus.OK);
-        }
-        errorQuantity = "Bạn chưa chọn sản phẩm";
-        errorMap.put("productList",errorQuantity);
-        return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
-                HttpStatus.BAD_REQUEST);
+        return null;
     }
-
 }

@@ -2,10 +2,11 @@ package api.controllers;
 
 import api.dto.IProductDto;
 import api.dto.ProductDto;
+import api.models.Category;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
-import api.repositories.ISaleReportRepository;
+import api.services.ICategoryService;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -18,15 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.BindingResult;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 
 @RestController
@@ -36,6 +31,8 @@ public class ProductRestController {
 
     @Autowired
     IProductService iProductService;
+    @Autowired
+    ICategoryService iCategoryService;
 
     /*
       Created by HauPV
@@ -44,21 +41,6 @@ public class ProductRestController {
     */
     @Autowired
     ISaleReportService iSaleReportService;
-
-
-//    @GetMapping(value = "/list")
-//    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-//                                                       @RequestParam Optional<String> keyPhone) {
-//    /*
-//        Created by khoaVC
-//        Time: 21:54 31/05/2022
-//        Function: list all Products from DB
-//    */
-
-//    @GetMapping(value = "/list")
-//    public List<Product> listProduct() {
-//        return iProductService.getAllProduct();
-//    }
 
 
     /*
@@ -82,22 +64,6 @@ public class ProductRestController {
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
-
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
-
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
-
-
-
-
-
-
     /*
      Created by tuanPA
      Time: 18:15 31/05/2022
@@ -111,8 +77,6 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto, bindingResult);
-//        productDto.validate(productDto,bindingResult);
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -125,10 +89,14 @@ public class ProductRestController {
         Product product = new Product();
 
         BeanUtils.copyProperties(productDto, product);
+        Category category = new Category();
+        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        product.setCategory(category);
         product.setPrice(price);
         product.setDeleteFlag(false);
 
         this.iProductService.save(product);
+
 
      /*
         Created by HauPV
@@ -156,7 +124,7 @@ public class ProductRestController {
         if (product.isPresent()) {
             return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     /*
@@ -166,10 +134,20 @@ public class ProductRestController {
  */
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+
         Map<String, String> errorMap = new HashMap<>();
+        if (!this.iProductService.findById(id).isPresent()) {
+            return new ResponseEntity<>(new ResponseObject(false, "Id ís not exist!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
+        }
+        productDto.setIProductService(iProductService);
 
-//        productDto.validate(productDto,bindingResult);
+        String inputtedProductName = productDto.getName();
+        Optional<Product> currentProduct = this.iProductService.findById(id);
 
+
+        if (!currentProduct.get().getName().equalsIgnoreCase(inputtedProductName)) {
+            productDto.validate(productDto, bindingResult);
+        }
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -183,6 +161,11 @@ public class ProductRestController {
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
+
+        Category category = new Category();
+        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        product.setCategory(category);
+
 
     /*
         Created by HauPV
@@ -218,6 +201,4 @@ public class ProductRestController {
         iProductService.deleteFlag(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
-
 }

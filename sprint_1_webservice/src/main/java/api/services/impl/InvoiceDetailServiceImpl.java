@@ -51,4 +51,20 @@ public class InvoiceDetailServiceImpl implements IInvoiceDetailService {
         return iInvoiceDetailRepository.findListProductBestseller(IProductBestsellerDto.class);
     }
 
+    //Create by chienLV
+//Time: 7h00 07/06/2022
+//Function: get list product newest from database
+    @Override
+    public List<IProductBestsellerDto> findListProductNewest() {
+        return iInvoiceDetailRepository.findListProductNewest(IProductBestsellerDto.class);
+    }
+
+    //Create by chienLV
+//Time: 14h00 07/06/2022
+//Function: find list product bestseller by category from database
+    @Override
+    public List<IProductBestsellerDto> findListProductBestsellerByCategory(int id) {
+        return iInvoiceDetailRepository.findListProductBestsellerByCategory(id);
+    }
+
 }

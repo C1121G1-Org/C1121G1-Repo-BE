@@ -23,10 +23,12 @@ Function: Query Create product
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO product(camera,`cpu`,image,`memory`,`name`,other_description,price,qr_scan,screen_size,selfie,delete_flag) " +
-            "VALUES(:camera,:cpu,:image,:memory,:name,:otherDescription,:price,:qrScan,:screenSize,:selfie,0)", nativeQuery = true)
-    void saveProduct(@Param("camera") String camera, @Param("cpu") String cpu, @Param("image") String image, @Param("memory") String memory, @Param("name") String name, @Param("otherDescription") String otherDescription,
-                     @Param("price") Double price, @Param("qrScan") String qrScan, @Param("screenSize") String screenSize, @Param("selfie") String selfie);
+    @Query(value = "INSERT INTO product(camera,`cpu`,image,`memory`,`name`,other_description,price,qr_scan,screen_size,selfie,delete_flag,category_id) " +
+            "VALUES(:camera,:cpu,:image,:memory,:name,:otherDescription,:price,:qrScan,:screenSize,:selfie,0,:categoryId)", nativeQuery = true)
+    void saveProduct(@Param("camera") String camera, @Param("cpu") String cpu, @Param("image") String image, @Param("memory") String memory,
+                     @Param("name") String name, @Param("otherDescription") String otherDescription,
+                     @Param("price") Double price, @Param("qrScan") String qrScan, @Param("screenSize") String screenSize,
+                     @Param("selfie") String selfie,@Param("categoryId") Integer categoryId);
 
     /*
     Created by TuanPA
@@ -40,7 +42,7 @@ Function: Query Create product
 
 
 
-    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
+    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image, " +
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
             "WHERE product.id = :id", nativeQuery = true)
@@ -58,7 +60,7 @@ Function: Query Create product
     @Query(value = "UPDATE product " +
             "SET camera =:#{#product.camera},cpu=:#{#product.cpu}, delete_flag = :#{#product.deleteFlag}, image = :#{#product.image}, " +
             "memory = :#{#product.memory},name= :#{#product.name},other_description = :#{#product.otherDescription}, " +
-            "price = :#{#product.price},qr_scan= :#{#product.qrScan},screen_size= :#{#product.screenSize},selfie= :#{#product.selfie} " +
+            "price = :#{#product.price},qr_scan= :#{#product.qrScan},screen_size= :#{#product.screenSize},selfie= :#{#product.selfie},category_id = :#{#product.category} " +
             "WHERE id =:#{#product.id}", nativeQuery = true)
 
     void updateProduct(Product product);
