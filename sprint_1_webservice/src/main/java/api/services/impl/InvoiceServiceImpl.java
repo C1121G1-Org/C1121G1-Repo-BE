@@ -28,21 +28,17 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     IProductRepository iProductRepository;
 
+
     /*
-    Created by LongNHL
-    Time: 21:30 31/05/2022
-    Function: create invoice
-    */
+        Created by LongNHL
+        Time: 21:30 31/05/2022
+        Function: create invoice
+        */
     @Override
     public void saveNewInvoice(Invoice invoice) {
         invoice.setCreateDate(LocalDate.now().toString());
         invoice.setCreateTime(LocalTime.now().toString());
         iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
-    }
-
-    @Override
-    public Page<Invoice> findAll(String keyword, Pageable pageable, String sort) {
-        return null;
     }
 
     @Override
@@ -71,6 +67,12 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     }
 
+
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: get invoice after create
+    */
     @Override
     public Invoice getNewInvoice() {
         return iInvoiceRepository.getNewInvoice();

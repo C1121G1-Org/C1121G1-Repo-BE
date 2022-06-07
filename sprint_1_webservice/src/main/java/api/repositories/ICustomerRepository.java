@@ -1,9 +1,9 @@
 package api.repositories;
 
 import api.dto.PurchaseHistoryDto;
+import api.dto.PurchaseProductDto;
 import api.dto.ReportCustomerDto;
 import api.models.Customer;
-import api.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,12 +14,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
-
 import java.util.Optional;
-
 import java.util.List;
-
-
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
@@ -66,15 +62,39 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "FROM customer " +
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
             "GROUP BY customer.id",
+            countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
+                    "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+                    "customer.email as email, customer.phone_number as phoneNumber, " +
+                    "count(invoice.id) as purchaseTimes " +
+                    "FROM customer " +
+                    "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+                    "GROUP BY customer.id",
             nativeQuery = true)
     Page<ReportCustomerDto> filterAll(Pageable pageable);
+
+    /*
+        Created by TuanNQ
+        Time: 22:50 02/06/2022
+        Function: Get info customer in customer report by customer_id
+    */
+    @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
+            "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+            "customer.email as email, customer.phone_number as phoneNumber, " +
+            "count(invoice.id) as purchaseTimes " +
+            "FROM customer " +
+            "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+            "WHERE customer.id = :id " +
+            "GROUP BY customer.id",
+            nativeQuery = true)
+    ReportCustomerDto getInfoCustomer(Long id);
 
     /*
         Created by TuanNQ
         Time: 18:15 31/05/2022
         Function: Show detail purchase history of customer
     */
-    @Query(value = "SELECT customer.customer_name as name, customer.date_of_birth as dateOfBirth, " +
+    @Query(value = "SELECT invoice.id as id, customer.customer_name as name, " +
+            "customer.date_of_birth as dateOfBirth, " +
             "customer.gender as gender, customer.email as email, " +
             "customer.phone_number as phoneNumber, invoice.total_money as totalMoney, " +
             "invoice.create_date as purchaseDate, " +
@@ -83,10 +103,44 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
             "INNER JOIN invoice_detail on invoice.id = invoice_detail.invoice_id " +
             "INNER JOIN product ON invoice_detail.product_id = product.id " +
-            "WHERE customer.id = :id " +
+            "WHERE customer.id = :id and " +
+            "(STR_TO_DATE(invoice.create_date, '%d-%m-%Y') " +
+            "BETWEEN STR_TO_DATE(:startDate, '%Y-%m-%d') AND STR_TO_DATE(:endDate, '%Y-%m-%d')) " +
             "GROUP BY invoice_detail.invoice_id",
+            countQuery = "SELECT invoice.id as id, customer.customer_name as name, " +
+                    "customer.date_of_birth as dateOfBirth, " +
+                    "customer.gender as gender, customer.email as email, " +
+                    "customer.phone_number as phoneNumber, invoice.total_money as totalMoney, " +
+                    "invoice.create_date as purchaseDate, " +
+                    "GROUP_CONCAT(DISTINCT product.name) as purchaseProducts " +
+                    "FROM customer " +
+                    "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+                    "INNER JOIN invoice_detail on invoice.id = invoice_detail.invoice_id " +
+                    "INNER JOIN product ON invoice_detail.product_id = product.id " +
+                    "WHERE customer.id = :id and " +
+                    "(STR_TO_DATE(invoice.create_date, '%d-%m-%Y') " +
+                    "BETWEEN STR_TO_DATE(:startDate, '%Y-%m-%d') AND STR_TO_DATE(:endDate, '%Y-%m-%d')) " +
+                    "GROUP BY invoice_detail.invoice_id",
             nativeQuery = true)
-    Page<PurchaseHistoryDto> detail(Long id, Pageable pageable);
+    Page<PurchaseHistoryDto> detail(Long id, String startDate, String endDate, Pageable pageable);
+
+    /*
+        Created by TuanNQ
+        Time: 11:00 02/06/2022
+        Function: Show all purchase products by ivoice.id
+    */
+    @Query(value = "SELECT invoice_detail.quantity as quantity, product.name as productName " +
+            "FROM product " +
+            "INNER JOIN invoice_detail on invoice_detail.product_id = product.id " +
+            "INNER JOIN invoice on invoice_detail.invoice_id = invoice.id " +
+            "WHERE invoice.id = :id",
+            countQuery = "SELECT invoice_detail.quantity as quantity, product.name as productName " +
+                    "FROM product " +
+                    "INNER JOIN invoice_detail on invoice_detail.product_id = product.id " +
+                    "INNER JOIN invoice on invoice_detail.invoice_id = invoice.id " +
+                    "WHERE invoice.id = :id",
+            nativeQuery = true)
+    Page<PurchaseProductDto> getPurchaseProducts(Long id, Pageable pageable);
 
     /*
        Created by TuanNQ
@@ -102,6 +156,15 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
             "WHERE gender = :gender " +
             "GROUP BY customer.id",
+            countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+                    "customer.email as email, customer.phone_number as phoneNumber, " +
+                    "count(invoice.id) as purchaseTimes " +
+                    "FROM customer " +
+                    "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+                    "WHERE gender = :gender " +
+                    "GROUP BY customer.id",
             nativeQuery = true)
     Page<ReportCustomerDto> filterByGender(Pageable pageable, Boolean gender);
 
@@ -119,14 +182,22 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
             "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
             "GROUP BY customer.id",
+            countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+                    "customer.email as email, customer.phone_number as phoneNumber, " +
+                    "count(invoice.id) as purchaseTimes " +
+                    "FROM customer " +
+                    "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+                    "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+                    "GROUP BY customer.id",
             nativeQuery = true)
     Page<ReportCustomerDto> filterByAge(Pageable pageable, Integer age);
 
-    /*
-        Created by TuanNQ
-        Time: 18:00 31/05/2022
-        Function: Show list of customer reports by age and gender
-    */
+//        Created by TuanNQ
+//        Time: 18:00 31/05/2022
+//        Function: Show list of customer reports by age and gender
+
     @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
             "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
             "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
@@ -134,22 +205,35 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "count(invoice.id) as purchaseTimes " +
             "FROM customer " +
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
-            "WHERE gender = :gender and (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+            "WHERE gender = :gender and (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) like concat('%', :age, '%') " +
+            "WHERE gender = :gender and " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
             "GROUP BY customer.id",
+            countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
+                    "customer.email as email, customer.phone_number as phoneNumber, " +
+                    "count(invoice.id) as purchaseTimes " +
+                    "FROM customer " +
+                    "INNER JOIN invoice ON customer.id = invoice.customer_id " +
+                    "WHERE gender = :gender and " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+                    "GROUP BY customer.id",
             nativeQuery = true)
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
 
     /*
      Created by TamT
      Time: 18:00 31/05/2022
      Function: get All customer and search
  */
-    @Query(value = "select * from customer where customer_name like concat('%', :name ,'%')" +
+    @Query(value = "select  id , address , customer_name , date_of_birth , email , gender , phone_number from customer where customer_name like concat('%', :name ,'%')" +
             " and phone_number like concat('%', :phone,'%')",
-            countQuery = "select * from customer where customer_name like concat('%', :name ,'%')" +
+            countQuery = "select  id , address , customer_name , date_of_birth , email , gender , phone_number from customer where customer_name like concat('%', :name ,'%')" +
                     "and phone_number like concat('%', :phone,'%')"
             , nativeQuery = true)
-    Page<Customer> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("phone") String keyWord2);
+            Page<Customer>pageFindAll(Pageable pageable, @Param("name")String keyWord1, @Param("phone")String keyWord2);
+
 
     /*
   Created by LongNHL
@@ -158,7 +242,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
   */
     @Transactional
     @Modifying
-    @Query(value = "insert into customer(customer_name, phone_number, date_of_birth, email, address, gender) " +
+    @Query(value = "insert into customer( customer_name, phone_number, date_of_birth, email, address, gender) " +
             "values (?1,?2,?3,?4,?5,?6);", nativeQuery = true)
     void saveCustomer(String customerName, String phoneNumber, String dateOfBirth, String email, String address, boolean gender);
 
@@ -178,4 +262,5 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "select product.*, storage.quantity from product inner join storage on product.id = storage.product_id", nativeQuery = true)
     <T> List<T> findProductUsingService(Class<T> classType);
+
 }

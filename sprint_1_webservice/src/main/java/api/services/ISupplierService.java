@@ -22,4 +22,5 @@ public interface ISupplierService {
     void save(Supplier supplier);
 
     Supplier findBySupplierName(String supplierName);
+
 }

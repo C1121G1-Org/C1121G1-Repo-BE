@@ -1,12 +1,14 @@
 package api.services;
 
+
+import api.dto.PurchaseHistoryDto;
+import api.dto.PurchaseProductDto;
+import api.dto.ReportCustomerDto;
 import api.models.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import api.dto.PurchaseHistoryDto;
 import api.dto.ReportCustomerDto;
-
-import java.util.Optional;
 
 import java.util.Optional;
 
@@ -47,6 +49,13 @@ Function: find customer object by id from database
 
     /*
         Created by TuanNQ
+        Time: 22:50 02/06/2022
+        Function: Get info customer in customer report by customer_id
+    */
+    ReportCustomerDto getInfoCustomer(Long id);
+
+    /*
+        Created by TuanNQ
         Time: 17:00 01/06/2022
         Function: Show list of customer reports by age
     */
@@ -57,14 +66,21 @@ Function: find customer object by id from database
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
 
     /*
         Created by TuanNQ
         Time: 18:15 31/05/2022
         Function: Show detail purchase history of customer
     */
-    Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable);
+    Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, String startDate, String endDate, Pageable pageable);
+
+    /*
+        Created by TuanNQ
+        Time: 11:00 02/06/2022
+        Function: Show all purchase products by ivoice.id
+    */
+    Page<PurchaseProductDto> getPurchaseProducts(Long id, Pageable pageable);
 
     /*
           Created by tamHT
@@ -72,6 +88,7 @@ Function: find customer object by id from database
           Function: get  all page customer and search of customer
       */
     Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2);
+
 
 
 

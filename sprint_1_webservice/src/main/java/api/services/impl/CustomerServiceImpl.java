@@ -1,9 +1,11 @@
 package api.services.impl;
 
+
 import api.models.Customer;
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import api.dto.PurchaseProductDto;
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
-
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
@@ -48,10 +48,17 @@ public class CustomerServiceImpl implements ICustomerService {
 
     /*
 <<<<<<< HEAD
+<<<<<<< HEAD
     Created by LongNHL
     Time: 21:30 31/05/2022
     Function: create customer
 =======
+=======
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create customer
+
+>>>>>>> 420924e132898405b15ad91cdb0f80d6afa6338a
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer
@@ -59,6 +66,16 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public Page<ReportCustomerDto> filterAll(Pageable pageable) {
         return iCustomerRepository.filterAll(pageable);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 22:50 02/06/2022
+        Function: Get info customer in customer report by customer_id
+    */
+    @Override
+    public ReportCustomerDto getInfoCustomer(Long id) {
+        return iCustomerRepository.getInfoCustomer(id);
     }
 
     /*
@@ -87,7 +104,7 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show list of customer reports by age and gender
     */
     @Override
-    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age) {
+    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age) {
         return iCustomerRepository.filterByGenderAndAge(pageable, gender, age);
     }
 
@@ -97,8 +114,18 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show detail purchase history of customer
     */
     @Override
-    public Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, Pageable pageable) {
-        return iCustomerRepository.detail(id, pageable);
+    public Page<PurchaseHistoryDto> detailPurchaseHistory(Long id, String startDate, String endDate, Pageable pageable) {
+        return iCustomerRepository.detail(id, startDate, endDate, pageable);
+    }
+
+    /*
+        Created by TuanNQ
+        Time: 11:00 02/06/2022
+        Function: Show all purchase products by ivoice.id
+    */
+    @Override
+    public Page<PurchaseProductDto> getPurchaseProducts(Long id, Pageable pageable) {
+        return iCustomerRepository.getPurchaseProducts(id, pageable);
     }
 
     /*
@@ -110,7 +137,6 @@ public class CustomerServiceImpl implements ICustomerService {
     public Page<Customer> findAllCustomer(Pageable pageable, String key1, String key2) {
         return iCustomerRepository.pageFindAll(pageable, key1, key2);
     }
-
 
 
     /*
@@ -132,8 +158,5 @@ public class CustomerServiceImpl implements ICustomerService {
     public Customer getNewCustomer() {
         return iCustomerRepository.getNewCreateCustomer();
     }
-
-
-
 
 }
