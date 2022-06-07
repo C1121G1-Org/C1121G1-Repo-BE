@@ -49,7 +49,7 @@ public class ProductServiceImpl implements IProductService {
     */
     @Override
     public void save(Product product) {
-        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie());
+        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie(),product.getCategory().getId());
     }
 
     /*

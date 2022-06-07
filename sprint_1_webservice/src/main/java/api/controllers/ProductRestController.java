@@ -2,9 +2,11 @@ package api.controllers;
 
 import api.dto.IProductDto;
 import api.dto.ProductDto;
+import api.models.Category;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
+import api.services.ICategoryService;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -24,7 +26,6 @@ import javax.validation.Valid;
 
 
 import java.util.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class ProductRestController {
 
     @Autowired
     IProductService iProductService;
+    @Autowired
+    ICategoryService iCategoryService;
 
     /*
       Created by HauPV
@@ -83,7 +86,6 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto, bindingResult);
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -96,10 +98,14 @@ public class ProductRestController {
         Product product = new Product();
 
         BeanUtils.copyProperties(productDto, product);
+        Category category = new Category();
+        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        product.setCategory(category);
         product.setPrice(price);
         product.setDeleteFlag(false);
 
         this.iProductService.save(product);
+
 
      /*
         Created by HauPV
@@ -125,7 +131,7 @@ public class ProductRestController {
         if (product.isPresent()) {
             return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     /*
@@ -134,9 +140,22 @@ public class ProductRestController {
      Function: edit product
  */
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto
-            productDto, BindingResult bindingResult) {
+    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+
         Map<String, String> errorMap = new HashMap<>();
+        if (!this.iProductService.findById(id).isPresent()) {
+            return new ResponseEntity<>(new ResponseObject(false, "Id ís not exist!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
+        }
+        productDto.setIProductService(iProductService);
+
+        String inputtedProductName = productDto.getName();
+        Optional<Product> currentProduct = this.iProductService.findById(id);
+
+
+        if (!currentProduct.get().getName().equalsIgnoreCase(inputtedProductName)) {
+            productDto.validate(productDto, bindingResult);
+        }
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -149,6 +168,11 @@ public class ProductRestController {
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
+
+        Category category = new Category();
+        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        product.setCategory(category);
+
 
     /*
         Created by HauPV
@@ -189,5 +213,4 @@ public class ProductRestController {
         List<Product> productTest = iProductService.findAllTest();
         return new ResponseEntity<>(productTest, HttpStatus.OK);
     }
-
 }
