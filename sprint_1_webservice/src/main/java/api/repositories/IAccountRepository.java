@@ -21,21 +21,29 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
             " VALUES (:#{#account.email},:#{#account.encryptPassword},:#{#account.isEnabled},:#{#account.userName},:#{#account.verificationCode}); ", nativeQuery = true)
     void createAccount(Account account);
 
-    /*
-    Created by Khoa PTD
-    Time: 09:00 02/06/2022
-    Function: setRoleId
-    */
-    @Query(value = "SELECT * FROM account WHERE account.user_name = :userName", countQuery = "SELECT * FROM account WHERE account.user_name = :userName", nativeQuery = true)
-    Account findByUserName(@Param("userName") String userName);
 
     /*
     Created by Khoa PTD
     Time: 09:00 02/06/2022
     Function: setRoleId
     */
-    @Query(value = "SELECT * FROM account WHERE  account.email = :email", nativeQuery = true)
-    Account findByEmail(@Param("email") String email);
+
+
+    @Query(value = "SELECT * FROM `sprint-1-db`.`account` WHERE `account`.user_name = :userName",countQuery = "SELECT * FROM account WHERE account.user_name = :userName",nativeQuery = true)
+    Account findByUserName(@Param("userName") String userName);
+    /*
+    Created by Khoa PTD
+    Time: 09:00 02/06/2022
+    Function: setRoleId
+    */
+
+
+
+
+    @Query(value = "SELECT * FROM `sprint-1-db`.`account` WHERE  `account`.email = :email", nativeQuery = true)
+    Account findByEmail(@Param("email")String email);
+
+
 
 
 }
