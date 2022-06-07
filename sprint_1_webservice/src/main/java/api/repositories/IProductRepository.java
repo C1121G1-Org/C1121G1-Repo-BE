@@ -40,11 +40,19 @@ Function: Query Create product
     @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
     Optional<Product> findById(@Param("id") Long id);
 
-    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image, " +
-            "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
-            "FROM product " +
-            "WHERE product.id = :id", nativeQuery = true)
-   Optional<Product>findByProductById(@Param("id") Long id);
+
+//    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image, " +
+//            "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
+//            "FROM product " +
+//            "WHERE product.id = :id", nativeQuery = true)
+//    Optional<Product> findByProductById(@Param("id") Long id);
+
+
+//    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image, " +
+//            "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
+//            "FROM product " +
+//            "WHERE product.id = :id", nativeQuery = true)
+//   Optional<Product>findByProductById(@Param("id") Long id);
 
     /*
     Created by TuanPA
