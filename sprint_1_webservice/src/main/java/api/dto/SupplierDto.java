@@ -10,6 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import api.services.ISupplierService;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -30,7 +31,8 @@ public class SupplierDto implements Validator {
     private String phone;
 
     @NotBlank(message = "Email can not empty")
-    @Pattern(regexp = "^$|[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)", message = "Please enter the correct format")
+    @Email(message = "Please enter the correct format")
+//    @Pattern(regexp = "^$|[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)", message = "Please enter the correct format")
     private String email;
 
     private boolean deleteFlag;
@@ -38,7 +40,58 @@ public class SupplierDto implements Validator {
     private ISupplierService isupplierService;
 
     public SupplierDto() {
-        setDeleteFlag(true);
+         setDeleteFlag(false);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+
+
+    public boolean isDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
     public ISupplierService getIsupplierService() {
@@ -61,8 +114,27 @@ public class SupplierDto implements Validator {
         Supplier supplier = this.isupplierService.findBySupplierName(supplierName);
         if (supplier != null) {
             if (supplier.getSupplierName().equals(supplierName)) {
-                errors.rejectValue("supplierName", "", "Name is already existed");
+                errors.rejectValue("supplierName", "", "Tên nhà cung cấp đã tồn tại!");
             }
         }
+        String email = supplierDto.getEmail();
+        Supplier supplier1 = this.isupplierService.findByEmail(email);
+        if(supplier1 != null) {
+            if(supplier1.getEmail().equals(email)){
+                errors.rejectValue("email", "", "Email không được trùng!");
+            }
+        }
+
     }
+
+//    public void validateEmail(Object target, Errors errors) {
+//        SupplierDto supplierDto = (SupplierDto) target;
+//        String email = supplierDto.getEmail();
+//        Supplier supplier1 = this.isupplierService.findByEmail(email);
+//        if(supplier1 != null) {
+//            if(supplier1.getEmail().equals(email)){
+//                errors.rejectValue("email", "", "Email không được trùng!");
+//            }
+//        }
+//    }
 }

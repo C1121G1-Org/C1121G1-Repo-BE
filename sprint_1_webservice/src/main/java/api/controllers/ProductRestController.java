@@ -59,7 +59,7 @@ public class ProductRestController {
       */
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 2) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 10) Pageable pageable, @RequestParam Optional<String> keyName,
                                                             @RequestParam Optional<String> keyPrice,
                                                             @RequestParam Optional<String> keyQuantity) {
         String keyNameValue = keyName.orElse("");
@@ -87,7 +87,6 @@ public class ProductRestController {
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto, bindingResult);
 
-//        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -173,10 +172,6 @@ public class ProductRestController {
      Time: 14:15 1/06/2022
      Function: delete product
  */
-//    @PatchMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-//    public void deleteProduct(Long id) {
-//         this.iProductService.deleteFlag(id);
-//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
