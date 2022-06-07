@@ -127,14 +127,4 @@ public class SupplierDto implements Validator {
 
     }
 
-//    public void validateEmail(Object target, Errors errors) {
-//        SupplierDto supplierDto = (SupplierDto) target;
-//        String email = supplierDto.getEmail();
-//        Supplier supplier1 = this.isupplierService.findByEmail(email);
-//        if(supplier1 != null) {
-//            if(supplier1.getEmail().equals(email)){
-//                errors.rejectValue("email", "", "Email không được trùng!");
-//            }
-//        }
-//    }
 }
