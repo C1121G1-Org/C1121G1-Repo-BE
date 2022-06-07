@@ -1,9 +1,14 @@
 package api.controllers;
 
+import api.dto.IProductDto;
 import api.dto.ProductDto;
 import api.models.Product;
+import api.models.ProductQRCode;
 import api.models.ResponseObject;
+import api.repositories.ISaleReportRepository;
 import api.services.IProductService;
+import api.services.ISaleReportService;
+import api.utils.QRCodeUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,44 +16,38 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-
-import java.util.Optional;
-
 
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+
+
+import java.util.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
 
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
     @Autowired
     IProductService iProductService;
 
+    /*
+      Created by HauPV
+      Time: 20:20 04/06/2022
+      Function: QRCode Create with new Product
+    */
+    @Autowired
+    ISaleReportService iSaleReportService;
 
-//    @GetMapping(value = "/list")
-//    public ResponseEntity<Page<Product>>findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-//                                                       @RequestParam Optional<String> keyPhone) {
-//    /*
-//        Created by khoaVC
-//        Time: 21:54 31/05/2022
-//        Function: list all Products from DB
-//    */
-
-//    @GetMapping(value = "/list")
-//    public List<Product> listProduct() {
-//        return iProductService.getAllProduct();
-//    }
 
     /*
           Created by tamHT and hieuMMT
@@ -59,25 +58,19 @@ public class ProductRestController {
           Function: get  all page product and search of product
       */
 
-        @GetMapping(value = "/listProduct")
-        public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                @RequestParam Optional<String> keyPhone ,
-                @RequestParam Optional<String> keyQuality) {
-            String keyNameValue = keyName.orElse("");
-            String keyPhoneValue = keyPhone.orElse("");
-            String keyQualityValue = keyQuality.orElse("");
+    @GetMapping(value = "/list")
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 10) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyPrice,
+                                                            @RequestParam Optional<String> keyQuantity) {
+        String keyNameValue = keyName.orElse("");
+        String keyQuantityValue = keyQuantity.orElse("0");
+        String keyPriceValue = keyPrice.orElse("0");
 
-            Page<Product> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPhoneValue ,keyQualityValue);
-            if (productPage.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(productPage, HttpStatus.OK);
-
+        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
+        if (productPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-    @PatchMapping(value = "/update")
-    public String updateProduct() {
-        return null;
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
     /*
@@ -85,11 +78,15 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: create new product
  */
+
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
                                                         BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
-//        productDto.validate(productDto,bindingResult);
+        ProductDto productDtoErrors = new ProductDto();
+        productDtoErrors.setIProductService(iProductService);
+        productDtoErrors.validate(productDto, bindingResult);
+
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -108,6 +105,16 @@ public class ProductRestController {
 
         this.iProductService.save(product);
 
+     /*
+        Created by HauPV
+        Time: 20:20 04/06/2022
+        Function: Create QRCode on local storage => D:/qrcode
+    */
+        Product latestProduct = this.iSaleReportService.getLatestProduct();
+        ProductQRCode productQRCode = new ProductQRCode();
+        BeanUtils.copyProperties(latestProduct, productQRCode);
+        QRCodeUtils.encode(productQRCode);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -118,14 +125,12 @@ public class ProductRestController {
  */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
-
-        Product product = this.iProductService.findById(id);
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<Product> product = this.iProductService.findById(id);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 
     /*
      Created by tuanPA
@@ -133,10 +138,9 @@ public class ProductRestController {
      Function: edit product
  */
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+    public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto
+            productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
-//        productDto.validate(productDto,bindingResult);
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -145,11 +149,19 @@ public class ProductRestController {
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
         }
 
-
         Product product = new Product();
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
+
+    /*
+        Created by HauPV
+        Time: 20:20 04/06/2022
+        Function: Update QRCode base on Edited Product on local storage => D:/qrcode
+    */
+        ProductQRCode productQRCode = new ProductQRCode();
+        BeanUtils.copyProperties(product,productQRCode);
+        QRCodeUtils.encode(productQRCode);
 
         this.iProductService.updateProduct(product);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -160,14 +172,28 @@ public class ProductRestController {
      Time: 14:15 1/06/2022
      Function: delete product
  */
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        Product product = iProductService.findById(id);
+
+        Optional<Product> product = iProductService.findById(id);
+
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         iProductService.deleteFlag(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    /*
+         Created by LongNHL
+         Time: 15:00 2/06/2022
+         Function: use test create invoiec
+     */
+    @GetMapping(value = {"/listTest"})
+    public ResponseEntity<List<Product>> showListCustomer() {
+        List<Product> productTest = iProductService.findAllTest();
+        return new ResponseEntity<>(productTest, HttpStatus.OK);
     }
 
 }

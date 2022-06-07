@@ -36,6 +36,7 @@ public class Account {
     private String verificationCode;
 
     @OneToOne(mappedBy = "account")
+    @JsonBackReference
     private Employee employee;
 
     @OneToMany(mappedBy = "account")

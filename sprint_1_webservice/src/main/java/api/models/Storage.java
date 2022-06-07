@@ -27,7 +27,7 @@ public class Storage {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity", nullable = false, columnDefinition = "BIGINT default 0")
     private Long quantity;
 
     @ManyToOne

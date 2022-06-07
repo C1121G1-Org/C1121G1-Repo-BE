@@ -1,4 +1,5 @@
 package api.services.impl;
+import api.dto.IProductDto;
 import api.models.Product;
 import api.repositories.IProductRepository;
 import api.services.IProductService;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -36,8 +38,8 @@ public class ProductServiceImpl implements IProductService {
             Function: search Products
         */
     @Override
-    public Page<Product> findAllProduct(Pageable pageable, String key1, String key2 , String key3) {
-        return iProductRepository.pageFindAll(pageable,key1, key2 , key3);
+    public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3) {
+        return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3);
     }
 
     /*
@@ -56,7 +58,7 @@ public class ProductServiceImpl implements IProductService {
      Function: findById
  */
     @Override
-    public Product findById(Long id) {
+    public Optional<Product> findById(Long id) {
         return iProductRepository.findByProductById(id);
     }
 
@@ -69,6 +71,19 @@ public class ProductServiceImpl implements IProductService {
     public void updateProduct(Product product) {
         this.iProductRepository.updateProduct(product);
     }
+
+
+    /*
+    Created by tuanPA
+    Time: 18:15 2/06/2022
+    Function: updateProduct
+*/
+    @Override
+    public Product findProductByName(String name) {
+        return this.iProductRepository.findProductByName(name);
+    }
+
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
@@ -79,5 +94,13 @@ public class ProductServiceImpl implements IProductService {
         this.iProductRepository.deleteFlag(id);
     }
 
-
+    /*
+      Created by LongNHL
+     Time: 15:00 2/06/2022
+     Function: use test create invoice
+      */
+    @Override
+    public List<Product> findAllTest() {
+        return iProductRepository.findAll();
+    }
 }
