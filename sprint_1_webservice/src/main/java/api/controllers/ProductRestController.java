@@ -62,18 +62,6 @@ public class ProductRestController {
 
 
     /*
-<<<<<<< HEAD
-          Created by tamHT and hieuMMT
-<<<<<<< HEAD
-=======
->>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
->>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
-=======
->>>>>>> 70e7e596057a3997c8ee0de59be352a38b674093
-
-    /*
-=======
->>>>>>> 0cfab175adc0b788c3c20b43da5a74a2d13ae9e9
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product

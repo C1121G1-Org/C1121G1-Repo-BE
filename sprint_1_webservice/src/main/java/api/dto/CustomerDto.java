@@ -11,17 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
     /*
-<<<<<<< HEAD
-
      Created by LongNHL Hoang
-
-=======
-<<<<<<< HEAD
-     Created by LongNHL
-=======
-     Created by LongNHL Hoang
->>>>>>> 420924e132898405b15ad91cdb0f80d6afa6338a
->>>>>>> 70e7e596057a3997c8ee0de59be352a38b674093
      Time: 9:30 1/06/2022
      Function: create CustomerDto
      */
