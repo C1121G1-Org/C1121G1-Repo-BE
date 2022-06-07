@@ -56,10 +56,6 @@ public class InvoiceDetailRestController {
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
                                                               BindingResult bindingResult) {
-<<<<<<< HEAD
-=======
-        System.out.println(invoiceDetailDto);
->>>>>>> manager-product
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors()
@@ -94,7 +90,6 @@ public class InvoiceDetailRestController {
          Function: update quantity product
          */
     @PatchMapping("/updateQuantityProduct")
-<<<<<<< HEAD
     public ResponseEntity<String> updateQuantityProduct(@RequestBody InvoiceDetailDto invoiceDetailDto) {
         String messageError = "";
         if (invoiceDetailDto.getProducts().isEmpty()) {
@@ -113,36 +108,6 @@ public class InvoiceDetailRestController {
         }
         messageError = "Bạn chưa chọn sản phẩm";
         return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
-=======
-    public ResponseEntity<ResponseObject> updateQuantityProduct(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,BindingResult bindingResult) {
-        String errorQuantity = "";
-        Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors()
-                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
-            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
-                    HttpStatus.BAD_REQUEST);
-        }
-        if (!invoiceDetailDto.getProducts().isEmpty()) {
-            for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
-                Storage storage = iStorageService.getStorageByIdProduct(productDto.getId());
-                if (productDto.getQuantity() > storage.getQuantity()) {
-                    errorQuantity = "Số lượng sản phẩm "+ storage.getProduct().getName() +" trong kho còn: " + storage.getQuantity();
-                    errorMap.put("quantity",errorQuantity);
-                    return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
-                            HttpStatus.BAD_REQUEST);
-                } else {
-                    storage.setQuantity(storage.getQuantity() - productDto.getQuantity());
-                    iStorageService.updateQuantityProduct(storage);
-                }
-            }
-            return new ResponseEntity<>( HttpStatus.OK);
-        }
-        errorQuantity = "Bạn chưa chọn sản phẩm";
-        errorMap.put("productList",errorQuantity);
-        return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
-                HttpStatus.BAD_REQUEST);
->>>>>>> manager-product
     }
 
 }

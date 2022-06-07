@@ -7,11 +7,8 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-<<<<<<< HEAD
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-=======
->>>>>>> manager-product
 
 /*
  Created by LongNHL

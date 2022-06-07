@@ -147,65 +147,6 @@ public class CustomerRestController {
 
     /*
         Created by TuanNQ
-        Time: 22:50 02/06/2022
-        Function: Get info customer in customer report by customer_id
-    */
-    @GetMapping(value = "/info-customer/{id}")
-    public ResponseEntity<ReportCustomerDto> getInfoCustomer(
-            @PathVariable Long id) {
-
-        ReportCustomerDto reportCustomerDto = iCustomerService.getInfoCustomer(id);
-
-        if (reportCustomerDto == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
-        return new ResponseEntity<>(reportCustomerDto, HttpStatus.OK);
-    }
-
-    /*
-        Created by TuanNQ
-        Time: 17:00 01/06/2022
-        Function: Show list of customer reports by gender
-    */
-    @GetMapping(value = "/report-customer-search-gender")
-    public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchGender(
-            @PageableDefault Pageable pageable, @RequestParam Boolean gender) {
-
-        Page<ReportCustomerDto> reportCustomerDtoPage =
-                iCustomerService.filterByGender(pageable, gender);
-
-        if (reportCustomerDtoPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
-        return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
-    }
-
-    /*
-        Created by TuanNQ
-        Time: 17:00 01/06/2022
-        Function: Show list of customer reports by age
-    */
-    @GetMapping(value = "/report-customer-search-age")
-    public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchAge(
-            @PageableDefault Pageable pageable, @RequestParam Integer age) {
-
-        Page<ReportCustomerDto> reportCustomerDtoPage =
-                iCustomerService.filterByAge(pageable, age);
-
-        if (reportCustomerDtoPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
-        return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
-    }
-
-    /*
-        Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */

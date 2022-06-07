@@ -5,7 +5,6 @@ import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
-import api.repositories.ISaleReportRepository;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +25,6 @@ import javax.validation.Valid;
 
 import java.util.*;
 
-=======
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
-import java.util.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.BindingResult;
-import javax.validation.Valid;
->>>>>>> manager-product
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,45 +46,19 @@ public class ProductRestController {
     */
     @Autowired
     ISaleReportService iSaleReportService;
-<<<<<<< HEAD
-=======
-
->>>>>>> manager-product
-
 
 
     /*
-<<<<<<< HEAD
-<<<<<<< HEAD
           Created by tamHT and hieuMMT
-<<<<<<< HEAD
-
-    /*
-=======
-<<<<<<< HEAD
-=======
->>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
->>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
-=======
->>>>>>> 70e7e596057a3997c8ee0de59be352a38b674093
-
-    /*
-=======
->>>>>>> 0cfab175adc0b788c3c20b43da5a74a2d13ae9e9
->>>>>>> manager-product
-=======
->>>>>>> 536a668439894a3bc5c179a4dbd01a8c13b6966e
-          Created by tamHT
           Time: 18:15 31/05/2022
-          Function: get  all page product and search of product
+          Function: get all page product and search of product
+          Role : Admin, bussines staff, seller
       */
-<<<<<<< HEAD
-=======
+
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 10) Pageable pageable, @RequestParam Optional<String> keyName,
                                                             @RequestParam Optional<String> keyPrice,
                                                             @RequestParam Optional<String> keyQuantity) {
-
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -106,34 +69,6 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
-
->>>>>>> manager-product
-
-    @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 5) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyPrice,
-                                                            @RequestParam Optional<String> keyQuantity) {
-        String keyNameValue = keyName.orElse("");
-        String keyQuantityValue = keyQuantity.orElse("0");
-        String keyPriceValue = keyPrice.orElse("0");
-
-<<<<<<< HEAD
-        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
-        if (productPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(productPage, HttpStatus.OK);
-    }
-=======
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
-
-
-
-
->>>>>>> manager-product
 
     /*
      Created by tuanPA
@@ -148,10 +83,6 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto, bindingResult);
-<<<<<<< HEAD
-=======
-//        productDto.validate(productDto,bindingResult);
->>>>>>> manager-product
 
         if (bindingResult.hasFieldErrors()) {
             bindingResult
@@ -188,12 +119,7 @@ public class ProductRestController {
      Time: 18:15 31/05/2022
      Function: findById
  */
-
     @GetMapping(value = "/{id}")
-<<<<<<< HEAD
-=======
-
->>>>>>> manager-product
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
         if (product.isPresent()) {
@@ -211,13 +137,6 @@ public class ProductRestController {
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto
             productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
-<<<<<<< HEAD
-=======
-
-//        productDto.validate(productDto,bindingResult);
-
-
->>>>>>> manager-product
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -237,11 +156,7 @@ public class ProductRestController {
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
         ProductQRCode productQRCode = new ProductQRCode();
-<<<<<<< HEAD
         BeanUtils.copyProperties(product,productQRCode);
-=======
-        BeanUtils.copyProperties(product, productQRCode);
->>>>>>> manager-product
         QRCodeUtils.encode(productQRCode);
 
         this.iProductService.updateProduct(product);
@@ -252,32 +167,18 @@ public class ProductRestController {
      Created by hieuMMT
      Time: 14:15 1/06/2022
      Function: delete product
+     Role : Admin, bussines staff, seller
  */
-<<<<<<< HEAD
 
-    @DeleteMapping ("/delete/{id}")
-    public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-        Product product = iProductService.findProductId(id);
-=======
-//    @PatchMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-//    public void deleteProduct(Long id) {
-//         this.iProductService.deleteFlag(id);
-//    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-
-        Optional<Product> product = iProductService.findById(id);
-//        Product product = iProductService.findById(id);
->>>>>>> manager-product
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProductById(Optional<Product> product) {
+        if (product.isPresent()) {
+            iProductService.deleteFlag(product.get().getId());
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        iProductService.deleteFlag(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-<<<<<<< HEAD
     /*
          Created by LongNHL
          Time: 15:00 2/06/2022
@@ -288,7 +189,5 @@ public class ProductRestController {
         List<Product> productTest = iProductService.findAllTest();
         return new ResponseEntity<>(productTest, HttpStatus.OK);
     }
-=======
->>>>>>> manager-product
 
 }

@@ -17,24 +17,10 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerRepository iCustomerRepository;
 
     /*
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-    Created by LongNHL
-    Time: 21:30 31/05/2022
-    Function: create customer
-=======
-=======
->>>>>>> manager-product
     Created by LongNHL
     Time: 21:30 31/05/2022
     Function: create customer
 
-<<<<<<< HEAD
-=======
->>>>>>> 420924e132898405b15ad91cdb0f80d6afa6338a
->>>>>>> manager-product
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer

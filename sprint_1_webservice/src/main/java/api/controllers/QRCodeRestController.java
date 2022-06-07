@@ -19,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 /*
     Created by HauPV
@@ -45,8 +44,7 @@ public class QRCodeRestController {
         if (productQRCode.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Optional<Product> product = iProductService.findById(productQRCode.getId());
-        if (product.isPresent() && product.get() == null) {
+        if (iProductService.findById(productQRCode.getId()) == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         String filePath = QRCodeUtils.encode(productQRCode);
