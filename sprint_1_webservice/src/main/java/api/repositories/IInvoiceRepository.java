@@ -13,6 +13,10 @@ import javax.transaction.Transactional;
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> manager-product
         /*
         Created by CongNv
         Time: 21:30 31/05/2022
@@ -37,6 +41,10 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 ////            "case when :sorts = 'sortProductAsc' then product_id end desc ," +
 ////            "case when :sorts = 'sortTotalMoneyAsc' then total_money end desc"
 //
+<<<<<<< HEAD
+=======
+//    Page<Invoice> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable ,String sort);
+>>>>>>> manager-product
 
     @Query(value = "SELECT invoice.id,create_date,create_time,name,total_money " +
             "FROM  invoice " +
@@ -48,7 +56,11 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "or  total_money like concat('%',:keyword,'%') " +
             "or  customer_id like concat('%',:keyword,'%') " +
             "or  product_id like concat('%',:keyword,'%') ",
+<<<<<<< HEAD
              nativeQuery = true)
+=======
+            nativeQuery = true)
+>>>>>>> manager-product
 //            "order by " +
 //            "case when :sorts = 'sortDateAsc' then create_date end desc ," +
 //            "case when :sorts = 'sortCustomerAsc' then customer_id end desc ," +
@@ -96,4 +108,5 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
 //                    "case when :sorts ='sortPriceAsc'then price end asc ," +
 //                    "case when :sorts ='sortPriceDesc' then price end desc ", nativeQuery = true)
 }
+
 

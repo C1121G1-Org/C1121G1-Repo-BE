@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+<<<<<<< HEAD
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -14,6 +15,13 @@ import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+=======
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+>>>>>>> manager-product
 
 @Getter
 @Setter
@@ -50,6 +58,11 @@ public class ProductDto implements Validator {
     private String memory;
     private String otherDescription;
     private IProductService iProductService;
+<<<<<<< HEAD
+=======
+//    private boolean deleteFlag;
+
+>>>>>>> manager-product
 
 
     @Override
@@ -60,14 +73,25 @@ public class ProductDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ProductDto productDto = (ProductDto) target;
+<<<<<<< HEAD
+=======
+
+>>>>>>> manager-product
         String inputtedProductName = productDto.getName();
         Product product = this.iProductService.findProductByName(productDto.getName());
         if (product != null) {
             if (product.getName().equals(inputtedProductName)) {
+<<<<<<< HEAD
                 errors.rejectValue("name", "", "this product already existed in database");
             }
         }
     }
 
+=======
+                errors.rejectValue("name", "", "Tên sản phẩm đã tồn tại");
+            }
+        }
+    }
+>>>>>>> manager-product
 }
 

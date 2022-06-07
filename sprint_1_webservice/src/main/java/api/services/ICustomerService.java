@@ -87,6 +87,10 @@ public interface ICustomerService {
        Function: get customer
        */
     Customer getNewCustomer();
+<<<<<<< HEAD
+=======
+
+>>>>>>> manager-product
 
 
 }

@@ -2,7 +2,19 @@ package api.models;
 
 import lombok.Getter;
 import lombok.Setter;
+<<<<<<< HEAD
+=======
+
+>>>>>>> manager-product
 import java.util.Objects;
+/*
+    Created by HauPV
+    Time: 10:00 02/06/2022
+    Function: display QR Code information
+*/
+
+
+
 /*
     Created by HauPV
     Time: 10:00 02/06/2022
