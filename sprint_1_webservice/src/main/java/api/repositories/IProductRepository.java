@@ -39,6 +39,8 @@ Function: Query Create product
     Optional<Product> findById(@Param("id") Long id);
 
 
+
+
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
@@ -90,6 +92,7 @@ Function: Query Create product
 
 
 
+
 /*     Created by hieuMMT
      Time: 14:15 1/06/2022
      Function: delete product
@@ -97,6 +100,8 @@ Function: Query Create product
 
     @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
+
+
 
 
 

@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
@@ -61,17 +61,8 @@ public class ProductRestController {
 //        return iProductService.getAllProduct();
 //    }
 
-    /*
-<<<<<<< HEAD
-          Created by tamHT and hieuMMT
-<<<<<<< HEAD
-=======
->>>>>>> f1c93deb94322896c6f0a7413dba6a9c11bec107
->>>>>>> eae306551dcd0a1721df875f610f33e8c48c5190
 
     /*
-=======
->>>>>>> 0cfab175adc0b788c3c20b43da5a74a2d13ae9e9
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
@@ -81,6 +72,7 @@ public class ProductRestController {
                                                             @RequestParam Optional<String> keyQuantity,
                                                             @RequestParam Optional<String> keyPrice
     ) {
+
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -124,12 +116,6 @@ public class ProductRestController {
 
 
         productDtoErrors.validate(productDto, bindingResult);
-
-
-
-
-        productDtoErrors.validate(productDto,bindingResult);
-
 
 //        productDto.validate(productDto,bindingResult);
 

@@ -23,14 +23,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceDetailDto {
-        private Long id;
-        @Valid
-        private Double totalMoney;
-        @NotBlank(message = "Vui lòng nhập loại thanh toán")
-        private String payments;
-        @Valid
-        private CustomerDto customerDto;
-        @NotNull(message = "Vui lòng chọn sản phẩm muốn mua")
-        @Valid
-        private List<ProductInvoiceDto> products;
+    private Long id;
+    @Valid
+    private InvoiceDto invoiceDto;
+    @NotNull(message = "Vui lòng chọn sản phẩm muốn mua")
+    private List<ProductInvoiceDto> productInvoiceDtoList;
+    private Double totalMoney;
+    @NotBlank(message = "Vui lòng nhập loại thanh toán")
+    private String payments;
+    @Valid
+    private CustomerDto customerDto;
+    @NotNull(message = "Vui lòng chọn sản phẩm muốn mua")
+    private List<ProductInvoiceDto> products;
 }
