@@ -23,11 +23,13 @@ import java.util.*;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/employee")
 public class EmployeeRestController {
+
+//    @Autowired
+//    private PasswordEncoder encoder;
 
     @Autowired
     IEmployeeService iEmployeeService;
@@ -93,40 +95,41 @@ public class EmployeeRestController {
     public ResponseEntity<ResponseObject> createEmployee(@Valid @RequestBody EmployeeDto employeeDto,
                                                          BindingResult bindingResult) {
 
+        Map<String, String> errorMap = bindingResult.getFieldErrors()
+                .stream().collect(Collectors.toMap(
+                        e -> e.getField(), e -> e.getDefaultMessage()));
+
         employeeDto.setIEmployeeService(iEmployeeService);
         employeeDto.validate(employeeDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = bindingResult.getFieldErrors()
+         errorMap = bindingResult.getFieldErrors()
                     .stream().collect(Collectors.toMap(
                             e -> e.getField(), e -> e.getDefaultMessage()));
-            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        String checkIdCard = employeeDto.getIdCard();
+       Employee employee = this.iEmployeeService.findByIdCard(employeeDto.getIdCard());
+        if (employee != null && employee.getIdCard().equals(checkIdCard)) {
+            errorMap.put("idCard","số chứng minh  tồn tại ! ");
         }
         String checkEmail = employeeDto.getAccountDto().getEmail();
         Account account1 = this.iAccountService.findByEmail(employeeDto.getAccountDto().getEmail());
         if (account1 != null && account1.getEmail().equals(checkEmail)) {
-            Map<String, String> errorMap = bindingResult.getFieldErrors()
-                    .stream().collect(Collectors.toMap(
-                            e -> e.getField(), e -> e.getDefaultMessage()));
             errorMap.put("email", " email tồn tại ! ");
-            return new ResponseEntity<>(new ResponseObject(false, "Failed", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+         }
 
         String checkUserName = employeeDto.getAccountDto().getUserName();
         Account account = this.iAccountService.findByUserName(employeeDto.getAccountDto().getUserName());
         if (account != null && account.getUserName().equals(checkUserName)) {
-            Map<String, String> errorMap = bindingResult.getFieldErrors()
-                    .stream().collect(Collectors.toMap(
-                            e -> e.getField(), e -> e.getDefaultMessage()));
             errorMap.put("userName", "tên đăng nhập tồn tại ! ");
             return new ResponseEntity<>(new ResponseObject(false, "Failed", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } else {
             account = new Account();
-            Employee employee = new Employee();
-
+             employee = new Employee();
+//            String password = encoder.encode(employeeDto.getAccountDto().getEncryptPassword());
+//            employeeDto.getAccountDto().setEncryptPassword(password);
             AccountRole accountRole = new AccountRole();
-
             Position position = new Position();
             BeanUtils.copyProperties(employeeDto, employee);
             BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
@@ -200,25 +203,16 @@ public class EmployeeRestController {
 
             Employee employee = new Employee();
             Account account = new Account();
-
-
             Position position = new Position();
             employeeDto.setId(Long.valueOf(id));
             BeanUtils.copyProperties(employeeDto, employee);
             BeanUtils.copyProperties(employeeDto.getAccountDto(), account);
             BeanUtils.copyProperties(employeeDto.getPositionDto(), position);
-
             account.setIsEnabled(true);
-
             AccountRole accountRole = iAccountRoleService.findByIdAccount(account.getId());
-            System.out.println("id position" + position.getId());
             iAccountRoleService.setRoleId(accountRole.getId(), position.getId());
-
-
             employee.setPosition(position);
             employee.setAccount(account);
-            System.out.println(employee.getId());
-
             this.iEmployeeService.update(employee, account);
 
             return new ResponseEntity<>(HttpStatus.OK);

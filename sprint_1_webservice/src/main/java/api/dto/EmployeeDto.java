@@ -1,20 +1,16 @@
 package api.dto;
 
-//import api.services.IAccountService;
-import api.models.Account;
-import api.models.Employee;
+
 import api.services.IAccountService;
 import api.services.IEmployeeService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -47,6 +43,7 @@ public class EmployeeDto implements Validator {
     private PositionDto positionDto;
     @Valid
     private AccountDto accountDto;
+
     private IAccountService iAccountService;
 
     @Valid
@@ -59,12 +56,6 @@ public class EmployeeDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-//        EmployeeDto employeeDto = (EmployeeDto) target;
-//        String checkIdCard = employeeDto.getIdCard();
-//       Employee employee = this.iEmployeeService.findByIdCard(employeeDto.getIdCard());
-//        if (employee != null && employee.getIdCard().equals(checkIdCard)) {
-//                errors.rejectValue("idCard", "", "số chứng minh  tồn tại");
-//        }
     }
 
 }

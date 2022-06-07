@@ -102,6 +102,6 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findEmployee(@Param("id") Long createdEmployeeDto);
 
 
-    @Query(value = "select * from employee where delete_flag = 0 and id_card = :idCard ", nativeQuery = true)
+    @Query(value = "select * from `sprint-1-db`.employee where delete_flag = 0 and employee.id_card = :idCard ", nativeQuery = true)
     Employee findByIdCard(@Param("idCard") String idCard);
 }
