@@ -24,9 +24,12 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
             "(:#{#supplier.address}, :#{#supplier.email}, :#{#supplier.phone}, :#{#supplier.supplierName}, :#{#supplier.deleteFlag});", nativeQuery = true)
     void createSupplier(Supplier supplier);
 
-    Supplier findBySupplierName(String supplierName);
+    @Query(value = "SELECT * FROM supplier WHERE delete_flag =0 and supplier.supplier_name = :supplierName", nativeQuery = true)
+    Supplier findBySupplierName(@Param("supplierName") String supplierName);
 
-    Supplier findByEmail(String email);
+    @Query(value = "SELECT * FROM supplier WHERE delete_flag =0 and supplier.email = :email", nativeQuery = true)
+    Supplier findByEmail(@Param("email") String email);
+
     /*
         Created by khoaVC
         Time: 21:54 31/05/2022
