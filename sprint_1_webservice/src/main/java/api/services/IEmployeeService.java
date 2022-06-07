@@ -1,12 +1,13 @@
 package api.services;
 
+import api.dto.EmployeeInterface;
 import api.models.Account;
 import api.models.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IEmployeeService {
-    Page<Employee> findAllEmployee(Pageable pageable, String key);
+    Page<EmployeeInterface> findAllEmployee(Pageable pageable, String key);
 
     void save(Employee employee);
   
