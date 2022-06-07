@@ -3,6 +3,7 @@ package api.controllers;
 import api.dto.PersonalDto;
 import api.models.Account;
 import api.models.Employee;
+import api.models.ResponseObject;
 import api.payload.request.ChangePasswordRequest;
 import api.payload.request.CheckVerificationCodeRequest;
 import api.payload.request.LoginRequest;
@@ -145,13 +146,13 @@ public class SecurityRestController {
         Function: This method update personal information of employee.
     */
     @PatchMapping(value = "/personal/information/update")
-    public ResponseEntity<Map<String, String>> updatePersonalInformation(@Valid @RequestBody PersonalDto personalDto,
+    public ResponseEntity<ResponseObject<PersonalDto>> updatePersonalInformation(@Valid @RequestBody PersonalDto personalDto,
                                                                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = bindingResult.getFieldErrors()
                     .stream().collect(Collectors.toMap(
                             FieldError::getField, DefaultMessageSourceResolvable::getDefaultMessage));
-            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseObject<>(false, "Các trường chưa hợp lệ.", errorMap, null), HttpStatus.BAD_REQUEST);
         }
         iEmployeeService.updatePersonalInforamation(personalDto);
         return new ResponseEntity<>(HttpStatus.OK);
