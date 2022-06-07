@@ -3,6 +3,7 @@ package api.controllers;
 import api.dto.HistoryInvoiceDto;
 import api.models.Customer;
 import api.models.Product;
+import api.services.ICustomerService;
 import api.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ public class InvoiceRestController {
 
     @Autowired
     IInvoiceService iInvoiceService;
+    @Autowired
+    ICustomerService iCustomerService;
 
     @ModelAttribute("customer")
     private List<Customer> customerList() {
@@ -50,7 +53,6 @@ public class InvoiceRestController {
         }
         return new ResponseEntity<>(invoices, HttpStatus.OK);
     }
-
 
         @PostMapping(value = "/create")
     public String createInvoice() {

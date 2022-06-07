@@ -1,18 +1,11 @@
-package api.controller;
+package api.controllers;
 
-import api.controllers.InvoiceRestController;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import javax.xml.stream.Location;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -20,8 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class InvoiceControllerTest {
-
+public class EmployeeRestController_getListEmployee {
     @Autowired
     private MockMvc mockMvc;
 
@@ -29,10 +21,15 @@ public class InvoiceControllerTest {
     // invoiceId = 1L, quantity = 6L, createTime = "12:00", createDate = "2022-01-21", customerName = "Nguyen Van A", productName = "xiaomi", totalMoney = 12000000
 
     @Test
+<<<<<<< HEAD:sprint_1_webservice/src/test/java/api/controller/InvoiceControllerTest.java
     public  void findAll_5() throws Exception{
+=======
+    public void getListEmployee_5() throws Exception {
+
+>>>>>>> 536a668439894a3bc5c179a4dbd01a8c13b6966e:sprint_1_webservice/src/test/java/api/controllers/EmployeeRestController_getListEmployee.java
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/invoice/list/"))
+                                .get("/api/employee/list/"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
@@ -42,13 +39,18 @@ public class InvoiceControllerTest {
     // invoiceId = 1L, quantity = 6L, createTime = "12:00", createDate = "2022-01-21", customerName = "Nguyen Van A", productName = "xiaomi", totalMoney = 12000000
 
     @Test
+<<<<<<< HEAD:sprint_1_webservice/src/test/java/api/controller/InvoiceControllerTest.java
     public void getList_6() throws Exception {
+=======
+    public void getListEmployee_6() throws Exception {
+>>>>>>> 536a668439894a3bc5c179a4dbd01a8c13b6966e:sprint_1_webservice/src/test/java/api/controllers/EmployeeRestController_getListEmployee.java
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/api/invoice/list"))
+                                .get("/api/employee/list/"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
+<<<<<<< HEAD:sprint_1_webservice/src/test/java/api/controller/InvoiceControllerTest.java
                 .andExpect(jsonPath("$.totalPages").value(1))
                 .andExpect(jsonPath("$.totalElements").value(4))
                 .andExpect(jsonPath("$.content[0].invoiceId").value(1))
@@ -114,4 +116,18 @@ public class InvoiceControllerTest {
 
 
 
+=======
+                .andExpect(jsonPath("$.totalPages").value(3))
+                .andExpect(jsonPath("$.totalElements").value(15))
+                .andExpect(jsonPath("$.content[3].employeeName").value("Lê Ngọc Ánh"))
+                .andExpect(jsonPath("$.content[3].dateOfBirth").value("2000-05-19"))
+                .andExpect(jsonPath("$.content[3].address").value("Hòa Khánh"))
+                .andExpect(jsonPath("$.content[3].idCard").value("194543332"))
+                .andExpect(jsonPath("$.content[3].phoneNumber").value("194543332"))
+                .andExpect(jsonPath("$.content[3].image").value("url"))
+                .andExpect(jsonPath("$.content[3].position.id").value(3))
+                .andExpect(jsonPath("$.content[3].account.id").value(3));
+
+    }
+>>>>>>> 536a668439894a3bc5c179a4dbd01a8c13b6966e:sprint_1_webservice/src/test/java/api/controllers/EmployeeRestController_getListEmployee.java
 }

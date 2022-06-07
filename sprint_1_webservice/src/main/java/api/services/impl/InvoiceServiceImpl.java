@@ -1,6 +1,7 @@
 package api.services.impl;
 
 import api.dto.HistoryInvoiceDto;
+import api.dto.InvoiceDto;
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -27,10 +30,16 @@ public class InvoiceServiceImpl implements IInvoiceService {
     IProductRepository iProductRepository;
 
     /*
-    Created by CongNV
-    Date:  01/06/2022
-    Function: find all history
-*/
+        Created by LongNHL
+        Time: 21:30 31/05/2022
+        Function: create invoice
+        */
+    @Override
+    public void saveNewInvoice(Invoice invoice) {
+        invoice.setCreateDate(LocalDate.now().toString());
+        invoice.setCreateTime(LocalTime.now().toString());
+        iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
+    }
 
     @Override
     public Page<HistoryInvoiceDto> findAll(String keyword, Pageable pageable, String sort) {
@@ -50,5 +59,15 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Override
     public List<Product> listProduct() {
         return iProductRepository.findAll();
+
+    }
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: get invoice after create
+    */
+    @Override
+    public Invoice getNewInvoice() {
+        return iInvoiceRepository.getNewInvoice();
     }
 }
