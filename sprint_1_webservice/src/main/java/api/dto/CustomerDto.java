@@ -1,7 +1,4 @@
 package api.dto;
-
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +8,7 @@ import org.springframework.validation.Validator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 
 
     /*
@@ -25,11 +23,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerDto implements Validator {
-
     private Long id;
-
-
-
     @NotBlank(message = "Vui lòng nhập tên khách hàng ")
     @Pattern(regexp = "^([^0-9]*)$", message = "Tên khách hàng sai định dạng ")
     private String customerName;
@@ -57,6 +51,15 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        CustomerDto customerDTO = (CustomerDto) target;
+        if (customerDTO.dateOfBirth.equals("")) {
+            errors.rejectValue("dateOfBirth", "std.notnull", "Hãy điền ngày tháng vào, không hợp lệ!");
+        } else {
+            Integer yearPast = Integer.parseInt(customerDTO.dateOfBirth.substring(6, 10));
+            Integer yearCurrent = LocalDate.now().getYear();
+            if (yearCurrent - yearPast < 18) {
+                errors.rejectValue("dateOfBirth", "std.notunder18", "Dưới 18 tuổi, không hợp lệ!");
+            }
+        }
     }
 }

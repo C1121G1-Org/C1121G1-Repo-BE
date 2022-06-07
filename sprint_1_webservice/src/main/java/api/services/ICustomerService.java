@@ -15,6 +15,7 @@ public interface ICustomerService {
        /*
 Created By hoangDH,
 Time: 12:38 PM 2022-06-01
+Role: admin, business staff
 Function: edit object by id from database
  */
 
@@ -23,6 +24,7 @@ Function: edit object by id from database
     /*
 Created By hoangDH, TamHT
 Time: 13:42 PM 2022-06-01
+Role: admin, business staff
 Function: find customer object by id from database
  */
 

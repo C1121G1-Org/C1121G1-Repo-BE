@@ -32,6 +32,7 @@ public class CustomerRestController {
     /*
     Created By hoangDH,
     Time: 15:00 PM 2022-06-01
+    Role: admin, business staff
     Function: find customer object by id from database
     */
     @GetMapping(value="/{id}")
@@ -92,6 +93,7 @@ public class CustomerRestController {
     Created By hoangDH,
     Time: 12:38 PM 2022-06-01
     Function: edit object by id from database
+    Role: admin, business staff
     */
 
     @PatchMapping(value = "/{id}")

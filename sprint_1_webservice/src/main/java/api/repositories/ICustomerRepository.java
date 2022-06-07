@@ -27,6 +27,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
         /*
     Created By hoangDH,
     Time: 12:38 PM 2022-06-01
+    Role: admin, business staff
     Function: edit object by id from database
      */
     @Transactional
@@ -44,6 +45,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     /*
     Created By hoangDH,
     Time: 13:42 PM 2022-06-01
+    Role: admin, business staff
     Function: find customer object by id from database
      */
     @Query(nativeQuery=true,value="select id,address,customer_name, " +

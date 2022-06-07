@@ -24,21 +24,19 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerRepository iCustomerRepository;
     /*
    Created By hoangDH,
+   Role: admin, business staff
    Time: 12:38 PM 2022-06-01
    Function: edit object by id from database
     */
     @Override
     public void editCustomer(Customer customer, Long id) {
-        /*iCustomerRepository.editCustomer(customer.getAddress()
-                ,customer.getCustomerName(),customer.getDateOfBirth()
-                ,customer.getEmail(),customer.isGender()
-                ,customer.getPhoneNumber(),id);*/
         iCustomerRepository.editCustomer(customer,id);
     }
 
     /*
     Created By hoangDH,TamHT
     Time: 13:42 PM 2022-06-01
+    Role: admin, business staff
     Function: find customer object by id from database
     */
     @Override

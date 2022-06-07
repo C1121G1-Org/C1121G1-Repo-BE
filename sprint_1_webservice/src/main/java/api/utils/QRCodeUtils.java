@@ -83,5 +83,4 @@ public class QRCodeUtils {
         return false;
     }
 
-
 }
