@@ -1,6 +1,5 @@
 package api.dto;
 
-
 public interface IProductDto {
     Long getId();
 
@@ -25,6 +24,6 @@ public interface IProductDto {
     String getSelfie();
 
     String getOtherDescription();
-    String getQuantity();
 
+    Long getQuantity();
 }

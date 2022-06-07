@@ -83,6 +83,7 @@ public class ProductServiceImpl implements IProductService {
         return this.iProductRepository.findProductByName(name);
     }
 
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
@@ -91,6 +92,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteFlag(Long id) {
         this.iProductRepository.deleteFlag(id);
+    }
+
+    @Override
+    public Product findProductId(Long id) {
+        return iProductRepository.findProductId(id);
     }
 
     /*
@@ -102,7 +108,4 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> findAllTest() {
         return iProductRepository.findAll();
     }
-
-
-
 }

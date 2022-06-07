@@ -8,12 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-
 
 @Getter
 @Setter
@@ -61,7 +61,6 @@ public class ProductDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ProductDto productDto = (ProductDto) target;
-
         String inputtedProductName = productDto.getName();
         Product product = this.iProductService.findProductByName(productDto.getName());
         if (product != null) {
@@ -70,5 +69,6 @@ public class ProductDto implements Validator {
             }
         }
     }
+
 }
 
