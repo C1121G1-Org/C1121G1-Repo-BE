@@ -4,9 +4,9 @@ package api.controllers;
     Created by HauPV
     Time: 19:16 31/05/2022
     Function: display list sale report
-<<<<<<< HEAD
     Role : Admin , Business Staff
 =======
+<<<<<<< HEAD
 <<<<<<< HEAD
     Role : Admin , Business Staff
 =======
@@ -20,6 +20,8 @@ package api.controllers;
 >>>>>>> ac3f8f86f7da4a6b078f7a2b93341c38566f3ea2
 >>>>>>> 0cfab175adc0b788c3c20b43da5a74a2d13ae9e9
 >>>>>>> manager-product
+=======
+>>>>>>> 536a668439894a3bc5c179a4dbd01a8c13b6966e
 */
 
 import api.models.ISaleReport;

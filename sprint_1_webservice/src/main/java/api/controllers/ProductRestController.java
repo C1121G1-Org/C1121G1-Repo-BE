@@ -66,6 +66,7 @@ public class ProductRestController {
 
     /*
 <<<<<<< HEAD
+<<<<<<< HEAD
           Created by tamHT and hieuMMT
 <<<<<<< HEAD
 
@@ -82,6 +83,8 @@ public class ProductRestController {
 =======
 >>>>>>> 0cfab175adc0b788c3c20b43da5a74a2d13ae9e9
 >>>>>>> manager-product
+=======
+>>>>>>> 536a668439894a3bc5c179a4dbd01a8c13b6966e
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get  all page product and search of product
