@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /*
     Created by HauPV
@@ -26,4 +27,5 @@ public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
     @Query(value = " select * from product where delete_flag = 0 order by id desc limit 1 ; ",
             nativeQuery = true)
     Product getLatestProduct();
+
 }

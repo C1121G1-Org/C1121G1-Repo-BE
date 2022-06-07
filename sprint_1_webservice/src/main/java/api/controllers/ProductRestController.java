@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
-
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,9 +57,10 @@ public class ProductRestController {
       */
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 10) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyPrice,
-                                                            @RequestParam Optional<String> keyQuantity) {
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyQuantity,
+                                                            @RequestParam Optional<String> keyPrice
+    ) {
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -72,6 +71,20 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+
+
+
+
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
 
     /*
      Created by tuanPA
@@ -85,7 +98,13 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
+
+
         productDtoErrors.validate(productDto, bindingResult);
+
+//        productDto.validate(productDto,bindingResult);
+
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -180,7 +199,9 @@ public class ProductRestController {
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
         ProductQRCode productQRCode = new ProductQRCode();
-        BeanUtils.copyProperties(product,productQRCode);
+
+
+        BeanUtils.copyProperties(product, productQRCode);
         QRCodeUtils.encode(productQRCode);
 
         this.iProductService.updateProduct(product);

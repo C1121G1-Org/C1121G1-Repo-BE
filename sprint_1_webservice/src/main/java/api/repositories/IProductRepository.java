@@ -41,6 +41,7 @@ Function: Query Create product
     Optional<Product> findById(@Param("id") Long id);
 
 
+
 //    @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image, " +
 //            "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
 //            "FROM product " +
@@ -53,6 +54,7 @@ Function: Query Create product
 //            "FROM product " +
 //            "WHERE product.id = :id", nativeQuery = true)
 //   Optional<Product>findByProductById(@Param("id") Long id);
+
 
     /*
     Created by TuanPA
@@ -119,6 +121,7 @@ Function: Query Create product
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
+
     @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
             "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
             "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +

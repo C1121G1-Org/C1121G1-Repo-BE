@@ -53,6 +53,7 @@ public class ProductDto implements Validator {
     private CategoryDto categoryDto;
 
 
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;

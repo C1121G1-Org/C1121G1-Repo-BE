@@ -35,7 +35,6 @@ public interface IProductService {
  */
     void save(Product product);
 
-
     /*
      Created by tuanPA
      Time: 18:15 31/05/2022
@@ -53,6 +52,7 @@ public interface IProductService {
 
     Product findProductId(Long id);
 
+
         /*
      Created by tuanPA
      Time: 18:15 31/05/2022
@@ -61,8 +61,6 @@ public interface IProductService {
 
     void updateProduct(Product product);
 
-    Product findProductByName(String name);
-
 
     /*
              Created by LongNHL
@@ -70,6 +68,18 @@ public interface IProductService {
              Function: use test create invoiec
          */
     List<Product> findAllTest();
+
+
+    /*
+ Created by tuanPA
+ Time: 18:15 31/05/2022
+ Function: updateProduct
+*/
+    Product findProductByName(String name);
+
+
+
+
 
 
 }
