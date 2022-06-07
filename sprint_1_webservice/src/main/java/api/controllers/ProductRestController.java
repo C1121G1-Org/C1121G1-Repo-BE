@@ -16,15 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-
-
 import java.util.*;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,6 +88,13 @@ public class ProductRestController {
 //        return null;
 //    }
 
+//    @PostMapping(value = "/create")
+//    public String createProduct() {
+//        return null;
+//    }
+
+
+
 
 
 
@@ -105,9 +110,7 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
-
         productDtoErrors.validate(productDto, bindingResult);
-
 //        productDto.validate(productDto,bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
@@ -147,6 +150,7 @@ public class ProductRestController {
  */
 
     @GetMapping(value = "/{id}")
+
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
         if (product.isPresent()) {
@@ -163,6 +167,10 @@ public class ProductRestController {
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         Map<String, String> errorMap = new HashMap<>();
+
+//        productDto.validate(productDto,bindingResult);
+
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -203,7 +211,7 @@ public class ProductRestController {
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
 
         Optional<Product> product = iProductService.findById(id);
-
+//        Product product = iProductService.findById(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -211,15 +219,5 @@ public class ProductRestController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    /*
-         Created by LongNHL
-         Time: 15:00 2/06/2022
-         Function: use test create invoiec
-     */
-    @GetMapping(value = {"/listTest"})
-    public ResponseEntity<List<Product>> showListCustomer() {
-        List<Product> productTest = iProductService.findAllTest();
-        return new ResponseEntity<>(productTest, HttpStatus.OK);
-    }
 
 }

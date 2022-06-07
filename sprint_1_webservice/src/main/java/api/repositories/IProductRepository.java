@@ -35,11 +35,17 @@ Function: Query Create product
 */
 
 
+    @Query(value = "select * from product where delete_flag = 0 and id = :id ", nativeQuery = true)
+    Optional<Product> findById(@Param("id") Long id);
+
+
+
     @Query(value = "SELECT product.id, product.camera,product.`cpu`,product.delete_flag,product.image," +
             "product.memory,product.`name`,product.other_description, product.price,product.qr_scan,product.screen_size,product.selfie " +
             "FROM product " +
             "WHERE product.id = :id", nativeQuery = true)
     Optional<Product> findByProductById(@Param("id") Long id);
+
 
     /*
     Created by TuanPA
@@ -54,6 +60,7 @@ Function: Query Create product
             "memory = :#{#product.memory},name= :#{#product.name},other_description = :#{#product.otherDescription}, " +
             "price = :#{#product.price},qr_scan= :#{#product.qrScan},screen_size= :#{#product.screenSize},selfie= :#{#product.selfie} " +
             "WHERE id =:#{#product.id}", nativeQuery = true)
+
     void updateProduct(Product product);
 
 
@@ -81,17 +88,7 @@ Function: Query Create product
     Product findProduct(@Param("id") Long productDto);
 
 
-    /*
-<<<<<<< HEAD
-      Created by hieuMMT and tamHT
-      Time: 14:00 1/06/2022
-      Function: get All product and search
-    */
 
-    @Query(value = "select name, price , cpu , memory, storage.quantity from product inner join" +
-            " storage on product.id = storage.product_id where product.delete_flag = false and like name concat('%', :name ,'%')" +
-            "and price like concat('%', :price ,'%')  and storage.quantity like concat('%', :quality ,'%')  group by product.id", nativeQuery = true)
-    Page<Product> pageFindAll(Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quality") String keyWord3);
 
 
 
@@ -103,12 +100,12 @@ Function: Query Create product
     @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
 
-
     /*
            Created by hieuMMT and tamHT
         Time: 18:00 31/05/2022
         Function: get All product and search
     */
+
     @Query(value = "select id, name, price , cpu , memory,camera,image,other_description,qr_scan, screen_size,selfie, quantity from (select product.id, name, price , cpu , memory,camera,image,other_description,qr_scan, " +
             "screen_size,selfie, ifnull(storage.quantity, 0) as quantity from product left join `storage` " +
             "on product.id = storage.product_id where product.delete_flag = 0 and `name` like  concat('%', :name ,'%') " +
@@ -120,5 +117,8 @@ Function: Query Create product
                     "and price >= :price group by product.id " +
                     ") as temp where quantity >= :quantity ", nativeQuery = true)
     <T> Page<T> pageFindAll(Class<T> tClass, Pageable pageable, @Param("name") String keyWord1, @Param("price") String keyWord2, @Param("quantity") String keyWord3);
+
 }
+
+
 

@@ -9,14 +9,9 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+
 
 @Getter
 @Setter
@@ -54,6 +49,7 @@ public class ProductDto implements Validator {
     private String otherDescription;
     private IProductService iProductService;
 //    private boolean deleteFlag;
+
 
 
     @Override

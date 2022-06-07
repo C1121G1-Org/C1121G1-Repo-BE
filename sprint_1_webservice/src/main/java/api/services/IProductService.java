@@ -27,7 +27,6 @@ public interface IProductService {
 
     Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2 , String key3);
 
-
     /*
      Created by tuanPA
      Time: 18:15 31/05/2022
@@ -35,8 +34,12 @@ public interface IProductService {
  */
     void save(Product product);
 
-
-
+    /*
+             Created by LongNHL
+             Time: 15:00 2/06/2022
+             Function: use test create invoiec
+         */
+    List<Product> findAllTest();
 
         /*
      Created by tuanPA
@@ -45,15 +48,6 @@ public interface IProductService {
  */
 
     void updateProduct(Product product);
-
-
-
-    /*
-             Created by LongNHL
-             Time: 15:00 2/06/2022
-             Function: use test create invoiec
-         */
-    List<Product> findAllTest();
 
     /*
          Created by hieuMMT
