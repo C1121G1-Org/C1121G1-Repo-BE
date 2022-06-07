@@ -2,9 +2,11 @@ package api.controllers;
 
 import api.dto.IProductDto;
 import api.dto.ProductDto;
+import api.models.Category;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
+import api.services.ICategoryService;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -29,6 +31,8 @@ public class ProductRestController {
 
     @Autowired
     IProductService iProductService;
+    @Autowired
+    ICategoryService iCategoryService;
 
     /*
       Created by HauPV
@@ -45,10 +49,10 @@ public class ProductRestController {
           Function: get  all page product and search of product
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 6) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyQuantity,
-                                                            @RequestParam Optional<String> keyPrice
-    ) {
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyPrice,
+                                                            @RequestParam Optional<String> keyQuantity) {
+
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -59,11 +63,6 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
-
-
-
-
-
 
     /*
      Created by tuanPA
@@ -77,9 +76,7 @@ public class ProductRestController {
         Map<String, String> errorMap = new HashMap<>();
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
-
         productDtoErrors.validate(productDto, bindingResult);
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -92,10 +89,14 @@ public class ProductRestController {
         Product product = new Product();
 
         BeanUtils.copyProperties(productDto, product);
+        Category category = new Category();
+        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        product.setCategory(category);
         product.setPrice(price);
         product.setDeleteFlag(false);
 
         this.iProductService.save(product);
+
 
      /*
         Created by HauPV
@@ -117,12 +118,13 @@ public class ProductRestController {
  */
 
     @GetMapping(value = "/{id}")
+
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
         Optional<Product> product = this.iProductService.findById(id);
         if (product.isPresent()) {
             return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     /*
@@ -132,7 +134,21 @@ public class ProductRestController {
  */
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
+
         Map<String, String> errorMap = new HashMap<>();
+        if (!this.iProductService.findById(id).isPresent()) {
+            return new ResponseEntity<>(new ResponseObject(false, "Id ís not exist!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
+        }
+        productDto.setIProductService(iProductService);
+
+        String inputtedProductName = productDto.getName();
+        Optional<Product> currentProduct = this.iProductService.findById(id);
+
+
+        if (!currentProduct.get().getName().equalsIgnoreCase(inputtedProductName)) {
+            productDto.validate(productDto, bindingResult);
+        }
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -145,6 +161,11 @@ public class ProductRestController {
         Double price = Double.valueOf(productDto.getPrice());
         product.setPrice(price);
         BeanUtils.copyProperties(productDto, product);
+
+        Category category = new Category();
+        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        product.setCategory(category);
+
 
     /*
         Created by HauPV
@@ -173,23 +194,11 @@ public class ProductRestController {
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
 
         Optional<Product> product = iProductService.findById(id);
-
+//        Product product = iProductService.findById(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         iProductService.deleteFlag(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
-    /*
-         Created by LongNHL
-         Time: 15:00 2/06/2022
-         Function: use test create invoiec
-     */
-    @GetMapping(value = {"/listTest"})
-    public ResponseEntity<List<Product>> showListCustomer() {
-        List<Product> productTest = iProductService.findAllTest();
-        return new ResponseEntity<>(productTest, HttpStatus.OK);
-    }
-
 }

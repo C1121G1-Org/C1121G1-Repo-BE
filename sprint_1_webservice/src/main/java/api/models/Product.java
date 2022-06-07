@@ -41,6 +41,16 @@ public class Product {
 
     @Column(name = "other_description", columnDefinition = "LONGTEXT")
     private String otherDescription;
+    @Column(name = "discount")
+    private Integer discount;
+    @Column(name = "promotions", columnDefinition = "LONGTEXT")
+    private String promotions;
+    @Column(name = "fiveStarRating")
+    private Integer fiveStarRating;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    private Category category;
 
     @OneToMany(mappedBy = "product")
     @JsonBackReference

@@ -38,7 +38,6 @@ public class ProductServiceImpl implements IProductService {
             Function: search Products
         */
     @Override
-
     public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3) {
         return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3);
     }
@@ -50,7 +49,7 @@ public class ProductServiceImpl implements IProductService {
     */
     @Override
     public void save(Product product) {
-        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie());
+        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie(),product.getCategory().getId());
     }
 
     /*
@@ -83,7 +82,6 @@ public class ProductServiceImpl implements IProductService {
     public Product findProductByName(String name) {
         return this.iProductRepository.findProductByName(name);
     }
-
 
     /*
          Created by hieuMMT
