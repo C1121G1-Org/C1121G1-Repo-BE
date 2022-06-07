@@ -10,8 +10,6 @@ public interface HistoryInvoiceDto {
 
     String getCreateDate();
 
-    String getPayments();
-
     Integer getQuantity();
 
     String getCustomerName();
@@ -19,4 +17,6 @@ public interface HistoryInvoiceDto {
     String getProductName();
 
     Double getTotalMoney();
+
+    String getInvoiceDetailId();
 }

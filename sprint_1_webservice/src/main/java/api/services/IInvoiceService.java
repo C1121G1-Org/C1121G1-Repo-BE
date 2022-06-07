@@ -12,7 +12,7 @@ import java.util.List;
 public interface IInvoiceService {
     /*
     Created by CongNV
-    Date:  01/06/2022
+    Date:  06/06/2022
     Function: find all history
 */
 
