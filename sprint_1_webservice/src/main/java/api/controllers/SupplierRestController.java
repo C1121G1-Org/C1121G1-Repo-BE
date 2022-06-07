@@ -12,9 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import org.springframework.validation.BindingResult;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Map;
@@ -35,17 +39,17 @@ public class SupplierRestController {
         Function: 1/    getAllSupplier() = list all Suppliers from DB
                   2/    listSupplier() = list all Suppliers from DB with paging and search
     */
-    private List<Supplier> getAllSupplier(){
+    private List<Supplier> getAllSupplier() {
         return iSupplierService.getAllSupplier();
     }
 
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 3) Pageable pageable,
-                                                      @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
-                                                      @RequestParam(name = "ad", required = false, defaultValue = "") String address,
-                                                      @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
-                                                      @RequestParam(name = "em", required = false, defaultValue = "") String email){
-        Page<Supplier> suppliers =iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
+                                                       @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
+                                                       @RequestParam(name = "ad", required = false, defaultValue = "") String address,
+                                                       @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
+                                                       @RequestParam(name = "em", required = false, defaultValue = "") String email) {
+        Page<Supplier> suppliers = iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
         return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
 
@@ -55,6 +59,40 @@ public class SupplierRestController {
     Function: Create Supplier
     */
 
+    //    @PostMapping(value = "/create")
+//    public ResponseEntity<ResponseObject> createSupplier(@Valid @RequestBody SupplierDto supplierDto,
+//                                                         BindingResult bindingResult) {
+//        Map<String, String> errorMap = bindingResult.getFieldErrors()
+//                .stream().collect(Collectors.toMap(
+//                        e -> e.getField(), e -> e.getDefaultMessage()));
+//        supplierDto.setIsupplierService(iSupplierService);
+//        supplierDto.validate(supplierDto, bindingResult);
+////        supplierDto.validateEmail(supplierDto, bindingResult);
+////        bindingResult.addError(new FieldError("supplierDto", "email", "Same email"));
+//        if (bindingResult.hasErrors()) {
+//            errorMap = bindingResult.getFieldErrors()
+//                    .stream().collect(Collectors.toMap(
+//                            e -> e.getField(), e -> e.getDefaultMessage()));
+//        }
+//        String supplierName = supplierDto.getSupplierName();
+//        Supplier supplier = this.iSupplierService.findBySupplierName(supplierDto.getSupplierName());
+//
+//        if (supplier != null && supplier.getSupplierName().equals(supplierName)) {
+//            errorMap.put("supplierName", "Tên nhà cung cấp đã tồn tại!");
+//        }
+//        String email = supplierDto.getSupplierName();
+//       supplier = this.iSupplierService.findByEmail(supplierDto.getEmail());
+//        if (supplier != null && supplier.getEmail().equals(email)) {
+//                errorMap.put("email", "Email đã tồn tại!");
+//                return new ResponseEntity<>(new ResponseObject(false, "Failed", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }else {
+//            supplier = new Supplier();
+//            BeanUtils.copyProperties(supplierDto, supplier);
+//            iSupplierService.save(supplier);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//
+//    }
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createSupplier(@Valid @RequestBody SupplierDto supplierDto,
                                                          BindingResult bindingResult) {
@@ -66,11 +104,9 @@ public class SupplierRestController {
                             e -> e.getField(), e -> e.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         Supplier supplier = new Supplier();
         BeanUtils.copyProperties(supplierDto, supplier);
         iSupplierService.save(supplier);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
