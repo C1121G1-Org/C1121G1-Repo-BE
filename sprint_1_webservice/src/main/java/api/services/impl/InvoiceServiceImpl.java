@@ -1,7 +1,9 @@
 package api.services.impl;
 
 
+
 import api.dto.HistoryInvoiceDto;
+
 
 import api.models.Customer;
 import api.models.Invoice;
@@ -41,6 +43,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
         invoice.setCreateTime(LocalTime.now().toString());
         iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
     }
+
 
     @Override
     public Page<HistoryInvoiceDto> findAll(String keyword, Pageable pageable, String sort) {

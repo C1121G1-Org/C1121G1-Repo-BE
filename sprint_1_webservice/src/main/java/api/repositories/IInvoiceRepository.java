@@ -18,6 +18,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
     Function: find all history
 */
 
+
     @Query(value = "SELECT invoice.id as invoiceId, create_date as createDate,create_time as createTime,`name`as productName, customer_name as customerName,total_money as totalMoney , quantity , invoice_detail.id as invoiceDetailId FROM  invoice " +
             "join invoice_detail on invoice.id = invoice_detail.invoice_id " +
             "join product on invoice_detail.product_id = product.id " +
@@ -53,8 +54,6 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             , nativeQuery = true)
     Page<HistoryInvoiceDto> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable, @Param("sorts") String sort);
 
-
-
     /*
     Created by LongNHL
     Time: 21:30 31/05/2022
@@ -68,9 +67,5 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
     @Query(value = "select * from invoice order by id desc limit 1;",nativeQuery = true)
     Invoice getNewInvoice();
 
-
-
-
 }
-
 

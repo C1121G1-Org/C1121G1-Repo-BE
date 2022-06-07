@@ -86,7 +86,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -105,7 +104,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDto, HttpStatus.OK);
     }
 
@@ -125,7 +123,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -145,7 +142,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -166,7 +162,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -188,7 +183,6 @@ public class CustomerRestController {
         if (purchaseHistoryDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-//            List<PurchaseHistoryDto> purchaseHistoryDtos = purchaseHistoryDtoPage.toList();
             return new ResponseEntity<>(purchaseHistoryDtoPage, HttpStatus.OK);
         }
     }

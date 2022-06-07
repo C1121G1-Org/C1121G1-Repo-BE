@@ -1,10 +1,14 @@
 package api.services;
 
 
+
 import api.dto.HistoryInvoiceDto;
-import api.models.Customer;
 
 import api.models.Invoice;
+
+import api.models.Customer;
+
+
 import api.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,5 +28,6 @@ public interface IInvoiceService {
     List<Product> listProduct();
 
     void saveNewInvoice(Invoice invoice);
+
     Invoice getNewInvoice();
 }

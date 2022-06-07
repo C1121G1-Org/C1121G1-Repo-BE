@@ -32,12 +32,9 @@ public class SupplierRestController {
     /*
         Created by khoaVC
         Time: 21:54 31/05/2022
-        Function: 1/    getAllSupplier() = list all Suppliers from DB
-                  2/    listSupplier() = list all Suppliers from DB with paging and search
+        Function:
+                  1/    listSupplier() = list all Suppliers from DB with paging and search
     */
-    private List<Supplier> getAllSupplier(){
-        return iSupplierService.getAllSupplier();
-    }
 
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 3) Pageable pageable,

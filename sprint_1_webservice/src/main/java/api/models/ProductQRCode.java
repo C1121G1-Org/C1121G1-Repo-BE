@@ -3,8 +3,6 @@ package api.models;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Objects;
-
-
 /*
     Created by HauPV
     Time: 10:00 02/06/2022
