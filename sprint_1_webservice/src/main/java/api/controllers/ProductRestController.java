@@ -86,10 +86,6 @@ public class ProductRestController {
 
 
         productDtoErrors.validate(productDto, bindingResult);
-
-//        productDto.validate(productDto,bindingResult);
-
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -103,7 +99,7 @@ public class ProductRestController {
 
         BeanUtils.copyProperties(productDto, product);
         Category category = new Category();
-        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        BeanUtils.copyProperties(productDto.getCategoryDto(), category);
         product.setCategory(category);
         product.setPrice(price);
         product.setDeleteFlag(false);
@@ -176,7 +172,7 @@ public class ProductRestController {
         BeanUtils.copyProperties(productDto, product);
 
         Category category = new Category();
-        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        BeanUtils.copyProperties(productDto.getCategoryDto(), category);
         product.setCategory(category);
 
 

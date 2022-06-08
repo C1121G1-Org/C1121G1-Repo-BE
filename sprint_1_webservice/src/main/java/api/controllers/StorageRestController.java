@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,15 +36,16 @@ public class StorageRestController {
 
     /*
         Created by khoaVC
+        Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
         Function: 1/    createStorage() = create Storage
         Role: Admin, Storekeeper
     */
     @PostMapping(value = "/create")
-    public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult){
-        storageDto.validate(storageDto,bindingResult);
+    public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult) {
+        storageDto.validate(storageDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
                     .stream()
@@ -57,7 +57,7 @@ public class StorageRestController {
             Employee employee = iEmployeeService.findEmployee(storageDto.getCreatedEmployeeDto());
             Product product = iProductService.findProduct(storageDto.getProductDto());
             Supplier supplier = iSupplierService.findSupplier(storageDto.getSupplierDto());
-            if (employee != null && product != null && supplier != null){
+            if (employee != null && product != null && supplier != null) {
                 storage.setCreatedEmployee(employee);
                 storage.setProduct(product);
                 storage.setSupplier(supplier);

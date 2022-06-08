@@ -27,7 +27,7 @@ public class StorageDto implements Validator {
     private boolean deleteFlag;
 
     public StorageDto(){
-        setDeleteFlag(true);
+        setDeleteFlag(false);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class StorageDto implements Validator {
         } else {
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate createdDate = LocalDate.parse(storageDto.getCreatedDate(), formatter);
-            if (createdDate.isAfter(currentDate)) {
+            LocalDate createdDateLocal = LocalDate.parse(storageDto.getCreatedDate(), formatter);
+            if (createdDateLocal.isAfter(currentDate)) {
                 errors.rejectValue("createdDate", "createdDate.afterCurrentDate", "Created Date must be before today!");
             }
         }

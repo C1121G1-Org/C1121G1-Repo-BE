@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
+
     /*
         Created by CongNV
         Date:  06/06/2022
