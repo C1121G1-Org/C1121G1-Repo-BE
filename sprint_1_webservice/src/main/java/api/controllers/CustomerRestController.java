@@ -35,7 +35,7 @@ public class CustomerRestController {
           Function: get  all page customer and search of customer
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value =6) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value =5) Pageable pageable, @RequestParam Optional<String> keyName,
                                                        @RequestParam Optional<String> keyPhone) {
         String keyNameValue = keyName.orElse("");
         String keyPhoneValue = keyPhone.orElse("");
@@ -86,7 +86,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -105,7 +104,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDto, HttpStatus.OK);
     }
 
@@ -125,7 +123,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -145,7 +142,6 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -166,7 +162,7 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-//        List<ReportCustomerDto> reportCustomerDtos = reportCustomerDtoPage.toList();
+
         return new ResponseEntity<>(reportCustomerDtoPage, HttpStatus.OK);
     }
 
@@ -188,7 +184,6 @@ public class CustomerRestController {
         if (purchaseHistoryDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-//            List<PurchaseHistoryDto> purchaseHistoryDtos = purchaseHistoryDtoPage.toList();
             return new ResponseEntity<>(purchaseHistoryDtoPage, HttpStatus.OK);
         }
     }
