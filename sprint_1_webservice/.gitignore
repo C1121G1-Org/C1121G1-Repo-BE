@@ -15,10 +15,9 @@ build/
 .sts4-cache
 bin/
 !**/src/main/**/bin/
-
 !**/src/test/**/bin/
 /sprint_1_webservice/src/test/
-
+/sprint_1_webservice/src/main/resources/application.properties
 
 
 ### IntelliJ IDEA ###

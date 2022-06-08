@@ -39,18 +39,9 @@ public class StorageRestController {
     /*
         Created by khoaVC
         Time: 21:54 31/05/2022
-        Function: 1/    getAllProduct() = list all Products from DB
-                  2/    getAllStorage() = list all Storages from DB
-                  3/    createStorage() = create Storage
+        Function:
+                  1/    createStorage() = create Storage
     */
-    private List<Product> getAllProduct(){
-        return iProductService.getAllProduct();
-    }
-
-    private List<Storage> getAllStorage(){
-        return iStorageService.getAllStorage();
-    }
-
     @GetMapping(value = "/list")
     public String listStorage(){
         return null;

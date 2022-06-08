@@ -49,7 +49,7 @@ public class ProductServiceImpl implements IProductService {
     */
     @Override
     public void save(Product product) {
-        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie());
+        this.iProductRepository.saveProduct(product.getCamera(),product.getCpu(),product.getImage(),product.getMemory(),product.getName(),product.getOtherDescription(),product.getPrice(),product.getQrScan(),product.getScreenSize(),product.getSelfie(),product.getCategory().getId());
     }
 
     /*
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements IProductService {
  */
     @Override
     public Optional<Product> findById(Long id) {
-        return iProductRepository.findByProductById(id);
+        return iProductRepository.findById(id);
     }
 
     /*
@@ -83,6 +83,7 @@ public class ProductServiceImpl implements IProductService {
         return this.iProductRepository.findProductByName(name);
     }
 
+
     /*
          Created by hieuMMT
          Time: 14:15 1/06/2022
@@ -91,6 +92,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteFlag(Long id) {
         this.iProductRepository.deleteFlag(id);
+    }
+
+    @Override
+    public Product findProductId(Long id) {
+        return iProductRepository.findProductId(id);
     }
 
     /*
@@ -102,7 +108,4 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> findAllTest() {
         return iProductRepository.findAll();
     }
-
-
-
 }
