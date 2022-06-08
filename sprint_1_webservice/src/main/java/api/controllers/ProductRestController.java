@@ -57,10 +57,9 @@ public class ProductRestController {
       */
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyQuantity,
-                                                            @RequestParam Optional<String> keyPrice
-    ) {
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 5) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam Optional<String> keyPrice,
+                                                            @RequestParam Optional<String> keyQuantity){
         String keyNameValue = keyName.orElse("");
         String keyQuantityValue = keyQuantity.orElse("0");
         String keyPriceValue = keyPrice.orElse("0");
@@ -87,6 +86,7 @@ public class ProductRestController {
 
 
         productDtoErrors.validate(productDto, bindingResult);
+
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
