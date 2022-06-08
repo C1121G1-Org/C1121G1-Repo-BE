@@ -37,20 +37,17 @@ public class StorageRestController {
 
     /*
         Created by khoaVC
+        Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
         Function:
                   1/    createStorage() = create Storage
     */
-    @GetMapping(value = "/list")
-    public String listStorage(){
-        return null;
-    }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult){
-        storageDto.validate(storageDto,bindingResult);
+    public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult) {
+        storageDto.validate(storageDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
                     .stream()
@@ -62,7 +59,7 @@ public class StorageRestController {
             Employee employee = iEmployeeService.findEmployee(storageDto.getCreatedEmployeeDto());
             Product product = iProductService.findProduct(storageDto.getProductDto());
             Supplier supplier = iSupplierService.findSupplier(storageDto.getSupplierDto());
-            if (employee != null && product != null && supplier != null){
+            if (employee != null && product != null && supplier != null) {
                 storage.setCreatedEmployee(employee);
                 storage.setProduct(product);
                 storage.setSupplier(supplier);
@@ -74,15 +71,5 @@ public class StorageRestController {
             }
         }
         return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
-    }
-
-    @PatchMapping(value = "/update")
-    public String updateStorage(){
-        return null;
-    }
-
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteStorage(){
-        return null;
     }
 }

@@ -30,13 +30,14 @@ public class SupplierRestController {
 
     /*
         Created by khoaVC
+        Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
         Function:
                   1/    listSupplier() = list all Suppliers from DB with paging and search
     */
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 3) Pageable pageable,
+    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 4) Pageable pageable,
                                                       @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
                                                       @RequestParam(name = "ad", required = false, defaultValue = "") String address,
                                                       @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
