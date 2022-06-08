@@ -15,5 +15,10 @@ public interface IProductBestsellerDto {
     String getCpu();
     String getMemory();
     String getOtherDescription();
+    String getDiscount();
+    String getPromotions();
+    String getFiveStarRating();
+    String getDateCreate();
+    String getCategory();
     Integer getProductQuantity();
 }
