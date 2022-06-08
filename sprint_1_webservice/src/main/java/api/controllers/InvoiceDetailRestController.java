@@ -17,10 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -36,8 +33,8 @@ public class InvoiceDetailRestController {
     private IStorageService iStorageService;
 
     //Create by chienLV
-//Time: 18h00 31/05/2022
-//Function: get list product bestseller from database
+    //Time: 18h00 31/05/2022
+    //Function: get list product bestseller from database
     @GetMapping("/listProductBestseller")
     public ResponseEntity<List<IProductBestsellerDto>> getListProductBestseller() {
         List<IProductBestsellerDto> productBestsellers = iInvoiceDetailService.findListProductBestseller();
@@ -48,8 +45,8 @@ public class InvoiceDetailRestController {
     }
 
     //Create by chienLV
-//Time: 7h00 07/06/2022
-//Function: get list product newest from database
+    //Time: 7h00 07/06/2022
+    //Function: get list product newest from database
     @GetMapping("/listProductNewest")
     public ResponseEntity<List<IProductBestsellerDto>> getListProductNewest() {
         List<IProductBestsellerDto> productNewests = iInvoiceDetailService.findListProductNewest();
@@ -60,8 +57,8 @@ public class InvoiceDetailRestController {
     }
 
     //Create by chienLV
-//Time: 14h00 07/06/2022
-//Function: find list product bestseller by category from database
+    //Time: 14h00 07/06/2022
+    //Function: find list product bestseller by category from database
     @GetMapping("/listProductBestseller/{id}")
     public ResponseEntity<List<IProductBestsellerDto>> getListProductBestsellerByCategory(@PathVariable int id) {
         List<IProductBestsellerDto> productBestsellerByCategories = iInvoiceDetailService.findListProductBestsellerByCategory(id);
@@ -71,11 +68,11 @@ public class InvoiceDetailRestController {
         return new ResponseEntity<>(productBestsellerByCategories, HttpStatus.OK);
     }
 
-
     /*
-     Created by LongNHL
-     Time: 9:30 1/06/2022
-     Function: create invoiceDetail
+         Created by LongNHL
+         Time: 9:30 1/06/2022
+         Function: create invoiceDetail
+         Role: Admin, seller
      */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
@@ -108,41 +105,57 @@ public class InvoiceDetailRestController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /*
-      Created by LongNHL
-      Time: 22:30 1/06/2022
-      Function: update quantity product
-      */
+     Created by LongNHL
+     Time: 22:30 1/06/2022
+     Function: update quantity product
+     */
     @PatchMapping("/updateQuantityProduct")
-    public ResponseEntity<ResponseObject> updateQuantityProduct(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,BindingResult bindingResult) {
+    public ResponseEntity<ResponseObject> updateQuantityProduct(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto, BindingResult bindingResult) {
         String errorQuantity = "";
         Map<String, String> errorMap = new HashMap<>();
         if (!bindingResult.hasErrors()) {
-//            bindingResult.getFieldErrors()
-//                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
-//            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
-//                    HttpStatus.BAD_REQUEST);
-
             if (!invoiceDetailDto.getProducts().isEmpty()) {
-                for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
-                    Storage storage = iStorageService.getStorageByIdProduct(productDto.getId());
-                    if (productDto.getQuantity() > storage.getQuantity()) {
-                        errorQuantity = "Số lượng sản phẩm "+ storage.getProduct().getName() +" trong kho còn: " + storage.getQuantity();
-                        errorMap.put("quantity",errorQuantity);
-                        return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
-                                HttpStatus.BAD_REQUEST);
-                    } else {
-                        storage.setQuantity(storage.getQuantity() - productDto.getQuantity());
+                errorMap = checkListProduct(invoiceDetailDto.getProducts());
+                if (errorMap.isEmpty()) {
+                    for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
+                        Optional<Storage> storages = iStorageService.getStorageByIdProduct(productDto.getId());
+                        Storage storage = storages.orElse(null);
                         iStorageService.updateQuantityProduct(storage);
                     }
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }else {
+                    return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
+                            HttpStatus.BAD_REQUEST);
                 }
-                return new ResponseEntity<>( HttpStatus.OK);
+            } else {
+                errorQuantity = "Bạn chưa chọn sản phẩm";
+                errorMap.put("productList", errorQuantity);
+                return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
+                        HttpStatus.BAD_REQUEST);
             }
-            errorQuantity = "Bạn chưa chọn sản phẩm";
-            errorMap.put("productList",errorQuantity);
-            return new ResponseEntity<>(new ResponseObject(false,"Failed!",errorMap,new ArrayList()),
+        } else {
+            errorQuantity = "Vui lòng nhập đủ thông tin";
+            errorMap.put("validProduct", errorQuantity);
+            return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList()),
                     HttpStatus.BAD_REQUEST);
         }
-        return null;
+    }
+    public Map<String,String> checkListProduct(List<ProductInvoiceDto> productList){
+        String errorMesseger ="";
+        Map<String, String> errorMap = new HashMap<>();
+        for (int i = 0; i <= productList.size() - 1; i++) {
+            Optional<Storage> storages = iStorageService.getStorageByIdProduct(productList.get(i).getId());
+            Storage storage = storages.orElse(null);
+            if (storage == null) {
+                errorMesseger = "Số lượng sản phẩm " + productList.get(i).getName() + " không có trong kho. Vui lòng chọn sản phẩm khác!";
+                errorMap.put(String.valueOf(i), errorMesseger);
+            } else if (productList.get(i).getQuantity() > storage.getQuantity()) {
+                errorMesseger = "Số lượng sản phẩm " + storage.getProduct().getName() + " trong kho còn: " + storage.getQuantity();
+                errorMap.put(String.valueOf(i), errorMesseger);
+            }
+        }
+        return errorMap;
     }
 }

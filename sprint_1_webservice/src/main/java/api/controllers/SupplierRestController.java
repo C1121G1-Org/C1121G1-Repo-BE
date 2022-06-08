@@ -1,4 +1,3 @@
-
 package api.controllers;
 
 import api.dto.SupplierDto;
@@ -32,10 +31,9 @@ public class SupplierRestController {
         Created by khoaVC
         Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
-        Function:
-                  1/    listSupplier() = list all Suppliers from DB with paging and search
+        Function: 1/    listSupplier() = list all Suppliers from DB with paging and search
+        Role: ROLE_ADMIN, STOREKEEPER
     */
-
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 4) Pageable pageable,
                                                       @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
@@ -51,12 +49,11 @@ public class SupplierRestController {
     }
 
     /*
-    Created by NgocTTB
-    Time: 09:00 31/05/2022
-    Function: Create Supplier
+        Created by NgocTTB
+        Time: 09:00 31/05/2022
+        Function: Create Supplier
+        Role: ROLE_ADMIN, BUSINESS_STAFF, STOREKEEPER
     */
-
-
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createSupplier(@Valid @RequestBody SupplierDto supplierDto,
                                                          BindingResult bindingResult) {

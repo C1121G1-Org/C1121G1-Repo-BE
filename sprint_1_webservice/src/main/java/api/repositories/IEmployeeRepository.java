@@ -1,6 +1,7 @@
 package api.repositories;
 
 import api.dto.EmployeeInterface;
+import api.dto.PersonalDto;
 import api.models.Account;
 import api.models.Employee;
 import org.springframework.data.jpa.repository.Modifying;
@@ -52,15 +53,6 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "where employee.`id`= :#{#employee.id}", nativeQuery = true)
     void updateEmployee(Employee employee, Account account);
 
-
-    /*
-        Created by Khoa PTD
-        Time: 09:00 02/06/2022
-        Function: find Employee by id.
-    */
-//    @Query(value = "SELECT * FROM employee  WHERE employee.id= :id", nativeQuery = true)
-//    Employee findEmployeeById(@Param("id") Long id);
-
     /*
        Created by HuyNH
        Time: 19:00 31/05/2022
@@ -85,8 +77,6 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
        Time: 19:00 31/05/2022
        Function:     deleteFlag = abstract method to delete flag a employee
     */
-
-
     @Transactional
     @Modifying
     @Query(value = "update employee set delete_flag = 1 where employee.id = :id ; ", nativeQuery = true)
@@ -97,11 +87,26 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
         Time: 21:54 31/05/2022
         Function: 1/    findEmployee() = write a native query to find Employee by id
     */
-
     @Query(value = "select * from employee where delete_flag = 0 and id = :id ", nativeQuery = true)
     Employee findEmployee(@Param("id") Long createdEmployeeDto);
 
-
+    /*
+        Created by Khoa PTD
+        Time: 09:00 02/06/2022
+        Function: find Employee by idCard.
+    */
     @Query(value = "select * from `sprint-1-db`.employee where delete_flag = 0 and employee.id_card = :idCard ", nativeQuery = true)
     Employee findByIdCard(@Param("idCard") String idCard);
+
+    /*
+        Created by KhaiTT
+        Date: 15:33 01/06/2022
+        Function: update personal information of employee to DB.
+    */
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE employee SET address = :#{#personalDto.address}, date_of_birth = :#{#personalDto.dateOfBirth}," +
+            " employee_name = :#{#personalDto.employeeName}, id_card = :#{#personalDto.idCard}, image = :#{#personalDto.image}," +
+            " phone_number = :#{#personalDto.phoneNumber} WHERE (id = :#{#personalDto.id}); ", nativeQuery = true)
+    void updatePersonalInformation(PersonalDto personalDto);
 }

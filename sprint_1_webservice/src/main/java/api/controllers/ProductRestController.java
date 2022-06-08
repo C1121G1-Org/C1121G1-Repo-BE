@@ -50,12 +50,11 @@ public class ProductRestController {
 
 
     /*
-          Created by tamHT and hieuMMT
-          Time: 18:15 31/05/2022
-          Function: get all page product and search of product
-          Role : Admin, bussines staff, seller
-      */
-
+        Created by tamHT and hieuMMT
+        Time: 18:15 31/05/2022
+        Function: get all page product and search of product
+        Role : Admin, bussines staff, seller
+     */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
                                                             @RequestParam Optional<String> keyQuantity,
@@ -73,11 +72,11 @@ public class ProductRestController {
     }
 
     /*
-     Created by tuanPA
-     Time: 18:15 31/05/2022
-     Function: create new product
- */
-
+         Created by tuanPA
+         Time: 18:15 31/05/2022
+         Function: create new product
+         Role: Admin, business staff
+    */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
                                                         BindingResult bindingResult) {
@@ -125,6 +124,7 @@ public class ProductRestController {
      Created by tuanPA
      Time: 18:15 31/05/2022
      Function: findById
+     Role: Admin, business staff
  */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
@@ -139,6 +139,7 @@ public class ProductRestController {
      Created by tuanPA
      Time: 18:15 31/05/2022
      Function: edit product
+     Role: Admin, business staff
  */
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
@@ -205,16 +206,4 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    /*
-         Created by LongNHL
-         Time: 15:00 2/06/2022
-         Function: use test create invoiec
-     */
-    @GetMapping(value = {"/listTest"})
-    public ResponseEntity<List<Product>> showListCustomer() {
-        List<Product> productTest = iProductService.findAllTest();
-        return new ResponseEntity<>(productTest, HttpStatus.OK);
-    }
-
 }

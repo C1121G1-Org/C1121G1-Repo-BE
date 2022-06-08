@@ -20,8 +20,9 @@ public class CategoryRestController {
     private ICategoryService iCategoryService;
 
     //Create by chienLV
-//Time: 7h00 07/06/2022
-//Function: get list category from database
+    //Time: 7h00 07/06/2022
+    //Function: get list category from database
+    //Role:  Admin, business staff
     @GetMapping("/list")
     public ResponseEntity<List<Category>> getListCategory() {
         List<Category> categories = iCategoryService.findAll();

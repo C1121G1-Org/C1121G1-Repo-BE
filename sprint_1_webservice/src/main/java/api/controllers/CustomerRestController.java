@@ -5,7 +5,6 @@ import api.dto.PurchaseHistoryDto;
 import api.dto.PurchaseProductDto;
 import api.dto.ReportCustomerDto;
 import api.models.Customer;
-import api.models.ResponseObject;
 import api.services.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -30,10 +29,11 @@ public class CustomerRestController {
     ICustomerService iCustomerService;
 
     /*
-          Created by tamHT
-          Time: 18:15 31/05/2022
-          Function: get  all page customer and search of customer
-      */
+      Created by tamHT
+      Time: 18:15 31/05/2022
+      Function: get  all page customer and search of customer
+      Role: Admin, Seller
+    */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value =6) Pageable pageable, @RequestParam Optional<String> keyName,
                                                        @RequestParam Optional<String> keyPhone) {
@@ -50,6 +50,7 @@ public class CustomerRestController {
           Created by tamHT
           Time: 18:15 31/05/2022
           Function: get customer By ID
+          Role: Admin, Seller
       */
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") Long id) {
@@ -60,21 +61,11 @@ public class CustomerRestController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-
-    @PatchMapping(value = "/update")
-    public String updateCustomer() {
-        return null;
-    }
-
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteCustomer() {
-        return null;
-    }
-
     /*
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer
+        Role: Admin, business staff
     */
     @GetMapping(value = "/report-customer")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomer(
@@ -93,6 +84,7 @@ public class CustomerRestController {
         Created by TuanNQ
         Time: 22:50 02/06/2022
         Function: Get info customer in customer report by customer_id
+        Role: Admin, business staff
     */
     @GetMapping(value = "/info-customer/{id}")
     public ResponseEntity<ReportCustomerDto> getInfoCustomer(
@@ -111,6 +103,7 @@ public class CustomerRestController {
         Created by TuanNQ
         Time: 17:00 01/06/2022
         Function: Show list of customer reports by gender
+        Role: Admin, business staff
     */
     @GetMapping(value = "/report-customer-search-gender")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchGender(
@@ -130,6 +123,7 @@ public class CustomerRestController {
         Created by TuanNQ
         Time: 17:00 01/06/2022
         Function: Show list of customer reports by age
+        Role: Admin, business staff
     */
     @GetMapping(value = "/report-customer-search-age")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearchAge(
@@ -149,6 +143,7 @@ public class CustomerRestController {
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
+        Role: Admin, business staff
     */
     @GetMapping(value = "/report-customer-search")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearch(
@@ -169,6 +164,7 @@ public class CustomerRestController {
         Created by TuanNQ
         Time: 18:15 31/05/2022
         Function: Show detail purchase history of customer
+        Role: Admin, business staff
     */
     @GetMapping(value = "/purchase-history/{id}")
     public ResponseEntity<Page<PurchaseHistoryDto>> showDetailPurchaseHistory(
@@ -191,6 +187,7 @@ public class CustomerRestController {
         Created by TuanNQ
         Time: 11:00 02/06/2022
         Function: Show all purchase products by ivoice.id
+        Role: Admin, business staff
     */
     @GetMapping(value = "/purchase-products/{id}")
     public ResponseEntity<Page<PurchaseProductDto>> showPurchaseProducts(
