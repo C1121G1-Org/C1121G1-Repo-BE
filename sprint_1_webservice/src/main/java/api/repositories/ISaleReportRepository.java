@@ -15,10 +15,10 @@ import java.util.Optional;
 */
 public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
 
-    @Query(value = "SELECT invoice.id as id , invoice.create_date as `date` , count(invoice_id) as invoiceQuantity , sum(invoice.total_money) as totalMoney  FROM `sprint-1-db`.invoice \n" +
-            "JOIN invoice_detail ON invoice_detail.id = invoice.id\n" +
-            "JOIN product ON product.id = invoice_detail.product_id \n" +
-            "WHERE ( str_to_date(invoice.create_date,'%d/%m/%Y') between :#{#startDay}  and :#{#endDay}  ) \n" +
+    @Query(value = "SELECT invoice.id as id , invoice.create_date as `date` , count(invoice_id) as invoiceQuantity , sum(invoice.total_money) as totalMoney  FROM `sprint-1-db`.invoice  " +
+            "JOIN invoice_detail ON invoice_detail.id = invoice.id " +
+            "JOIN product ON product.id = invoice_detail.product_id  " +
+            "WHERE ( str_to_date(invoice.create_date,'%d/%m/%Y') between :#{#startDay}  and :#{#endDay}  )  " +
             "AND product.id LIKE concat('%', :productId ,'%') " +
             "GROUP BY invoice.create_date ;",
             nativeQuery = true)
