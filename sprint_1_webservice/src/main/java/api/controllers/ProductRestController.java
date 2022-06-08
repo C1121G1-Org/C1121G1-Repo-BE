@@ -72,20 +72,6 @@ public class ProductRestController {
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
-
-
-
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
-
-//    @PostMapping(value = "/create")
-//    public String createProduct() {
-//        return null;
-//    }
-
-
     /*
      Created by tuanPA
      Time: 18:15 31/05/2022
@@ -101,10 +87,6 @@ public class ProductRestController {
 
 
         productDtoErrors.validate(productDto, bindingResult);
-
-//        productDto.validate(productDto,bindingResult);
-
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
@@ -118,7 +100,7 @@ public class ProductRestController {
 
         BeanUtils.copyProperties(productDto, product);
         Category category = new Category();
-        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        BeanUtils.copyProperties(productDto.getCategoryDto(), category);
         product.setCategory(category);
         product.setPrice(price);
         product.setDeleteFlag(false);
@@ -189,7 +171,7 @@ public class ProductRestController {
         BeanUtils.copyProperties(productDto, product);
 
         Category category = new Category();
-        BeanUtils.copyProperties(productDto.getCategoryDto(),category);
+        BeanUtils.copyProperties(productDto.getCategoryDto(), category);
         product.setCategory(category);
 
 
@@ -234,4 +216,5 @@ public class ProductRestController {
         List<Product> productTest = iProductService.findAllTest();
         return new ResponseEntity<>(productTest, HttpStatus.OK);
     }
+
 }
