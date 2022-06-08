@@ -1,5 +1,6 @@
 package api.dto;
 
+
 public interface HistoryInvoiceDto {
 
     Long getInvoiceId();

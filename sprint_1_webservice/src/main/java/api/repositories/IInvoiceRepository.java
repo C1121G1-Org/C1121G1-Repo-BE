@@ -66,4 +66,3 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
     @Query(value = "select * from invoice order by id desc limit 1;",nativeQuery = true)
     Invoice getNewInvoice();
 }
-

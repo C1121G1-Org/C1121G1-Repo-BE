@@ -34,7 +34,7 @@ public class QRCodeUtils {
     private static final String PATH = "D:\\qrcode\\";
 
     public static String encode(ProductQRCode productQRCode) {
-        String filePath = PATH + "PD-" + productQRCode.getId() + ".png";
+        String filePath = PATH + productQRCode.getId() + " - " + productQRCode.getName() + ".png";
 
         try {
             ObjectMapper mapper = new ObjectMapper();
