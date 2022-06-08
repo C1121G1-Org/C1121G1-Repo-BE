@@ -43,7 +43,7 @@ public interface ICustomerService {
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
 
     /*
         Created by TuanNQ

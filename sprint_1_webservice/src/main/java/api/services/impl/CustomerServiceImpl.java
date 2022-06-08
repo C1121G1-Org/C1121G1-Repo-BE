@@ -20,8 +20,9 @@ public class CustomerServiceImpl implements ICustomerService {
     Created by LongNHL
     Time: 21:30 31/05/2022
     Function: create customer
+    */
 
-        Created by TuanNQ
+    /*    Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer
     */
@@ -66,7 +67,7 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show list of customer reports by age and gender
     */
     @Override
-    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age) {
+    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age) {
         return iCustomerRepository.filterByGenderAndAge(pageable, gender, age);
     }
 
