@@ -5,7 +5,6 @@ import api.dto.ProductDto;
 import api.models.Product;
 import api.models.ProductQRCode;
 import api.models.ResponseObject;
-import api.repositories.ISaleReportRepository;
 import api.services.IProductService;
 import api.services.ISaleReportService;
 import api.utils.QRCodeUtils;
@@ -86,8 +85,6 @@ public class ProductRestController {
         ProductDto productDtoErrors = new ProductDto();
         productDtoErrors.setIProductService(iProductService);
         productDtoErrors.validate(productDto, bindingResult);
-
-
         if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()

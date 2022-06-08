@@ -56,7 +56,6 @@ public class InvoiceDetailRestController {
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createInvoiceDetail(@Valid @RequestBody InvoiceDetailDto invoiceDetailDto,
                                                               BindingResult bindingResult) {
-        System.out.println(invoiceDetailDto);
         Map<String, String> errorMap = new HashMap<>();
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors()
@@ -75,7 +74,6 @@ public class InvoiceDetailRestController {
         invoice.setPayments(invoiceDetailDto.getPayments());
         invoice.setCustomer(customer);
         iInvoiceService.saveNewInvoice(invoice);
-        System.out.println(invoice);
 
         Invoice newInvoice = iInvoiceService.getNewInvoice();
         List<ProductInvoiceDto> list = invoiceDetailDto.getProducts();

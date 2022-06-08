@@ -24,4 +24,6 @@ public interface IProductDto {
     String getSelfie();
 
     String getOtherDescription();
+
+    Long getQuantity();
 }

@@ -12,13 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 import org.springframework.validation.BindingResult;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Map;
@@ -35,17 +30,14 @@ public class SupplierRestController {
 
     /*
         Created by khoaVC
+        Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
-        Function: 1/    getAllSupplier() = list all Suppliers from DB
-                  2/    listSupplier() = list all Suppliers from DB with paging and search
+        Function:
+                  1/    listSupplier() = list all Suppliers from DB with paging and search
     */
-    private List<Supplier> getAllSupplier() {
-        return iSupplierService.getAllSupplier();
-    }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 3) Pageable pageable,
-
+    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 4) Pageable pageable,
                                                       @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
                                                       @RequestParam(name = "ad", required = false, defaultValue = "") String address,
                                                       @RequestParam(name = "ph", required = false, defaultValue = "") String phone,

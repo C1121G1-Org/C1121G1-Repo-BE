@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,29 +37,17 @@ public class StorageRestController {
 
     /*
         Created by khoaVC
+        Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
-        Function: 1/    getAllProduct() = list all Products from DB
-                  2/    getAllStorage() = list all Storages from DB
-                  3/    createStorage() = create Storage
+        Function:
+                  1/    createStorage() = create Storage
     */
-    private List<Product> getAllProduct(){
-        return iProductService.getAllProduct();
-    }
-
-    private List<Storage> getAllStorage(){
-        return iStorageService.getAllStorage();
-    }
-
-    @GetMapping(value = "/list")
-    public String listStorage(){
-        return null;
-    }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult){
-        storageDto.validate(storageDto,bindingResult);
+    public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult) {
+        storageDto.validate(storageDto, bindingResult);
         Map<String, String> errorMap = new HashMap<>();
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             bindingResult
                     .getFieldErrors()
                     .stream()
@@ -72,7 +59,7 @@ public class StorageRestController {
             Employee employee = iEmployeeService.findEmployee(storageDto.getCreatedEmployeeDto());
             Product product = iProductService.findProduct(storageDto.getProductDto());
             Supplier supplier = iSupplierService.findSupplier(storageDto.getSupplierDto());
-            if (employee != null && product != null && supplier != null){
+            if (employee != null && product != null && supplier != null) {
                 storage.setCreatedEmployee(employee);
                 storage.setProduct(product);
                 storage.setSupplier(supplier);
@@ -84,15 +71,5 @@ public class StorageRestController {
             }
         }
         return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
-    }
-
-    @PatchMapping(value = "/update")
-    public String updateStorage(){
-        return null;
-    }
-
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteStorage(){
-        return null;
     }
 }
