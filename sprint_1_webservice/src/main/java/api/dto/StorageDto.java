@@ -27,7 +27,7 @@ public class StorageDto implements Validator {
     private boolean deleteFlag;
 
     public StorageDto(){
-        setDeleteFlag(true);
+        setDeleteFlag(false);
     }
 
     @Override

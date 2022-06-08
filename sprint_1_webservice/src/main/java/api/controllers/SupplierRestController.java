@@ -46,6 +46,7 @@ public class SupplierRestController {
         if (suppliers.isEmpty()){
             return new ResponseEntity<>(suppliers, HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
 
@@ -54,6 +55,7 @@ public class SupplierRestController {
     Time: 09:00 31/05/2022
     Function: Create Supplier
     */
+
 
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createSupplier(@Valid @RequestBody SupplierDto supplierDto,
@@ -71,5 +73,4 @@ public class SupplierRestController {
         iSupplierService.save(supplier);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
