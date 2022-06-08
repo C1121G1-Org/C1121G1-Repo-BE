@@ -35,7 +35,7 @@ public class CustomerRestController {
           Function: get  all page customer and search of customer
       */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
+    public ResponseEntity<Page<Customer>> listCustomer(@PageableDefault(value =6) Pageable pageable, @RequestParam Optional<String> keyName,
                                                        @RequestParam Optional<String> keyPhone) {
         String keyNameValue = keyName.orElse("");
         String keyPhoneValue = keyPhone.orElse("");
@@ -60,26 +60,6 @@ public class CustomerRestController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    /*
-    Created by LongNHL
-    Time: 11:30 31/05/2022
-    Function: create invoice
-    */
-    @PostMapping(value = "/create")
-    public ResponseEntity<ResponseObject> createCustomer(@Valid @RequestBody CustomerDto customerDto,
-                                 BindingResult bindingResult){
-        Map<String, String> errorMap = new HashMap<>();
-        if(bindingResult.hasErrors()){
-            bindingResult.getFieldErrors()
-                    .stream().forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
-            return new ResponseEntity<>(new ResponseObject(false,"Failed!", errorMap, new ArrayList()),
-                    HttpStatus.BAD_REQUEST);
-        }
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
-        iCustomerService.createCustomer(customer);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     @PatchMapping(value = "/update")
     public String updateCustomer() {
@@ -172,8 +152,9 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/report-customer-search")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearch(
-            @PageableDefault(value = 5) Pageable pageable, @RequestParam Boolean gender,
-            @RequestParam Integer age) {
+            @PageableDefault Pageable pageable, @RequestParam Boolean gender,
+            @RequestParam String age) {
+
 
         Page<ReportCustomerDto> reportCustomerDtoPage =
                 iCustomerService.filterByGenderAndAge(pageable, gender, age);

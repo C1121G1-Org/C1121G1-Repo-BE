@@ -43,7 +43,7 @@ public interface ICustomerService {
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
 
     /*
         Created by TuanNQ
@@ -73,9 +73,20 @@ public interface ICustomerService {
          */
     Customer findById(long id);
 
+    /*
+       Created by LongNHL
+       Time: 21:30 31/05/2022
+       Function: get customer
+       */
+
     void createCustomer(Customer customer);
 
-    Customer findCustomer(Customer customer);
+       /*
+       Created by LongNHL
+       Time: 21:30 31/05/2022
+       Function: get customer
+       */
+    Customer getNewCustomer();
 
 
 }

@@ -13,11 +13,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
-
     @Autowired
     ICustomerRepository iCustomerRepository;
 
     /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: create customer
+
         Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer
@@ -63,7 +66,7 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show list of customer reports by age and gender
     */
     @Override
-    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age) {
+    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age) {
         return iCustomerRepository.filterByGenderAndAge(pageable, gender, age);
     }
 
@@ -108,12 +111,14 @@ public class CustomerServiceImpl implements ICustomerService {
         iCustomerRepository.saveCustomer(customer.getCustomerName(), customer.getPhoneNumber(),
                 customer.getDateOfBirth(), customer.getEmail(), customer.getAddress(), customer.isGender());
     }
-
+    /*
+    Created by LongNHL
+    Time: 21:30 31/05/2022
+    Function: get customer
+    */
     @Override
-    public Customer findCustomer(Customer customer) {
-        return iCustomerRepository.findCustomer(customer.getCustomerName(), customer.getPhoneNumber(), customer.getDateOfBirth());
+    public Customer getNewCustomer() {
+        return iCustomerRepository.getNewCreateCustomer();
     }
-
-
 
 }

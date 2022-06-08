@@ -1,12 +1,11 @@
+
 package api.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "storage")
@@ -26,7 +25,7 @@ public class Storage {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity", nullable = false, columnDefinition = "BIGINT default 0")
     private Long quantity;
 
     @ManyToOne
