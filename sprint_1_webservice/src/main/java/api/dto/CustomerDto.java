@@ -31,6 +31,9 @@ public class CustomerDto {
     private String phoneNumber;
 
     @NotBlank(message = "Vui lòng nhập ngày sinh khách hàng")
+    @Pattern(regexp = "^\\d{4}[\\-\\/\\s]?((((0[13578])|(1[02]))[\\-\\/\\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\\-\\/\\s]?(([0-2][0-9])|(30)))|(02[\\-\\/\\s]?[0-2][0-9]))$", message = "vui lòng nhập đúng định dạng")
+    private String dateOfBirth;
+
     @Pattern(regexp = "^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,}){1,}$", message = "vui lòng nhập đúng định dạng")
     private String email;
     @NotBlank(message = "Vui lòng nhập địa chỉ ")

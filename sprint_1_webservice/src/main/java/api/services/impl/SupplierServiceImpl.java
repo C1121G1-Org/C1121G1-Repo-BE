@@ -37,14 +37,26 @@ public class SupplierServiceImpl implements ISupplierService {
     public Page<Supplier> getAllSupplierPagingAndSearch(Pageable pageable, String supplier, String address, String phone, String email) {
         return iSupplierRepository.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
     }
+    /*
+            Created by ngocTTB
+            Time: 19:00 31/05/2022
+            Function: 1/    save(Supplier supplier) = store relative supplier
+                      2/    findBySupplierName(String supplierName) = find the supplier name field to check
 
+        */
     @Override
     public void save(Supplier supplier) {
-        iSupplierRepository.createSupplier(supplier.getSupplierName(), supplier.getAddress(), supplier.getPhone(), supplier.getEmail(), supplier.isDeleteFlag());
+
+        iSupplierRepository.createSupplier(supplier);
     }
 
     @Override
     public Supplier findBySupplierName(String supplierName) {
         return iSupplierRepository.findBySupplierName(supplierName);
+    }
+
+    @Override
+    public Supplier findByEmail(String email) {
+        return iSupplierRepository.findByEmail(email);
     }
 }

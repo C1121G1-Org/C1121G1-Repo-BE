@@ -1,5 +1,10 @@
 package api.services.impl;
 
+
+
+import api.dto.HistoryInvoiceDto;
+
+
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -27,7 +32,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     IProductRepository iProductRepository;
 
-
     /*
         Created by LongNHL
         Time: 21:30 31/05/2022
@@ -42,8 +46,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
 
     @Override
-    public Page<Invoice> findAll(String keyword, Pageable pageable) {
-         return iInvoiceRepository.findAllByKeyWord(keyword,pageable);
+    public Page<HistoryInvoiceDto> findAll(String keyword, Pageable pageable, String sort) {
+         return iInvoiceRepository.findAllByKeyWord(keyword,pageable,sort);
     }
 
     @Override
@@ -62,12 +66,12 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     }
 
-
         /*
         Created by LongNHL
         Time: 21:30 31/05/2022
         Function: get invoice after create
         */
+
     @Override
     public Invoice getNewInvoice() {
         return iInvoiceRepository.getNewInvoice();

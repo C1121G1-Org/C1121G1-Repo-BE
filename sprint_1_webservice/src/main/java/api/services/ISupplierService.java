@@ -19,8 +19,16 @@ public interface ISupplierService {
     List<Supplier> getAllSupplier();
     Page<Supplier> getAllSupplierPagingAndSearch(Pageable pageable, String supplier, String address, String phone, String email);
 
+    /*
+    Created by NgocTTB
+    Time: 09:00 31/05/2022
+    Function: 1/ void save
+              2/ Supplier findBySupplierNam
+    */
+
     void save(Supplier supplier);
 
     Supplier findBySupplierName(String supplierName);
 
+    Supplier findByEmail(String email);
 }
