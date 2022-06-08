@@ -152,9 +152,8 @@ public class CustomerRestController {
     */
     @GetMapping(value = "/report-customer-search")
     public ResponseEntity<Page<ReportCustomerDto>> showListReportCustomerSearch(
-            @PageableDefault Pageable pageable, @RequestParam Boolean gender,
-            @RequestParam String age) {
-
+            @PageableDefault(value = 5) Pageable pageable, @RequestParam Boolean gender,
+            @RequestParam Integer age) {
 
         Page<ReportCustomerDto> reportCustomerDtoPage =
                 iCustomerService.filterByGenderAndAge(pageable, gender, age);
