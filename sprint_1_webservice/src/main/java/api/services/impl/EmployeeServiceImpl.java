@@ -1,6 +1,7 @@
 package api.services.impl;
 
 import api.dto.EmployeeInterface;
+import api.dto.PersonalDto;
 import api.models.Account;
 import api.models.Employee;
 
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
@@ -49,10 +52,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     }
 
-
     @Override
     public void saveDelete(Long id) {
         iEmployeeRepository.saveDelete(id);
+    }
+
+    /*
+        Created by KhaiTT
+        Date: 22:40 31/05/2022
+        Function: find employee object by id.
+    */
+    @Override
+    public Optional<Employee> findById(Long id) {
+        return iEmployeeRepository.findById(id);
     }
 
     /*
@@ -68,5 +80,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public Employee findByIdCard(String idCard) {
         return iEmployeeRepository.findByIdCard(idCard);
+    }
+
+    /*
+        Created by KhaiTT
+        Date: 15:33 01/06/2022
+        Function: update personal information of employee to DB.
+    */
+    @Override
+    public void updatePersonalInforamation(PersonalDto personalDto) {
+        iEmployeeRepository.updatePersonalInformation(personalDto);
     }
 }

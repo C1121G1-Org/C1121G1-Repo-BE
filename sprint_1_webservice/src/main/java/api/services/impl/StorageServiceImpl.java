@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StorageServiceImpl implements IStorageService {
@@ -36,7 +37,7 @@ public class StorageServiceImpl implements IStorageService {
     Function: find storage by productId after create invoice
     */
     @Override
-    public Storage getStorageByIdProduct(Long productId) {
+    public Optional<Storage> getStorageByIdProduct(Long productId) {
         return iStorageRepository.getStorageByIdProduct(productId);
     }
 

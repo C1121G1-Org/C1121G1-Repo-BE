@@ -37,11 +37,11 @@ public class InvoiceRestController {
     }
 
     /*
-    Created by CongNV
-    Date:  06/06/2022
-    Function: find all history
-*/
-
+        Created by CongNV
+        Date:  06/06/2022
+        Function: find all history
+        Role: Admin, seller
+    */
     @GetMapping(value = "/list")
     public ResponseEntity<Page<HistoryInvoiceDto>> list(@RequestParam(required = false, defaultValue = "") String keyword,
                                                         @RequestParam("page") Optional<Integer> page,
@@ -52,20 +52,5 @@ public class InvoiceRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(invoices, HttpStatus.OK);
-    }
-
-        @PostMapping(value = "/create")
-    public String createInvoice() {
-        return null;
-    }
-
-    @PatchMapping(value = "/update")
-    public String updateInvoice() {
-        return null;
-    }
-
-    @DeleteMapping(value = "/delete") //Nếu dùng deleteFlag thì phải dùng @PatchMapping để update lại deleteFlag
-    public String deleteInvoice() {
-        return null;
     }
 }

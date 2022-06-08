@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IStorageRepository extends JpaRepository<Storage, Long> {
 
@@ -36,7 +37,7 @@ public interface IStorageRepository extends JpaRepository<Storage, Long> {
     */
 
     @Query(value = "select * from `storage` where product_id = :id", nativeQuery = true)
-    Storage getStorageByIdProduct(@Param("id") Long productId);
+    Optional<Storage> getStorageByIdProduct(@Param("id") Long productId);
 
     @Transactional
     @Modifying
