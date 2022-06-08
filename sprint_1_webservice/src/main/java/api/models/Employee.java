@@ -1,10 +1,22 @@
+
 package api.models;
+
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "employee")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
 
     @Id
@@ -32,8 +44,9 @@ public class Employee {
     private Account account;
 
     @OneToMany(mappedBy = "createdEmployee")
+    @JsonBackReference
     private Set<Storage> storageSet;
 
-    @Column(name = "delete_flag", nullable = false)
+    @Column(name = "delete_flag", nullable = false, columnDefinition = "BIT(1) default 1")
     private boolean deleteFlag;
 }

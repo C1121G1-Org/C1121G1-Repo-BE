@@ -1,10 +1,21 @@
+
 package api.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "invoice_detail")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class InvoiceDetail {
 
     @Id
@@ -18,15 +29,9 @@ public class InvoiceDetail {
     @JoinColumn(name = "invoice_id", nullable = false, referencedColumnName = "id")
     private Invoice invoice;
 
-//    @OneToMany(mappedBy = "")
-//    private Product product;
+    @ManyToOne()
+    @JoinColumn(name = "product_id", nullable = false, referencedColumnName = "id")
+    private Product product;
 
-//    @ManyToOne
-//    @JoinColumn(name = "product_id", nullable = false, referencedColumnName = "id")
-//    private Product product;
-
-//    @ManyToOne
-//    @JoinColumn(name = "customer_id", nullable = false, referencedColumnName = "id")
-//    private Customer customer;
 
 }
