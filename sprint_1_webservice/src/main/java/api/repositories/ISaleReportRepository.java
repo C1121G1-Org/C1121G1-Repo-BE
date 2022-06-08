@@ -16,11 +16,11 @@ import java.util.Optional;
 public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "SELECT invoice.id as id , invoice.create_date as `date` , count(invoice_id) as invoiceQuantity , sum(invoice.total_money) as totalMoney  FROM `sprint-1-db`.invoice \n" +
-            "JOIN product ON product.id = invoice.product_id " +
-            "JOIN invoice_detail ON invoice_detail.id = invoice.id " +
-            "where ( str_to_date(invoice.create_date,'%d/%m/%Y') between :#{#startDay} and :#{#endDay}  ) " +
-            "and product.id like concat('%', :productId ,'%') " +
-            "GROUP BY invoice.create_date ; ",
+            "JOIN invoice_detail ON invoice_detail.id = invoice.id\n" +
+            "JOIN product ON product.id = invoice_detail.product_id \n" +
+            "WHERE ( str_to_date(invoice.create_date,'%d/%m/%Y') between :#{#startDay}  and :#{#endDay}  ) \n" +
+            "AND product.id LIKE concat('%', :productId ,'%') " +
+            "GROUP BY invoice.create_date ;",
             nativeQuery = true)
     <T> List<T> findAllSaleReport(Class<T> t, String startDay, String endDay, @Param("productId") String productId);
 

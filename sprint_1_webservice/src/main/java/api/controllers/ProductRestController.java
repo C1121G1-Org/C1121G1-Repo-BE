@@ -199,8 +199,6 @@ public class ProductRestController {
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
         ProductQRCode productQRCode = new ProductQRCode();
-
-
         BeanUtils.copyProperties(product, productQRCode);
         QRCodeUtils.encode(productQRCode);
 
