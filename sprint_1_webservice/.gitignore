@@ -16,6 +16,8 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+/sprint_1_webservice/src/test/
+
 
 ### IntelliJ IDEA ###
 .idea
@@ -23,8 +25,10 @@ bin/
 *.iml
 *.ipr
 out/
+
 !**/src/main/**/out/
-!**/src/test/**/out/
+!**/src/test/**
+
 
 ### NetBeans ###
 /nbproject/private/
