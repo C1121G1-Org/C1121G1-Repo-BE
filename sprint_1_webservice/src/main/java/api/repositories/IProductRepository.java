@@ -85,6 +85,7 @@ Function: Query Create product
      Time: 14:15 1/06/2022
      Function: delete product
  */
+
     @Query(value = "update product SET delete_flag = 0 WHERE product_id = ?;", nativeQuery = true)
     void deleteFlag(@PathVariable("id") Long id);
 
