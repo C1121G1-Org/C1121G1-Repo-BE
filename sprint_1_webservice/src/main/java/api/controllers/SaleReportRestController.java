@@ -86,4 +86,13 @@ public class SaleReportRestController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("/list-product")
+    public ResponseEntity<List<Product>> listProduct() {
+        List<Product> list = this.iSaleReportService.getListProduct();
+        if (list.size() < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

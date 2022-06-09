@@ -29,4 +29,8 @@ public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
             nativeQuery = true)
     Product getLatestProduct();
 
+    @Query(value = "SELECT * FROM `sprint-1-db`.product where delete_flag = 0 ; ",
+            nativeQuery = true)
+    List<Product> getListProduct();
+
 }
