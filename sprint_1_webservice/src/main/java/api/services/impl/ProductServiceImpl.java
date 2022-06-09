@@ -37,10 +37,10 @@ public class ProductServiceImpl implements IProductService {
             Time: 18:15 31/05/2022
             Function: search Products
         */
-    @Override
-    public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3) {
-        return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3);
-    }
+        @Override
+        public Page<IProductDto> findAllProduct(Pageable pageable, String key1, String key2, String key3,String key4) {
+            return iProductRepository.pageFindAll(IProductDto.class,pageable,key1, key2 , key3 , key4);
+        }
 
     /*
         Created by tuanPA

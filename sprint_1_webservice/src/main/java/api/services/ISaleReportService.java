@@ -15,4 +15,6 @@ public interface ISaleReportService {
     List<ISaleReport> findAllSaleReports(String startDay, String endDay,String productId);
 
     Product getLatestProduct();
+
+    List<Product> getListProduct();
 }

@@ -9,6 +9,8 @@ import api.models.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface ICustomerService {
     /*
         Created by TuanNQ
@@ -43,7 +45,7 @@ public interface ICustomerService {
         Time: 18:00 31/05/2022
         Function: Show list of customer reports by age and gender
     */
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
 
     /*
         Created by TuanNQ
@@ -87,6 +89,24 @@ public interface ICustomerService {
        Function: get customer
        */
     Customer getNewCustomer();
+
+    /*
+Created By hoangDH,
+Time: 12:38 PM 2022-06-01
+Role: admin, business staff
+Function: edit object by id from database
+ */
+
+    void editCustomer(Customer customer, Long id);
+
+    /*
+Created By hoangDH, TamHT
+Time: 13:42 PM 2022-06-01
+Role: admin, business staff
+Function: find customer object by id from database
+ */
+
+    Optional<Customer> findById(Long id);
 
 
 }

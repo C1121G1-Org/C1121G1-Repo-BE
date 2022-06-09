@@ -52,6 +52,7 @@ public class SaleReportRestController {
                                                          @RequestParam(required = false, defaultValue = "3000-01-01") String endDay,
                                                          @RequestParam(required = false, defaultValue = "") String productId) {
         if (productId.equals("")) {
+            productId = "%%";
             List<ISaleReport> saleReportList = this.iSaleReportService.findAllSaleReports(startDay, endDay, productId);
             if (saleReportList.size() < 1) {
                 return new ResponseEntity<>(new ResponseObject(false, "Failed!", null, null), HttpStatus.BAD_REQUEST);
@@ -83,6 +84,15 @@ public class SaleReportRestController {
     public ResponseEntity<Product> getLatestProduct() {
         Product product = this.iSaleReportService.getLatestProduct();
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @GetMapping("/list-product")
+    public ResponseEntity<List<Product>> listProduct() {
+        List<Product> list = this.iSaleReportService.getListProduct();
+        if (list.size() < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

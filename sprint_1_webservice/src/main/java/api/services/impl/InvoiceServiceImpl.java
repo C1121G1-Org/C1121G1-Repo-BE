@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -40,7 +41,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Override
     public void saveNewInvoice(Invoice invoice) {
         invoice.setCreateDate(LocalDate.now().toString());
-        invoice.setCreateTime(LocalTime.now().toString());
+        invoice.setCreateTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
     }
 
@@ -48,6 +49,11 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Override
     public Page<HistoryInvoiceDto> findAll(String keyword, Pageable pageable, String sort) {
          return iInvoiceRepository.findAllByKeyWord(keyword,pageable,sort);
+    }
+
+    @Override
+    public Page<HistoryInvoiceDto> findProductsInvoice(Pageable pageable, Long id) {
+        return iInvoiceRepository.findProductsInvoice(pageable, id);
     }
 
     @Override

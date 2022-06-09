@@ -31,4 +31,9 @@ public class SaleReportServiceImpl implements ISaleReportService {
         return this.iSaleReportRepository.getLatestProduct();
     }
 
+    @Override
+    public List<Product> getListProduct() {
+        return this.iSaleReportRepository.getListProduct();
+    }
+
 }

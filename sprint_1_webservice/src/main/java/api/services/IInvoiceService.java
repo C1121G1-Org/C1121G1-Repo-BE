@@ -22,6 +22,7 @@ public interface IInvoiceService {
 */
 
     Page<HistoryInvoiceDto> findAll(String keyword, Pageable pageable , String sort);
+    Page<HistoryInvoiceDto> findProductsInvoice(Pageable pageable, Long id);
 
     Invoice findById(Long id);
     List<Customer> listCustomer();

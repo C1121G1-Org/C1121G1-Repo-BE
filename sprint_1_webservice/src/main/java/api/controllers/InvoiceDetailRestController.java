@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 @RequestMapping("/api/invoiceDetail")
 public class InvoiceDetailRestController {
     @Autowired
@@ -122,6 +122,7 @@ public class InvoiceDetailRestController {
                     for (ProductInvoiceDto productDto : invoiceDetailDto.getProducts()) {
                         Optional<Storage> storages = iStorageService.getStorageByIdProduct(productDto.getId());
                         Storage storage = storages.orElse(null);
+                        storage.setQuantity(storage.getQuantity() - productDto.getQuantity());
                         iStorageService.updateQuantityProduct(storage);
                     }
                     return new ResponseEntity<>(HttpStatus.OK);
