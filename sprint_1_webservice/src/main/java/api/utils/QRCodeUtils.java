@@ -34,20 +34,20 @@ public class QRCodeUtils {
     private static final String PATH = "D:\\qrcode\\";
 
     public static String encode(ProductQRCode productQRCode) {
-        String filePath = PATH + "PD-" + productQRCode.getId() + ".png";
+        String filePath = PATH + productQRCode.getId() + " - " + productQRCode.getName() + ".png";
 
         try {
             ObjectMapper mapper = new ObjectMapper();
             String jsonProduct = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(productQRCode);
 
+            //Config UTF-8
             Hashtable hashtable = new Hashtable();
             hashtable.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
             BitMatrix bitMatrix = new MultiFormatWriter().encode(jsonProduct, BarcodeFormat.QR_CODE, 500, 500, hashtable);
             MatrixToImageWriter.writeToPath(bitMatrix, "png", Paths.get(filePath));
-
             return filePath;
-        } catch (WriterException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

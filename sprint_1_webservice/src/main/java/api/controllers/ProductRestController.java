@@ -50,34 +50,31 @@ public class ProductRestController {
 
 
     /*
-          Created by tamHT and hieuMMT
-          Time: 18:15 31/05/2022
-          Function: get all page product and search of product
-          Role : Admin, bussines staff, seller
-      */
-
+        Created by tamHT and hieuMMT
+        Time: 18:15 31/05/2022
+        Function: get all page product and search of product
+        Role : Admin, business staff, seller
+     */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyQuantity,
-                                                            @RequestParam Optional<String> keyPrice
-    ) {
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 10) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam(value = "keyPrice", defaultValue = "1000000000000000000000000000000000", required = false) String keyPrice,
+                                                            @RequestParam(value = "keyQuantity", defaultValue = "0", required = false) String keyQuantity,
+                                                            @RequestParam(value = "keySort", defaultValue = "priceDesc", required = false) String keySort){
         String keyNameValue = keyName.orElse("");
-        String keyQuantityValue = keyQuantity.orElse("0");
-        String keyPriceValue = keyPrice.orElse("0");
-
-        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
+        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPrice, keyQuantity,keySort);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
-    /*
-     Created by tuanPA
-     Time: 18:15 31/05/2022
-     Function: create new product
- */
 
+    /*
+         Created by tuanPA
+         Time: 18:15 31/05/2022
+         Function: create new product
+         Role: Admin, business staff
+    */
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createProduct(@Valid @RequestBody ProductDto productDto,
                                                         BindingResult bindingResult) {
@@ -117,7 +114,6 @@ public class ProductRestController {
         ProductQRCode productQRCode = new ProductQRCode();
         BeanUtils.copyProperties(latestProduct, productQRCode);
         QRCodeUtils.encode(productQRCode);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -125,6 +121,7 @@ public class ProductRestController {
      Created by tuanPA
      Time: 18:15 31/05/2022
      Function: findById
+     Role: Admin, business staff
  */
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) {
@@ -139,6 +136,7 @@ public class ProductRestController {
      Created by tuanPA
      Time: 18:15 31/05/2022
      Function: edit product
+     Role: Admin, business staff
  */
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<ResponseObject> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
@@ -205,16 +203,4 @@ public class ProductRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    /*
-         Created by LongNHL
-         Time: 15:00 2/06/2022
-         Function: use test create invoiec
-     */
-    @GetMapping(value = {"/listTest"})
-    public ResponseEntity<List<Product>> showListCustomer() {
-        List<Product> productTest = iProductService.findAllTest();
-        return new ResponseEntity<>(productTest, HttpStatus.OK);
-    }
-
 }

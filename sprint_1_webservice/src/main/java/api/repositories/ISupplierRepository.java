@@ -38,11 +38,11 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
                   3/    getAllSupplier() = write a native query to get all Suppliers
     */
 
-    @Query(value = "select * from supplier where delete_flag = 0 and supplier_name like concat('%',:supplier,'%') and " +
-            "address like concat('%',:address,'%') and phone like concat('%',:phone,'%') and email like concat('%',:email,'%') ",
+    @Query(value = "select * from supplier where delete_flag = 0 and lower(replace(supplier_name,' ','')) like concat('%',:supplier,'%') and \n" +
+            "lower(replace(address,' ','')) like concat('%',:address,'%') and lower(replace(phone,' ','')) like concat('%',:phone,'%') and lower(replace(email,' ','')) like concat('%',:email ,'%') ",
             nativeQuery = true,
-            countQuery = "select count(*) from supplier where delete_flag = 0 and supplier_name like concat('%',:supplier,'%') and " +
-                    "address like concat('%',:address,'%') and phone like concat('%',:phone,'%') and email like concat('%',:email,'%') ")
+            countQuery = "select * from supplier where delete_flag = 0 and lower(replace(supplier_name,' ','')) like concat('%',:supplier,'%') and +\n" +
+                    "lower(replace(address,' ','')) like concat('%',:address,'%') and lower(replace(phone,' ','')) like concat('%',:phone,'%') and lower(replace(email,' ','')) like concat('%',:email ,'%') ")
     Page<Supplier> getAllSupplierPagingAndSearch(Pageable pageable, @Param("supplier") String supplier, @Param("address") String address,
                                                  @Param("phone") String phone, @Param("email") String email);
 
@@ -55,6 +55,4 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
 
     @Query(value = " INSERT INTO supplier ( address, email, phone_number, supplier_name, delete_flag) VALUES (?, ?, ?, ?, ?);", nativeQuery = true)
     void createSupplier(String supplierName, String address, String phone, String email,boolean deleteFlag );
-
-
 }

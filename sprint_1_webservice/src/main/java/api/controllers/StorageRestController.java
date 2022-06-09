@@ -38,10 +38,9 @@ public class StorageRestController {
         Created by khoaVC
         Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
-        Function:
-                  1/    createStorage() = create Storage
+        Function: 1/    createStorage() = create Storage
+        Role: Admin, Storekeeper
     */
-
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createStorage(@Valid @RequestBody StorageDto storageDto, BindingResult bindingResult) {
         storageDto.validate(storageDto, bindingResult);

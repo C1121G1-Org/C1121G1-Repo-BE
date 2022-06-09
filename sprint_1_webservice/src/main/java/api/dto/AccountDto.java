@@ -1,7 +1,5 @@
 package api.dto;
 
-
-import api.models.Account;
 import api.services.IAccountService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

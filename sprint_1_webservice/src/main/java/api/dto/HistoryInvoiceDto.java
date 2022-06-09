@@ -1,6 +1,5 @@
 package api.dto;
 
-import api.models.Customer;
 
 public interface HistoryInvoiceDto {
 

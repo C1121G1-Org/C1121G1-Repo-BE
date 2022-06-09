@@ -41,7 +41,6 @@ public class StorageDto implements Validator {
         Time: 21:54 31/05/2022
         Function: validate() = validate quantity and validate createdDate
     */
-
     @Override
     public void validate(Object target, Errors errors) {
         StorageDto storageDto = (StorageDto) target;

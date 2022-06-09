@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
@@ -72,7 +73,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "INNER JOIN invoice_detail on invoice.id = invoice_detail.invoice_id " +
             "INNER JOIN product ON invoice_detail.product_id = product.id " +
             "WHERE customer.id = :id and " +
-            "(STR_TO_DATE(invoice.create_date, '%d-%m-%Y') " +
+            "(STR_TO_DATE(invoice.create_date, '%Y-%m-%d') " +
             "BETWEEN STR_TO_DATE(:startDate, '%Y-%m-%d') AND STR_TO_DATE(:endDate, '%Y-%m-%d')) " +
             "GROUP BY invoice_detail.invoice_id",
             countQuery = "SELECT invoice.id as id, customer.customer_name as name, " +
@@ -86,7 +87,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     "INNER JOIN invoice_detail on invoice.id = invoice_detail.invoice_id " +
                     "INNER JOIN product ON invoice_detail.product_id = product.id " +
                     "WHERE customer.id = :id and " +
-                    "(STR_TO_DATE(invoice.create_date, '%d-%m-%Y') " +
+                    "(STR_TO_DATE(invoice.create_date, '%Y-%m-%d') " +
                     "BETWEEN STR_TO_DATE(:startDate, '%Y-%m-%d') AND STR_TO_DATE(:endDate, '%Y-%m-%d')) " +
                     "GROUP BY invoice_detail.invoice_id",
             nativeQuery = true)
@@ -116,7 +117,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
        Function: Show list of customer reports by gender
    */
     @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
-            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) as age, " +
             "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
             "customer.email as email, customer.phone_number as phoneNumber, " +
             "count(invoice.id) as purchaseTimes " +
@@ -125,7 +126,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "WHERE gender = :gender " +
             "GROUP BY customer.id",
             countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
-                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) as age, " +
                     "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
                     "customer.email as email, customer.phone_number as phoneNumber, " +
                     "count(invoice.id) as purchaseTimes " +
@@ -142,53 +143,53 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
         Function: Show list of customer reports by age
     */
     @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
-            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) as age, " +
             "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
             "customer.email as email, customer.phone_number as phoneNumber, " +
             "count(invoice.id) as purchaseTimes " +
             "FROM customer " +
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
-            "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+            "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) = :age " +
             "GROUP BY customer.id",
             countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
-                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) as age, " +
                     "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
                     "customer.email as email, customer.phone_number as phoneNumber, " +
                     "count(invoice.id) as purchaseTimes " +
                     "FROM customer " +
                     "INNER JOIN invoice ON customer.id = invoice.customer_id " +
-                    "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+                    "WHERE (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) = :age " +
                     "GROUP BY customer.id",
             nativeQuery = true)
     Page<ReportCustomerDto> filterByAge(Pageable pageable, Integer age);
 
-//        Created by TuanNQ
-//        Time: 18:00 31/05/2022
-//        Function: Show list of customer reports by age and gender
-
+    /*
+        Created by TuanNQ
+        Time: 18:00 31/05/2022
+        Function: Show list of customer reports by age and gender
+    */
     @Query(value = "SELECT customer.id as id, customer.customer_name as name, " +
-            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) as age, " +
             "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
             "customer.email as email, customer.phone_number as phoneNumber, " +
             "count(invoice.id) as purchaseTimes " +
             "FROM customer " +
             "INNER JOIN invoice ON customer.id = invoice.customer_id " +
-            "WHERE gender = :gender and (year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) like concat('%', :age, '%') " +
             "WHERE gender = :gender and " +
-            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+            "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) = :age " +
             "GROUP BY customer.id",
             countQuery = "SELECT customer.id as id, customer.customer_name as name, " +
-                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) as age, " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) as age, " +
                     "customer.gender as gender, customer.date_of_birth as dateOfBirth, " +
                     "customer.email as email, customer.phone_number as phoneNumber, " +
                     "count(invoice.id) as purchaseTimes " +
                     "FROM customer " +
                     "INNER JOIN invoice ON customer.id = invoice.customer_id " +
                     "WHERE gender = :gender and " +
-                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%d-%m-%Y'))) = :age " +
+                    "(year(now()) - year(STR_TO_DATE(customer.date_of_birth, '%Y-%m-%d'))) = :age " +
                     "GROUP BY customer.id",
             nativeQuery = true)
-    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age);
+    Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age);
 
     /*
      Created by TamT
@@ -226,4 +227,31 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select product.*, storage.quantity from product inner join storage on product.id = storage.product_id", nativeQuery = true)
     <T> List<T> findProductUsingService(Class<T> classType);
 
+    /*
+Created By hoangDH,
+Time: 12:38 PM 2022-06-01
+Role: admin, business staff
+Function: edit object by id from database
+*/
+    @Transactional
+    @Modifying
+    @Query( value = "UPDATE `sprint-1-db`.`customer` SET " +
+            "`address` = :#{#customer.address}," +
+            " `customer_name` = :#{#customer.customerName}," +
+            " `date_of_birth` = :#{#customer.dateOfBirth}," +
+            " `email` = :#{#customer.email}," +
+            " `gender` = :#{#customer.gender}," +
+            " `phone_number` = :#{#customer.phoneNumber} WHERE (`id` =:id);",nativeQuery = true)
+    void editCustomer(Customer customer,@Param("id") Long id);
+
+
+    /*
+    Created By hoangDH,
+    Time: 13:42 PM 2022-06-01
+    Role: admin, business staff
+    Function: find customer object by id from database
+     */
+    @Query(nativeQuery=true,value="select id,address,customer_name, " +
+            "date_of_birth,email,gender,phone_number from `sprint-1-db`.`customer` where `id`=:id")
+    Optional<Customer> findById(@Param("id") Long id);
 }
