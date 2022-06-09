@@ -35,12 +35,12 @@ public class SupplierRestController {
         Role: ROLE_ADMIN, STOREKEEPER
     */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 4) Pageable pageable,
-                                                      @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
-                                                      @RequestParam(name = "ad", required = false, defaultValue = "") String address,
-                                                      @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
-                                                      @RequestParam(name = "em", required = false, defaultValue = "") String email){
-        Page<Supplier> suppliers =iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
+    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 5) Pageable pageable,
+                                                       @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
+                                                       @RequestParam(name = "ad", required = false, defaultValue = "") String address,
+                                                       @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
+                                                       @RequestParam(name = "em", required = false, defaultValue = "") String email){
+        Page<Supplier> suppliers = iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
         if (suppliers.isEmpty()){
             return new ResponseEntity<>(suppliers, HttpStatus.NOT_FOUND);
         }

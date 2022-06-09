@@ -38,11 +38,11 @@ public interface ISupplierRepository extends JpaRepository<Supplier, Long> {
                   3/    getAllSupplier() = write a native query to get all Suppliers
     */
 
-    @Query(value = "select * from supplier where delete_flag = 0 and supplier_name like concat('%',:supplier,'%') and " +
-            "address like concat('%',:address,'%') and phone like concat('%',:phone,'%') and email like concat('%',:email,'%') ",
+    @Query(value = "select * from supplier where delete_flag = 0 and lower(supplier_name) like concat('%',:supplier,'%') and \n" +
+            "lower(address) like concat('%',:address,'%') and lower(phone) like concat('%',:phone,'%') and lower(email) like concat('%',:email ,'%') ",
             nativeQuery = true,
-            countQuery = "select count(*) from supplier where delete_flag = 0 and supplier_name like concat('%',:supplier,'%') and " +
-                    "address like concat('%',:address,'%') and phone like concat('%',:phone,'%') and email like concat('%',:email,'%') ")
+            countQuery = "select * from supplier where delete_flag = 0 and lower(supplier_name) like concat('%',:supplier,'%') and +\n" +
+                    "lower(address) like concat('%',:address,'%') and lower(phone) like concat('%',:phone,'%') and lower(email) like concat('%',:email ,'%') ")
     Page<Supplier> getAllSupplierPagingAndSearch(Pageable pageable, @Param("supplier") String supplier, @Param("address") String address,
                                                  @Param("phone") String phone, @Param("email") String email);
 

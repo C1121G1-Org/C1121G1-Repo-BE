@@ -14,11 +14,15 @@ build/
 .springBeans
 .sts4-cache
 bin/
+<<<<<<< HEAD
+!**/src/main/**/bin/
+
 !**/src/test/**/bin/
 src/test
 !**/src/test/**
 /sprint_1_webservice/src/test/
->>>>>>> 23d1cd77e3c2e275db875f1c581ce2206c883f07
+/sprint_1_webservice/src/main/resources/application.properties
+
 
 
 ### IntelliJ IDEA ###

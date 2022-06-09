@@ -15,12 +15,13 @@ import java.util.Optional;
 */
 public interface ISaleReportRepository extends JpaRepository<Product, Integer> {
 
-    @Query(value = "SELECT invoice.id as id , invoice.create_date as `date` , count(invoice_id) as invoiceQuantity , sum(invoice.total_money) as totalMoney  FROM `sprint-1-db`.invoice \n" +
-            "JOIN product ON product.id = invoice.product_id " +
-            "JOIN invoice_detail ON invoice_detail.id = invoice.id " +
-            "where ( str_to_date(invoice.create_date,'%d/%m/%Y') between :#{#startDay} and :#{#endDay}  ) " +
-            "and product.id like concat('%', :productId ,'%') " +
-            "GROUP BY invoice.create_date ; ",
+    @Query(value = "SELECT invoice.id as id , date_format(invoice.create_date,'%m-%Y') as `date` , count(invoice_id) as invoiceQuantity , sum(invoice.total_money) as totalMoney  FROM `sprint-1-db`.invoice \n" +
+            "JOIN invoice_detail ON invoice_detail.id = invoice.id\n" +
+            "JOIN product ON product.id = invoice_detail.product_id \n" +
+            "WHERE ( str_to_date(invoice.create_date,'%Y-%m-%d') between :#{#startDay}  and :#{#endDay}  ) \n" +
+            "AND product.id LIKE :productId \n" +
+            "GROUP BY date_format(invoice.create_date,'%m-%Y') \n" +
+            "ORDER BY str_to_date(invoice.create_date,'%Y-%m-%d') ;",
             nativeQuery = true)
     <T> List<T> findAllSaleReport(Class<T> t, String startDay, String endDay, @Param("productId") String productId);
 

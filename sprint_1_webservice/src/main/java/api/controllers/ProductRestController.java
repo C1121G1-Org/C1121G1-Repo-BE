@@ -53,23 +53,21 @@ public class ProductRestController {
         Created by tamHT and hieuMMT
         Time: 18:15 31/05/2022
         Function: get all page product and search of product
-        Role : Admin, bussines staff, seller
+        Role : Admin, business staff, seller
      */
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 4) Pageable pageable, @RequestParam Optional<String> keyName,
-                                                            @RequestParam Optional<String> keyQuantity,
-                                                            @RequestParam Optional<String> keyPrice
-    ) {
+    public ResponseEntity<Page<IProductDto>> findAllProduct(@PageableDefault(value = 10) Pageable pageable, @RequestParam Optional<String> keyName,
+                                                            @RequestParam(value = "keyPrice", defaultValue = "1000000000000000000000000000000000", required = false) String keyPrice,
+                                                            @RequestParam(value = "keyQuantity", defaultValue = "0", required = false) String keyQuantity,
+                                                            @RequestParam(value = "keySort", defaultValue = "priceDesc", required = false) String keySort){
         String keyNameValue = keyName.orElse("");
-        String keyQuantityValue = keyQuantity.orElse("0");
-        String keyPriceValue = keyPrice.orElse("0");
-
-        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPriceValue, keyQuantityValue);
+        Page<IProductDto> productPage = iProductService.findAllProduct(pageable, keyNameValue, keyPrice, keyQuantity,keySort);
         if (productPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
+
 
     /*
          Created by tuanPA
@@ -116,7 +114,6 @@ public class ProductRestController {
         ProductQRCode productQRCode = new ProductQRCode();
         BeanUtils.copyProperties(latestProduct, productQRCode);
         QRCodeUtils.encode(productQRCode);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

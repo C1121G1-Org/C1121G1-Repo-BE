@@ -60,15 +60,17 @@ public class QRCodeRestController {
        Function: decode QR-Code
    */
     @PostMapping(value = "/decode", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductQRCode> decode(@RequestBody MultipartFile file) {
+    public ResponseEntity<Product> decode(@RequestBody MultipartFile file) {
         try {
             BufferedImage bf = ImageIO.read(file.getInputStream());
             ProductQRCode productQRCode = QRCodeUtils.decode(bf);
 
-            if (productQRCode == null) {
+            Product product = this.iProductService.findProductId(productQRCode.getId());
+
+            if (product == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(productQRCode, HttpStatus.OK);
+            return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

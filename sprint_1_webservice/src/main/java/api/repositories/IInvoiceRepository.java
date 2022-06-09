@@ -27,6 +27,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "or  total_money like concat('%',:keyword,'%') " +
             "or  customer_name like concat('%',:keyword,'%') " +
             "or  `name` like concat('%',:keyword,'%') " +
+            "group by invoice.id " +
             "order by " +
             "case when :sorts = 'sortDateDesc' then create_date end desc ," +
             "case when :sorts = 'sortDateAsc' then create_date end asc ," +
@@ -43,6 +44,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
                     "or  total_money like concat('%',:keyword,'%') " +
                     "or  customer_name like concat('%',:keyword,'%') " +
                     "or  `name` like concat('%',:keyword,'%') " +
+                    "group by invoice.id " +
                     "order by " +
                     "case when :sorts = 'sortDateDesc' then create_date end desc ," +
                     "case when :sorts = 'sortDateAsc' then create_date end asc ," +
@@ -53,6 +55,18 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             , nativeQuery = true)
     Page<HistoryInvoiceDto> findAllByKeyWord(@Param("keyword") String keyword, Pageable pageable, @Param("sorts") String sort);
 
+    @Query(value = "SELECT invoice.id as invoiceId, create_date as createDate,create_time as createTime,`name`as productName, total_money as totalMoney , quantity , invoice_detail.id as invoiceDetailId " +
+            "FROM product " +
+            "INNER JOIN invoice_detail on invoice_detail.product_id = product.id " +
+            "INNER JOIN invoice on invoice_detail.invoice_id = invoice.id " +
+            "WHERE invoice.id = :id",
+            countQuery= "SELECT invoice.id as invoiceId, create_date as createDate,create_time as createTime,`name`as productName, total_money as totalMoney , quantity , invoice_detail.id as invoiceDetailId " +
+                    "FROM product " +
+                    "INNER JOIN invoice_detail on invoice_detail.product_id = product.id " +
+                    "INNER JOIN invoice on invoice_detail.invoice_id = invoice.id " +
+                    "WHERE invoice.id = :id",
+            nativeQuery= true)
+    Page<HistoryInvoiceDto> findProductsInvoice(Pageable pageable, Long id);
     /*
         Created by LongNHL
         Time: 21:30 31/05/2022
@@ -66,4 +80,3 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
     @Query(value = "select * from invoice order by id desc limit 1;",nativeQuery = true)
     Invoice getNewInvoice();
 }
-

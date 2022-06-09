@@ -2,7 +2,6 @@ package api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import api.models.Supplier;
@@ -32,7 +31,6 @@ public class SupplierDto implements Validator {
 
     @NotBlank(message = "Email can not empty")
     @Email(message = "Please enter the correct format")
-//    @Pattern(regexp = "^$|[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)", message = "Please enter the correct format")
     private String email;
 
     private boolean deleteFlag;
@@ -110,17 +108,17 @@ public class SupplierDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         SupplierDto supplierDto = (SupplierDto) target;
-        String supplierName = supplierDto.getSupplierName();
-        Supplier supplier = this.isupplierService.findBySupplierName(supplierName);
+        String supplierNameValidate = supplierDto.getSupplierName();
+        Supplier supplier = this.isupplierService.findBySupplierName(supplierNameValidate);
         if (supplier != null) {
-            if (supplier.getSupplierName().equals(supplierName)) {
+            if (supplier.getSupplierName().equals(supplierNameValidate)) {
                 errors.rejectValue("supplierName", "", "Tên nhà cung cấp đã tồn tại!");
             }
         }
-        String email = supplierDto.getEmail();
-        Supplier supplier1 = this.isupplierService.findByEmail(email);
+        String emailValidate = supplierDto.getEmail();
+        Supplier supplier1 = this.isupplierService.findByEmail(emailValidate);
         if(supplier1 != null) {
-            if(supplier1.getEmail().equals(email)){
+            if(supplier1.getEmail().equals(emailValidate)){
                 errors.rejectValue("email", "", "Email không được trùng!");
             }
         }

@@ -52,6 +52,7 @@ public class SaleReportRestController {
                                                          @RequestParam(required = false, defaultValue = "3000-01-01") String endDay,
                                                          @RequestParam(required = false, defaultValue = "") String productId) {
         if (productId.equals("")) {
+            productId = "%%";
             List<ISaleReport> saleReportList = this.iSaleReportService.findAllSaleReports(startDay, endDay, productId);
             if (saleReportList.size() < 1) {
                 return new ResponseEntity<>(new ResponseObject(false, "Failed!", null, null), HttpStatus.BAD_REQUEST);
