@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
@@ -28,8 +29,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/employee")
 public class EmployeeRestController {
 
-//    @Autowired
-//    private PasswordEncoder encoder;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     IEmployeeService iEmployeeService;
@@ -127,8 +128,8 @@ public class EmployeeRestController {
         } else {
             account = new Account();
             employee = new Employee();
-//            String password = encoder.encode(employeeDto.getAccountDto().getEncryptPassword());
-//            employeeDto.getAccountDto().setEncryptPassword(password);
+            String password = encoder.encode(employeeDto.getAccountDto().getEncryptPassword());
+            employeeDto.getAccountDto().setEncryptPassword(password);
             AccountRole accountRole = new AccountRole();
             Position position = new Position();
             BeanUtils.copyProperties(employeeDto, employee);
@@ -185,21 +186,18 @@ public class EmployeeRestController {
         Function: edit Employee
     */
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<ResponseObject> updateEmployee(@PathVariable Integer id,
+    public ResponseEntity<ResponseObject> updateEmployee(@PathVariable Long id,
                                                          @Valid @RequestBody EmployeeDto employeeDto,
                                                          BindingResult bindingResult) {
         employeeDto.setIEmployeeService(iEmployeeService);
         employeeDto.validate(employeeDto, bindingResult);
-        Map<String, String> errorMap = new HashMap<>();
-
-        if (bindingResult.hasFieldErrors()) {
-            bindingResult
-                    .getFieldErrors()
-                    .stream()
-                    .forEach(f -> errorMap.put(f.getField(), f.getDefaultMessage()));
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = bindingResult.getFieldErrors()
+                    .stream().collect(Collectors.toMap(
+                            e -> e.getField(), e -> e.getDefaultMessage()));
             return new ResponseEntity<>(new ResponseObject(false, "Failed!", errorMap, new ArrayList<>()), HttpStatus.BAD_REQUEST);
-        } else {
 
+        } else {
 
             Employee employee = new Employee();
             Account account = new Account();

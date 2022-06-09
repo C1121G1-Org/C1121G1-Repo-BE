@@ -1,6 +1,5 @@
 package api.dto;
 
-
 import api.services.IAccountService;
 import api.services.IEmployeeService;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -32,7 +30,7 @@ public class EmployeeDto implements Validator {
     @Size(min = 5, max = 100)
     private String address;
     @NotBlank
-    @Pattern(regexp = "^[0-9_-]{9,12}$", message = "9 - 10 number please")
+    @Pattern(regexp = "^[0-9_-]{9,12}$", message = "9 - 12 number please")
     private String idCard;
     @NotBlank
     @Pattern(regexp = "((09|03|07|08|05)+([0-9]{8})\\b)", message = "invalid phone number ex:0901234567")

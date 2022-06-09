@@ -1,4 +1,3 @@
-
 package api.controllers;
 
 import api.dto.SupplierDto;
@@ -13,7 +12,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import org.springframework.validation.BindingResult;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -31,33 +29,31 @@ public class SupplierRestController {
 
     /*
         Created by khoaVC
+        Role: Storekeeper, Admin
         Time: 21:54 31/05/2022
-        Function: 1/    getAllSupplier() = list all Suppliers from DB
-                  2/    listSupplier() = list all Suppliers from DB with paging and search
+        Function: 1/    listSupplier() = list all Suppliers from DB with paging and search
+        Role: ROLE_ADMIN, STOREKEEPER
     */
-    private List<Supplier> getAllSupplier(){
-        return iSupplierService.getAllSupplier();
-    }
-
     @GetMapping(value = "/list")
-    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 3) Pageable pageable,
-                                                      @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
-                                                      @RequestParam(name = "ad", required = false, defaultValue = "") String address,
-                                                      @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
-                                                      @RequestParam(name = "em", required = false, defaultValue = "") String email){
-        Page<Supplier> suppliers =iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
+    public ResponseEntity<Page<Supplier>> listSupplier(@PageableDefault(value = 5) Pageable pageable,
+                                                       @RequestParam(name = "su", required = false, defaultValue = "") String supplier,
+                                                       @RequestParam(name = "ad", required = false, defaultValue = "") String address,
+                                                       @RequestParam(name = "ph", required = false, defaultValue = "") String phone,
+                                                       @RequestParam(name = "em", required = false, defaultValue = "") String email){
+        Page<Supplier> suppliers = iSupplierService.getAllSupplierPagingAndSearch(pageable, supplier, address, phone, email);
         if (suppliers.isEmpty()){
             return new ResponseEntity<>(suppliers, HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
 
     /*
-    Created by NgocTTB
-    Time: 09:00 31/05/2022
-    Function: Create Supplier
+        Created by NgocTTB
+        Time: 09:00 31/05/2022
+        Function: Create Supplier
+        Role: ROLE_ADMIN, BUSINESS_STAFF, STOREKEEPER
     */
-
     @PostMapping(value = "/create")
     public ResponseEntity<ResponseObject> createSupplier(@Valid @RequestBody SupplierDto supplierDto,
                                                          BindingResult bindingResult) {
@@ -74,5 +70,4 @@ public class SupplierRestController {
         iSupplierService.save(supplier);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

@@ -3,6 +3,7 @@ package api.services;
 import api.models.Storage;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IStorageService {
 
@@ -20,7 +21,7 @@ public interface IStorageService {
      Time: 22:30 1/06/2022
      Function: find storage by productId after create invoice
      */
-    Storage getStorageByIdProduct(Long productId);
+    Optional<Storage> getStorageByIdProduct(Long productId);
         /*
         Created by LongNHL
         Time: 22:30 1/06/2022

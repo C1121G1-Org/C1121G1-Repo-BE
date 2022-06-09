@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IStorageRepository extends JpaRepository<Storage, Long> {
 
@@ -35,11 +36,11 @@ public interface IStorageRepository extends JpaRepository<Storage, Long> {
     Function: find storage by productId after create invoice
     */
 
-    @Query(value = "select * from `storage` where product_id = :id", nativeQuery = true)
-    Storage getStorageByIdProduct(@Param("id") Long productId);
+    @Query(value = "select * from `storage` where product_id = :id and delete_flag = 0 ", nativeQuery = true)
+    Optional<Storage> getStorageByIdProduct(@Param("id") Long productId);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE `storage` SET `quantity` = ?1 WHERE (`id` = ?2)",nativeQuery = true)
+    @Query(value = "UPDATE `storage` SET `quantity` = ?1 WHERE (`id` = ?2) and delete_flag =0 ",nativeQuery = true)
     void updateQuantityProduct(Long quantity, Long id);
 }

@@ -11,25 +11,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements ICustomerService {
     @Autowired
     ICustomerRepository iCustomerRepository;
 
     /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-    Created by LongNHL
-    Time: 21:30 31/05/2022
-    Function: create customer
-=======
-=======
     Created by LongNHL
     Time: 21:30 31/05/2022
     Function: create customer
 
->>>>>>> 420924e132898405b15ad91cdb0f80d6afa6338a
-        Created by TuanNQ
+        /*    Created by TuanNQ
         Time: 18:00 31/05/2022
         Function: Show all list report customer
     */
@@ -74,7 +68,7 @@ public class CustomerServiceImpl implements ICustomerService {
         Function: Show list of customer reports by age and gender
     */
     @Override
-    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, String age) {
+    public Page<ReportCustomerDto> filterByGenderAndAge(Pageable pageable, Boolean gender, Integer age) {
         return iCustomerRepository.filterByGenderAndAge(pageable, gender, age);
     }
 
@@ -96,6 +90,28 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public Page<PurchaseProductDto> getPurchaseProducts(Long id, Pageable pageable) {
         return iCustomerRepository.getPurchaseProducts(id, pageable);
+    }
+
+    /*
+Created By hoangDH,
+Role: admin, business staff
+Time: 12:38 PM 2022-06-01
+Function: edit object by id from database
+ */
+    @Override
+    public void editCustomer(Customer customer, Long id) {
+        iCustomerRepository.editCustomer(customer,id);
+    }
+
+    /*
+    Created By hoangDH,TamHT
+    Time: 13:42 PM 2022-06-01
+    Role: admin, business staff
+    Function: find customer object by id from database
+    */
+    @Override
+    public Optional<Customer> findById(Long id) {
+        return iCustomerRepository.findById(id);
     }
 
 

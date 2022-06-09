@@ -1,6 +1,10 @@
 package api.services.impl;
 
-import api.dto.InvoiceDto;
+
+
+import api.dto.HistoryInvoiceDto;
+
+
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -28,7 +33,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     IProductRepository iProductRepository;
 
-
     /*
         Created by LongNHL
         Time: 21:30 31/05/2022
@@ -37,13 +41,19 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Override
     public void saveNewInvoice(Invoice invoice) {
         invoice.setCreateDate(LocalDate.now().toString());
-        invoice.setCreateTime(LocalTime.now().toString());
+        invoice.setCreateTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         iInvoiceRepository.saveInvoice(invoice.getCreateDate(), invoice.getCreateTime(),invoice.getTotalMoney(), invoice.getPayments(), invoice.getCustomer().getId());
     }
 
+
     @Override
-    public Page<Invoice> findAll(String keyword, Pageable pageable) {
-         return iInvoiceRepository.findAllByKeyWord(keyword,pageable);
+    public Page<HistoryInvoiceDto> findAll(String keyword, Pageable pageable, String sort) {
+         return iInvoiceRepository.findAllByKeyWord(keyword,pageable,sort);
+    }
+
+    @Override
+    public Page<HistoryInvoiceDto> findProductsInvoice(Pageable pageable, Long id) {
+        return iInvoiceRepository.findProductsInvoice(pageable, id);
     }
 
     @Override
@@ -62,17 +72,12 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     }
 
-    @Override
-    public void createInvoice(InvoiceDto invoiceDto) {
+        /*
+        Created by LongNHL
+        Time: 21:30 31/05/2022
+        Function: get invoice after create
+        */
 
-    }
-
-
-    /*
-    Created by LongNHL
-    Time: 21:30 31/05/2022
-    Function: get invoice after create
-    */
     @Override
     public Invoice getNewInvoice() {
         return iInvoiceRepository.getNewInvoice();

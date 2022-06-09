@@ -1,16 +1,26 @@
 package api.utils;
 
+import api.models.Product;
 import api.models.ProductQRCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+import org.springframework.beans.BeanUtils;
+import org.springframework.core.io.ByteArrayResource;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Hashtable;
 
     /*
@@ -23,25 +33,21 @@ public class QRCodeUtils {
 
     private static final String PATH = "D:\\qrcode\\";
 
-    protected QRCodeUtils() {
-    }
-
-
     public static String encode(ProductQRCode productQRCode) {
-        String filePath = PATH + "PD-" + productQRCode.getId() + ".png";
+        String filePath = PATH + productQRCode.getId() + " - " + productQRCode.getName() + ".png";
 
         try {
             ObjectMapper mapper = new ObjectMapper();
             String jsonProduct = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(productQRCode);
 
+            //Config UTF-8
             Hashtable hashtable = new Hashtable();
             hashtable.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
             BitMatrix bitMatrix = new MultiFormatWriter().encode(jsonProduct, BarcodeFormat.QR_CODE, 500, 500, hashtable);
             MatrixToImageWriter.writeToPath(bitMatrix, "png", Paths.get(filePath));
-
             return filePath;
-        } catch (WriterException | IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

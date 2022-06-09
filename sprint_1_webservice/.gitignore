@@ -14,10 +14,14 @@ build/
 .springBeans
 .sts4-cache
 bin/
+<<<<<<< HEAD
 !**/src/main/**/bin/
 
 !**/src/test/**/bin/
+src/test
+!**/src/test/**
 /sprint_1_webservice/src/test/
+/sprint_1_webservice/src/main/resources/application.properties
 
 
 

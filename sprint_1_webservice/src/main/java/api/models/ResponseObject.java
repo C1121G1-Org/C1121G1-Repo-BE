@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ResponseObject <T>{
-
     private boolean status;
     private String message;
     private Map<String, String> errorMap;
