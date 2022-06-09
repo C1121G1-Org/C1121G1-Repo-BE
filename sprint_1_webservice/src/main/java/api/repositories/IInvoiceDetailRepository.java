@@ -32,7 +32,7 @@ public interface IInvoiceDetailRepository extends JpaRepository<InvoiceDetail,Lo
     @Query(value = "select product.id as id, product.camera as camera, product.cpu as cpu, product.image as image, product.memory as memory, product.name as name, " +
             "product.other_description as otherDescription, product.price as price, product.screen_size as screenSize, product.selfie as selfie, " +
             "product.discount as discount, product.promotions as promotions, product.five_star_rating as fiveStarRating, " +
-            "sum(invoice_detail.quantity) as productQuantity " +
+            "product.category_id as category, sum(invoice_detail.quantity) as productQuantity " +
             "from invoice_detail " +
             "inner join product on product.id = invoice_detail.product_id " +
             "inner join invoice on invoice.id = invoice_detail.invoice_id " +
