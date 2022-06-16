@@ -110,10 +110,10 @@ public class ProductRestController {
         Time: 20:20 04/06/2022
         Function: Create QRCode on local storage => D:/qrcode
     */
-        Product latestProduct = this.iSaleReportService.getLatestProduct();
-        ProductQRCode productQRCode = new ProductQRCode();
-        BeanUtils.copyProperties(latestProduct, productQRCode);
-        QRCodeUtils.encode(productQRCode);
+//        Product latestProduct = this.iSaleReportService.getLatestProduct();
+//        ProductQRCode productQRCode = new ProductQRCode();
+//        BeanUtils.copyProperties(latestProduct, productQRCode);
+//        QRCodeUtils.encode(productQRCode);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -178,11 +178,11 @@ public class ProductRestController {
         Time: 20:20 04/06/2022
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
-        ProductQRCode productQRCode = new ProductQRCode();
-
-
-        BeanUtils.copyProperties(product, productQRCode);
-        QRCodeUtils.encode(productQRCode);
+//        ProductQRCode productQRCode = new ProductQRCode();
+//
+//
+//        BeanUtils.copyProperties(product, productQRCode);
+//        QRCodeUtils.encode(productQRCode);
 
         this.iProductService.updateProduct(product);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -53,14 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/public/**", "/api/invoiceDetail/listProductBestseller", "/api/invoiceDetail/listProductNewest", "/api/invoiceDetail/listProductBestseller/{id}", "/api/category/list", "api/product/create")
+                .antMatchers("/api/public/**", "/api/invoiceDetail/listProductBestseller", "/api/invoiceDetail/listProductNewest", "/api/invoiceDetail/listProductBestseller/{id}", "/api/category/list")
                 .permitAll()
                 .antMatchers("/api/sale-report/**", "/api/customer/report-customer", "/api/customer/info-customer/{id}", "/api/customer/report-customer-search-gender", "/api/customer/report-customer-search-age", "/api/customer/report-customer-search", "/api/customer/purchase-history/{id}", "/api/customer/purchase-products/{id}").hasAnyRole("STAFF", "ADMIN")
                 .antMatchers("/api/storage/create", "/api/supplier/list").hasAnyRole("ADMIN", "STOREKEEPER")
                 .antMatchers("/api/supplier/create").hasAnyRole("ADMIN", "STOREKEEPER", "STAFF")
                 .antMatchers("/api/invoiceDetail/create",
                         "/api/invoiceDetail/updateQuantityProduct",
-                        "/api/customer/{id}", "/api/invoice/**", "/api/customer/list").hasAnyRole("ADMIN", "SELLER", "STAFF")
+                        "/api/customer/{id}", "/api/invoice/**", "/api/customer/list", "api/product/create").hasAnyRole("ADMIN", "SELLER", "STAFF")
                 .antMatchers("/api/qrcode/**").hasAnyRole("ADMIN", "STOREKEEPER", "SELLER")
                 .antMatchers("/api/product/**").hasAnyRole(  "ADMIN", "STAFF", "SELLER", "STOREKEEPER")
                 .anyRequest()

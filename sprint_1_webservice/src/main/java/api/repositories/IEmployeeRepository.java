@@ -95,7 +95,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
         Time: 09:00 02/06/2022
         Function: find Employee by idCard.
     */
-    @Query(value = "select * from `sprint-1-db`.employee where delete_flag = 0 and employee.id_card = :idCard ", nativeQuery = true)
+    @Query(value = "select * from `sprint-1-db`.employee where employee.id_card = :idCard ", nativeQuery = true)
     Employee findByIdCard(@Param("idCard") String idCard);
 
     /*

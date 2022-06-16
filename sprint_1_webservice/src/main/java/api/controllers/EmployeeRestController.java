@@ -111,20 +111,18 @@ public class EmployeeRestController {
         String checkIdCard = employeeDto.getIdCard();
         Employee employee = this.iEmployeeService.findByIdCard(employeeDto.getIdCard());
         if (employee != null && employee.getIdCard().equals(checkIdCard)) {
-            errorMap.put("idCard","số chứng minh  tồn tại ! ");
+            errorMap.put("idCard","Số chứng minh  tồn tại ! ");
         }
         String checkEmail = employeeDto.getAccountDto().getEmail();
         Account account1 = this.iAccountService.findByEmail(employeeDto.getAccountDto().getEmail());
         if (account1 != null && account1.getEmail().equals(checkEmail)) {
-            errorMap.put("email", " email tồn tại ! ");
+            errorMap.put("email", " Email tồn tại ! ");
         }
-
         String checkUserName = employeeDto.getAccountDto().getUserName();
         Account account = this.iAccountService.findByUserName(employeeDto.getAccountDto().getUserName());
         if (account != null && account.getUserName().equals(checkUserName)) {
-            errorMap.put("userName", "tên đăng nhập tồn tại ! ");
+            errorMap.put("userName", "Tên đăng nhập tồn tại ! ");
             return new ResponseEntity<>(new ResponseObject(false, "Failed", errorMap, new ArrayList<>()), HttpStatus.INTERNAL_SERVER_ERROR);
-
         } else {
             account = new Account();
             employee = new Employee();
