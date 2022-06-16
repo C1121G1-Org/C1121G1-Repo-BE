@@ -3,9 +3,7 @@ package api.services;
 import api.dto.PurchaseHistoryDto;
 import api.dto.PurchaseProductDto;
 import api.dto.ReportCustomerDto;
-
 import api.models.Customer;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

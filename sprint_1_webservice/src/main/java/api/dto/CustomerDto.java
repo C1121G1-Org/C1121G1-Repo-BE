@@ -23,11 +23,11 @@ public class CustomerDto {
     private Long id;
 
     @NotBlank(message = "Vui lòng nhập tên khách hàng ")
-    @Pattern(regexp = "^([^0-9]*)$", message = "Tên khách hàng sai định dạng ")
+    @Pattern(regexp = "^([A-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]+)((\\s{1}[A-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]+){1,})$", message = "Tên khách hàng sai định dạng ")
     private String customerName;
 
     @NotBlank(message = "Vui lòng nhập số điện thoại ")
-    @Pattern(regexp = "^(090\\d{7})|(091\\d{7})|(\\(\\+84\\)90\\d{7})|(\\(\\+84\\)91\\d{7})$", message = "Số điện thoại sai định dạng ")
+    @Pattern(regexp = "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$", message = "Số điện thoại sai định dạng ")
     private String phoneNumber;
 
     @NotBlank(message = "Vui lòng nhập ngày sinh khách hàng")

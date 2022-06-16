@@ -1,9 +1,7 @@
 package api.services;
 
 import api.dto.IProductBestsellerDto;
-import api.dto.InvoiceDetailDto;
 import api.models.InvoiceDetail;
-import api.models.Product;
 
 import java.util.List;
 

@@ -56,7 +56,7 @@ public class InvoiceRestController {
     }
 
     @GetMapping(value = "/products-invoice/{id}")
-    public ResponseEntity<Page<HistoryInvoiceDto>> productsList(@PageableDefault(value = 5) Pageable pageable, @PathVariable Long id) {
+    public ResponseEntity<Page<HistoryInvoiceDto>> productsList(@PageableDefault (value = 5) Pageable pageable, @PathVariable Long id) {
         Page<HistoryInvoiceDto> productsInvoice = iInvoiceService.findProductsInvoice(pageable, id);
         if (productsInvoice.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

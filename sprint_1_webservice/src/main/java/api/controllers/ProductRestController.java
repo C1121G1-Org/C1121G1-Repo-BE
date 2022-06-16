@@ -4,12 +4,10 @@ import api.dto.IProductDto;
 import api.dto.ProductDto;
 import api.models.Category;
 import api.models.Product;
-import api.models.ProductQRCode;
 import api.models.ResponseObject;
 import api.services.ICategoryService;
 import api.services.IProductService;
 import api.services.ISaleReportService;
-import api.utils.QRCodeUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,13 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -110,10 +105,10 @@ public class ProductRestController {
         Time: 20:20 04/06/2022
         Function: Create QRCode on local storage => D:/qrcode
     */
-        Product latestProduct = this.iSaleReportService.getLatestProduct();
-        ProductQRCode productQRCode = new ProductQRCode();
-        BeanUtils.copyProperties(latestProduct, productQRCode);
-        QRCodeUtils.encode(productQRCode);
+//        Product latestProduct = this.iSaleReportService.getLatestProduct();
+//        ProductQRCode productQRCode = new ProductQRCode();
+//        BeanUtils.copyProperties(latestProduct, productQRCode);
+//        QRCodeUtils.encode(productQRCode);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -178,11 +173,11 @@ public class ProductRestController {
         Time: 20:20 04/06/2022
         Function: Update QRCode base on Edited Product on local storage => D:/qrcode
     */
-        ProductQRCode productQRCode = new ProductQRCode();
-
-
-        BeanUtils.copyProperties(product, productQRCode);
-        QRCodeUtils.encode(productQRCode);
+//        ProductQRCode productQRCode = new ProductQRCode();
+//
+//
+//        BeanUtils.copyProperties(product, productQRCode);
+//        QRCodeUtils.encode(productQRCode);
 
         this.iProductService.updateProduct(product);
         return new ResponseEntity<>(HttpStatus.OK);

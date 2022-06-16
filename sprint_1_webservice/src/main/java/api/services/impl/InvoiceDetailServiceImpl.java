@@ -1,12 +1,9 @@
 package api.services.impl;
 
 import api.dto.IProductBestsellerDto;
-import api.dto.InvoiceDetailDto;
 import api.models.InvoiceDetail;
-import api.models.Product;
 import api.repositories.IInvoiceDetailRepository;
 import api.services.IInvoiceDetailService;
-import api.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

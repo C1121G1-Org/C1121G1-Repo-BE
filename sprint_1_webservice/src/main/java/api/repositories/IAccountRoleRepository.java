@@ -1,7 +1,6 @@
 package api.repositories;
 
 import api.models.AccountRole;
-import api.models.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

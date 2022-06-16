@@ -4,7 +4,6 @@ import api.models.Product;
 import api.models.ProductQRCode;
 import api.services.IProductService;
 import api.utils.QRCodeUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;

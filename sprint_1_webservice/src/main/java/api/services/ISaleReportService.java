@@ -4,7 +4,6 @@ import api.models.ISaleReport;
 import api.models.Product;
 
 import java.util.List;
-import java.util.Optional;
 
 /*
     Created by HauPV
@@ -13,8 +12,7 @@ import java.util.Optional;
 */
 public interface ISaleReportService {
     List<ISaleReport> findAllSaleReports(String startDay, String endDay,String productId);
-
     Product getLatestProduct();
-
     List<Product> getListProduct();
+    Product findProductByIdNamePrice(Long id, String name, Double price);
 }

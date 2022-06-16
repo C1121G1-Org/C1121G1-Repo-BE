@@ -1,6 +1,5 @@
 package api.dto;
 
-import api.models.Category;
 import api.models.Product;
 import api.services.IProductService;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

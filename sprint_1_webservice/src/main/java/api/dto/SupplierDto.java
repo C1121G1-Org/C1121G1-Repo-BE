@@ -1,13 +1,12 @@
 package api.dto;
 
+import api.models.Supplier;
+import api.services.ISupplierService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import api.models.Supplier;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import api.services.ISupplierService;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

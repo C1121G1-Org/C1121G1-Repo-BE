@@ -4,13 +4,13 @@ import api.dto.EmployeeInterface;
 import api.dto.PersonalDto;
 import api.models.Account;
 import api.models.Employee;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
@@ -95,7 +95,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
         Time: 09:00 02/06/2022
         Function: find Employee by idCard.
     */
-    @Query(value = "select * from `sprint-1-db`.employee where delete_flag = 0 and employee.id_card = :idCard ", nativeQuery = true)
+    @Query(value = "select * from `sprint-1-db`.employee where employee.id_card = :idCard ", nativeQuery = true)
     Employee findByIdCard(@Param("idCard") String idCard);
 
     /*
