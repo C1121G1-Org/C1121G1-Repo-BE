@@ -1,10 +1,8 @@
 package api.controllers;
 
 import api.dto.AccountDto;
-import api.dto.EmployeeInterface;
-import api.models.Employee;
-import api.models.Position;
 import api.dto.EmployeeDto;
+import api.dto.EmployeeInterface;
 import api.dto.PositionDto;
 import api.models.*;
 import api.services.*;
@@ -16,12 +14,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.*;
 import javax.validation.Valid;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController

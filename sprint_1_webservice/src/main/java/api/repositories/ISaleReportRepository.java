@@ -1,10 +1,12 @@
 package api.repositories;
+
 import api.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import java.util.List;
-import java.util.Optional;
+
 /*
     Created by HauPV
     Time: 19:27 31/05/2022

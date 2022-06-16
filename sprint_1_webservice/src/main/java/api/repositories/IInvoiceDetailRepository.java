@@ -2,7 +2,6 @@ package api.repositories;
 
 import api.dto.IProductBestsellerDto;
 import api.models.InvoiceDetail;
-import api.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

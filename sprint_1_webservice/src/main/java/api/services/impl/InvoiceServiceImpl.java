@@ -1,10 +1,7 @@
 package api.services.impl;
 
 
-
 import api.dto.HistoryInvoiceDto;
-
-
 import api.models.Customer;
 import api.models.Invoice;
 import api.models.Product;

@@ -1,12 +1,12 @@
 package api.services.impl;
 
+import api.dto.PurchaseHistoryDto;
 import api.dto.PurchaseProductDto;
+import api.dto.ReportCustomerDto;
+import api.models.Customer;
 import api.repositories.ICustomerRepository;
 import api.services.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import api.dto.PurchaseHistoryDto;
-import api.dto.ReportCustomerDto;
-import api.models.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
